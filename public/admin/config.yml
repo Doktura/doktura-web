@@ -4,7 +4,7 @@
 
 backend:
   name: github
-  repo: GITHUB-BENUTZER/doktura-web # wird beim Einrichten ersetzt
+  repo: Doktura/doktura-web
   branch: main
   commit_messages:
     update: 'Text geändert: {{slug}}'
