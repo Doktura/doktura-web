@@ -1,0 +1,47 @@
+{
+  "label": "Unsere Leistungen",
+  "titel": "Ihre finanzielle Situation besteht nicht aus einzelnen Verträgen.",
+  "einleitung": "Deshalb betrachten wir Absicherung, Praxis, Vermögen und Vorsorge als zusammenhängendes System und entwickeln daraus eine Struktur, die zu Ihnen passt.",
+  "leistungen": [
+    {
+      "icon": "bu",
+      "titel": "Berufsunfähigkeits­versicherung",
+      "text": "Absicherung Ihrer Arbeitskraft mit Fokus auf ärztespezifische Vertragsbedingungen – etwa Infektionsklauseln und Nachversicherungsmöglichkeiten."
+    },
+    {
+      "icon": "praxis",
+      "titel": "Praxisversicherung",
+      "text": "Wir prüfen Ihre Praxisabsicherung auf Lücken, Leistungen, Versicherungssummen und Kosten."
+    },
+    {
+      "icon": "optimierung",
+      "titel": "Praxisoptimierung",
+      "text": "Bestehende Verträge und Strukturen werden gebündelt, geprüft und sinnvoll aufeinander abgestimmt."
+    },
+    {
+      "icon": "waage",
+      "titel": "Leistungs- und Kostenoptimierung",
+      "text": "Wir analysieren Leistungen, Kosten und Überschneidungen – für mehr Klarheit und weniger unnötige Komplexität."
+    },
+    {
+      "icon": "steuer",
+      "titel": "Steueroptimierung",
+      "text": "Finanzielle Entscheidungen betrachten wir auch im Zusammenspiel mit Ihrer steuerlichen Situation und Ihrer Steuerberatung."
+    },
+    {
+      "icon": "anlage",
+      "titel": "Kapitalanlagen",
+      "text": "Wir entwickeln eine langfristige Anlagestrategie passend zu Ihren Zielen, Ihrer Liquidität und Ihrer Risikobereitschaft."
+    },
+    {
+      "icon": "vorsorge",
+      "titel": "Private Altersvorsorge",
+      "text": "Wir ergänzen bestehende Versorgung gezielt und schaffen eine langfristige Strategie für Ihren Ruhestand."
+    },
+    {
+      "icon": "liquiditaet",
+      "titel": "Liquidität und Rücklagen",
+      "text": "Private Rücklagen, Praxisliquidität und geplante Investitionen werden sinnvoll aufeinander abgestimmt."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+/* =========================================================
+   DOKTURA – zentrale Einstellungen
+   Farben, Schriften, Abstände. Hier ändern = überall geändert.
+   ========================================================= */
+
+:root {
+  /* ---- Farbwelt 01.75 ---- */
+  --c-aubergine: #23052f;
+  --c-lavender: #a29fce;
+  --c-gold: #bf9e5d;
+  --c-offwhite: #f0edf6;
+
+  /* Abgeleitete Töne (aus der Farbwelt gemischt) */
+  --c-aubergine-soft: #2f1240;   /* Karten / Flächen auf Aubergine */
+  --c-aubergine-line: #4a2d5a;   /* feine Linien auf Aubergine */
+  --c-offwhite-deep: #e6e1ef;    /* Karten / Flächen auf Off-White */
+  --c-line-light: #d6cfe2;       /* feine Linien auf Off-White */
+  --c-gold-light: #d4b77c;       /* Gold beim Überfahren mit der Maus */
+  --c-gold-text: #7a5c24;        /* Gold für kleine Schrift auf Off-White (lesbarer Kontrast) */
+  --c-text-muted-light: #4e3f58; /* Nebentext auf Off-White */
+  --c-text-muted-dark: #c9c6e2;  /* Nebentext auf Aubergine */
+
+  /* ---- Schriften ---- */
+  /* Headlines: Libre Caslon (Platzhalter für Adobe Caslon Pro) */
+  --font-display: 'Libre Caslon Display', 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+  /* Fließtext: Figtree – klare Grotesk, verwandt mit der Logo-Unterzeile */
+  --font-sans: 'Figtree Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* ---- Schriftgrößen (wachsen mit der Bildschirmbreite) ---- */
+  --fs-h1: clamp(2.5rem, 1.6rem + 4.2vw, 5rem);
+  --fs-h2: clamp(2.125rem, 1.6rem + 2.6vw, 3.5rem);
+  --fs-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --fs-body: 1.0625rem;  /* 17 px */
+  --fs-small: 1rem;      /* 16 px – Minimum für Text */
+  --fs-label: 0.875rem;  /* 14 px, nur für Labels in Großbuchstaben */
+
+  --lh-tight: 1.08;
+  --lh-head: 1.15;
+  --lh-body: 1.65;
+  --tracking-label: 0.18em;
+
+  /* ---- Abstände & Raster ---- */
+  --container: 1200px;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --section-y: clamp(5rem, 3.5rem + 7vw, 10rem);
+  --measure: 65ch; /* maximale Textbreite */
+  --radius: 2px;
+
+  /* ---- Bewegung ---- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 700ms;
+}

@@ -1,0 +1,31 @@
+---
+// Einheitliche Gold-Icons für die Leistungen (Linienstärke 1.5, Raster 40 × 40)
+interface Props { name: string }
+const { name } = Astro.props;
+const icons: Record<string, string> = {
+  // Schild mit Herzschlag – Berufsunfähigkeit
+  bu: 'M20 4l13 5v9c0 8.5-5.6 15.4-13 18-7.4-2.6-13-9.5-13-18V9l13-5z M11 21h5l2-4 3 8 2-4h6',
+  // Praxisgebäude mit Kreuz
+  praxis: 'M6 35V16L20 6l14 10v19 M3 35h34 M20 16v8 M16 20h8 M16 35v-6h8v6',
+  // Regler – Praxisoptimierung
+  optimierung: 'M6 11h28 M6 20h28 M6 29h28 M14 8v6 M26 17v6 M18 26v6',
+  // Waage – Leistung und Kosten
+  waage: 'M20 6v28 M12 34h16 M8 12h24 M8 12l-5 11h10l-5-11z M32 12l-5 11h10l-5-11z M20 6a2 2 0 1 0 0 .01',
+  // Dokument mit Prozent – Steuern
+  steuer: 'M10 4h14l7 7v25H10V4z M24 4v7h7 M15 29l11-11 M16.5 19.5a1.5 1.5 0 1 0 0 .01 M24.5 27.5a1.5 1.5 0 1 0 0 .01',
+  // Balken mit Pfeil – Kapitalanlagen
+  anlage: 'M5 35h30 M9 35v-8 M17 35v-12 M25 35v-16 M33 35v-21 M7 19l9-7 6 4 11-9 M27 7h6v6',
+  // Sanduhr – Altersvorsorge
+  vorsorge: 'M10 4h20 M10 36h20 M12 4c0 9 8 10 8 16s-8 7-8 16 M28 4c0 9-8 10-8 16s8 7 8 16 M15 31c2-2 8-2 10 0',
+  // Münzstapel – Liquidität & Rücklagen
+  liquiditaet: 'M8 30c0 2.2 5.4 4 12 4s12-1.8 12-4 M8 24c0 2.2 5.4 4 12 4s12-1.8 12-4 M8 18c0 2.2 5.4 4 12 4s12-1.8 12-4 M8 12c0 2.2 5.4 4 12 4s12-1.8 12-4-5.4-4-12-4-12 1.8-12 4z M8 12v18 M32 12v18',
+};
+---
+<svg class="service-icon draw" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+  <path pathLength="1" d={icons[name]} />
+</svg>
+
+<style>
+  .service-icon { width: 2.5rem; height: 2.5rem; }
+  .service-icon path { stroke: var(--c-gold); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+</style>

@@ -1,0 +1,37 @@
+---
+import Icon from '../Icon.astro';
+import EkgLine from '../EkgLine.astro';
+import Rich from '../Rich.astro';
+import { site } from '../../site.config';
+import c from '../../content/startseite/10-kontakt.json';
+---
+<section class="section section--dark closing" aria-labelledby="closing-title">
+  <div class="closing__glow" aria-hidden="true"></div>
+  <div class="container closing__inner reveal">
+    <h2 id="closing-title" class="h2 closing__title"><Rich text={c.abschlussTitel} /></h2>
+    <p class="lead muted"><Rich text={c.abschlussText} /></p>
+    <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.abschlussButton} <Icon name="arrow-up-right" /></a>
+  </div>
+  <!-- Große EKG-Linie, die sich beim Scrollen über die ganze Breite zieht -->
+  <div class="container closing__line reveal"><EkgLine scrub /></div>
+</section>
+
+<style>
+  .closing { position: relative; overflow: hidden; isolation: isolate; padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); }
+  .closing__glow {
+    position: absolute; z-index: -1; left: 50%; top: 45%; width: min(70rem, 120vw); aspect-ratio: 1;
+    transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, rgb(191 158 93 / 0.14), rgb(162 159 206 / 0.06) 35%, transparent 65%);
+  }
+  .closing__inner { display: grid; justify-items: center; gap: 1.5rem; text-align: center; }
+  .closing__title { font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5.5rem); max-width: 14ch; }
+  .closing .lead { margin-bottom: 0.75rem; }
+  .closing__line { margin-top: clamp(3rem, 2rem + 4vw, 6rem); }
+  .closing__line :global(.ekg path) { stroke-width: 2; }
+  .closing__line :global(.ekg) { filter: drop-shadow(0 0 10px rgb(191 158 93 / 0.35)); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .closing__glow { animation: glow-breathe 7s ease-in-out infinite alternate; }
+  }
+  @keyframes glow-breathe { from { opacity: 0.6; transform: translate(-50%, -50%) scale(0.92); } to { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } }
+</style>

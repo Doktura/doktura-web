@@ -1,0 +1,103 @@
+---
+// Interne Musterseite: Farben, Schriften, Bausteine. Nicht verlinkt, nicht in der Sitemap.
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import Icon from '../components/Icon.astro';
+import Placeholder from '../components/Placeholder.astro';
+
+const colors = [
+  ['Aubergine', '--c-aubergine', '#23052F'],
+  ['Lavendel', '--c-lavender', '#A29FCE'],
+  ['Gold', '--c-gold', '#BF9E5D'],
+  ['Off-White', '--c-offwhite', '#F0EDF6'],
+];
+---
+<Base title="Styleguide" noindex>
+  <section class="section section--dark">
+    <div class="container sg">
+      <p class="label">Styleguide · intern</p>
+      <h1 class="h1">Logo: Original und SVG-Nachbau</h1>
+      <div class="sg-logos">
+        <figure>
+          <div class="sg-logo-orig"><img src="/styleguide/logo-original.jpg" alt="Original-Logo (JPG)" width="1080" height="1080" /></div>
+          <figcaption>Original · Logo.jpg</figcaption>
+        </figure>
+        <figure>
+          <div class="sg-logo-svg"><Logo /></div>
+          <figcaption>Nachbau · SVG, ohne Hintergrund</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container sg">
+      <p class="label">Logo auf hellem Grund</p>
+      <div class="sg-row">
+        <div style="width:min(26rem,100%)"><Logo /></div>
+        <div style="width:min(14rem,100%)"><Logo withClaim={false} /></div>
+      </div>
+      <p class="label" style="margin-top:4rem">Favicon</p>
+      <div class="sg-row"><img src="/favicon.svg" width="64" height="64" alt="Favicon" /><img src="/favicon.svg" width="32" height="32" alt="" /><img src="/favicon.svg" width="16" height="16" alt="" /></div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container sg">
+      <p class="label">Farbwelt 01.75</p>
+      <div class="sg-colors">
+        {colors.map(([name, v, hex]) => (
+          <div class="sg-swatch"><span style={`background: var(${v})`}></span><p><strong>{name}</strong><br />{hex}<br /><code>{v}</code></p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container sg">
+      <p class="label">Das wird oft übersehen</p>
+      <h2 class="h1">Nur eine Zielgruppe. Nur ein Anspruch: Ärzte.</h2>
+      <h2 class="h2">Die Infektionsklausel</h2>
+      <h3 class="h3">Berufsunfähigkeitsversicherung</h3>
+      <p class="lead">Wir begleiten Ärzte bei Absicherung, Steueroptimierung und Vermögensaufbau mit individuell angepassten Lösungen statt Standard.</p>
+      <div class="prose muted">
+        <p>Fließtext in Figtree, 17 px. Eine eigene Praxis bedeutet Verantwortung – für Patienten, Mitarbeitende, laufende Kosten und die eigene finanzielle Zukunft. Die Textbreite ist auf etwa 65 Zeichen begrenzt, damit sich längere Absätze ruhig lesen.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="#">Kostenloses Erstgespräch <Icon name="arrow-up-right" /></a>
+        <a class="link-arrow" href="#"><span>Leistungen ansehen</span><Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container sg">
+      <p class="label">Auf Aubergine</p>
+      <h2 class="h2">Bereit für den nächsten Schritt?</h2>
+      <p class="lead muted">Nebentext auf dunklem Grund.</p>
+      <div class="actions">
+        <a class="btn" href="#">Erstgespräch vereinbaren <Icon name="arrow-up-right" /></a>
+        <a class="link-arrow" href="#"><span>Mehr zur Infektionsklausel</span><Icon name="arrow-right" /></a>
+      </div>
+      <p class="label" style="margin-top:4rem">Bild-Platzhalter</p>
+      <div style="max-width:28rem"><Placeholder file="praxis-detail.jpg" size="1600 × 1200" ratio="4 / 3" /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sg { display: grid; gap: 2rem; }
+  .sg-logos { display: grid; gap: 2rem; }
+  .sg-logos figure { margin: 0; display: grid; gap: 0.75rem; }
+  .sg-logos figcaption { color: var(--c-text-muted-dark); font-size: var(--fs-small); }
+  .sg-logo-orig { position: relative; aspect-ratio: 16 / 7; overflow: hidden; background: #2d1431; }
+  .sg-logo-orig img { position: absolute; left: 50%; top: 50%; width: 125%; max-width: none; transform: translate(-50%, -50%); }
+  .sg-logo-svg { aspect-ratio: 16 / 7; display: grid; place-items: center; padding: 0 10%; color: #fff;
+    background: repeating-conic-gradient(#2a0c38 0 25%, #23052f 0 50%) 0 0 / 24px 24px; }
+  .sg-row { display: flex; flex-wrap: wrap; align-items: center; gap: 3rem; }
+  .sg-colors { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1.5rem; }
+  .sg-swatch span { display: block; aspect-ratio: 1; border: 1px solid var(--c-aubergine-line); }
+  .sg-swatch p { margin-top: 0.75rem; color: var(--c-text-muted-dark); }
+  .sg-swatch strong { color: var(--c-offwhite); }
+  @media (min-width: 56rem) { .sg-logos { grid-template-columns: 1fr 1fr; } }
+</style>

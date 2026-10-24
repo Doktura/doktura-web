@@ -1,0 +1,124 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { nav, site } from '../site.config';
+---
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a class="site-header__logo" href="/" aria-label="Doktura – zur Startseite">
+      <Logo withClaim={false} />
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="Hauptnavigation">
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+      <a class="btn site-nav__cta" href={site.calUrl} target="_blank" rel="noopener">Erstgespräch vereinbaren</a>
+    </nav>
+
+    <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" data-menu-toggle>
+      <span class="visually-hidden" data-menu-label>Menü öffnen</span>
+      <Icon name="menu" class="menu-toggle__open" />
+      <Icon name="close" class="menu-toggle__close" />
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--c-aubergine); color: var(--c-offwhite);
+    border-bottom: 1px solid transparent;
+    transition: border-color 300ms var(--ease), transform 500ms var(--ease), background-color 300ms var(--ease);
+  }
+  .site-header.is-scrolled {
+    border-bottom-color: var(--c-aubergine-line);
+    background: rgb(35 5 47 / 0.86);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+  }
+  .site-header.is-hidden { transform: translateY(-100%); }
+  .site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 4.5rem; }
+  .site-header__logo { display: block; color: var(--c-offwhite); padding-block: 0.5rem; }
+  .site-header__logo :global(.logo) { width: 9.5rem; }
+
+  .menu-toggle {
+    display: grid; place-items: center; width: 3rem; height: 3rem; margin-right: -0.75rem;
+    background: none; border: 0; color: var(--c-offwhite); cursor: pointer;
+  }
+  .menu-toggle :global(svg) { width: 1.75rem; height: 1.75rem; grid-area: 1 / 1; }
+  .menu-toggle :global(.menu-toggle__close),
+  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__open) { display: none; }
+  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__close) { display: block; }
+
+  /* Mobil: schlichtes aufklappbares Menü */
+  .site-nav {
+    position: absolute; inset: 100% 0 auto 0;
+    display: none; flex-direction: column; gap: 1.5rem;
+    padding: 1.5rem var(--gutter) 2rem;
+    background: var(--c-aubergine); border-bottom: 1px solid var(--c-aubergine-line);
+  }
+  .site-nav.is-open { display: flex; }
+  .site-nav ul { list-style: none; display: grid; }
+  .site-nav li + li { border-top: 1px solid var(--c-aubergine-line); }
+  .site-nav ul a {
+    display: block; padding: 0.875rem 0;
+    font-family: var(--font-serif); font-size: 1.375rem; text-decoration: none;
+  }
+  .site-nav__cta { align-self: stretch; }
+
+  @media (min-width: 64rem) {
+    .menu-toggle { display: none; }
+    .site-header__logo :global(.logo) { width: 10.5rem; }
+    .site-nav {
+      position: static; display: flex; flex-direction: row; align-items: center; gap: 2.5rem;
+      padding: 0; border: 0; background: none;
+    }
+    .site-nav ul { display: flex; gap: 2rem; }
+    .site-nav li + li { border: 0; }
+    .site-nav ul a {
+      padding: 0.5rem 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 500;
+      color: var(--c-text-muted-dark); transition: color 200ms var(--ease);
+    }
+    .site-nav ul a { position: relative; }
+    .site-nav ul a::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0.2rem; height: 1px;
+      background: var(--c-gold); transform: scaleX(0); transform-origin: right;
+      transition: transform 400ms var(--ease);
+    }
+    .site-nav ul a:hover { color: var(--c-offwhite); }
+    .site-nav ul a:hover::after { transform: scaleX(1); transform-origin: left; }
+    .site-nav__cta { align-self: auto; min-height: 2.875rem; padding: 0.625rem 1.25rem; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const navEl = document.getElementById('site-nav');
+  const label = document.querySelector('[data-menu-label]');
+
+  const setOpen = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    navEl?.classList.toggle('is-open', open);
+    if (label) label.textContent = open ? 'Menü schließen' : 'Menü öffnen';
+  };
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  navEl?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
+  // Header verschwindet beim Runterscrollen und kommt beim Hochscrollen zurück
+  let lastY = window.scrollY;
+  const onScroll = () => {
+    const y = window.scrollY;
+    header?.classList.toggle('is-scrolled', y > 8);
+    const menuOpen = toggle?.getAttribute('aria-expanded') === 'true';
+    if (!menuOpen && Math.abs(y - lastY) > 6) {
+      header?.classList.toggle('is-hidden', y > lastY && y > 400);
+      lastY = y;
+    }
+  };
+  onScroll();
+  header?.addEventListener('focusin', () => header.classList.remove('is-hidden'));
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

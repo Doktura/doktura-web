@@ -1,0 +1,43 @@
+{
+  "label": "In jeder Phase Ihrer Praxis",
+  "titel": "Jede Phase stellt andere Fragen.",
+  "einleitung": "Wir begleiten Sie nicht nur bei einem einzelnen Vertrag, sondern über Ihren gesamten beruflichen Weg.",
+  "phasen": [
+    {
+      "titel": "Niederlassung planen",
+      "text": "Bevor die eigene Praxis kommt, werden die Grundlagen gelegt. Eine Berufsunfähigkeitsversicherung mit ärztespezifischen Bedingungen lässt sich in jüngeren Jahren und bei guter Gesundheit meist zu besseren Konditionen abschließen.",
+      "themen": [
+        "Berufsunfähigkeit",
+        "Infektionsklausel",
+        "Erste Rücklagen"
+      ]
+    },
+    {
+      "titel": "Gründung oder Übernahme",
+      "text": "Viele Entscheidungen fallen gleichzeitig: Praxisversicherungen, Liquidität für die Anlaufphase, die eigene Absicherung. Wir sorgen dafür, dass Praxis und Privatfinanzen zusammenpassen – abgestimmt mit Ihrer Steuerberatung.",
+      "themen": [
+        "Praxisversicherung",
+        "Liquidität",
+        "Absicherung"
+      ]
+    },
+    {
+      "titel": "Etablierte Praxis",
+      "text": "Verträge sind über Jahre gewachsen, oft ohne Abstimmung untereinander. Wir prüfen Leistungen, Kosten und Überschneidungen und bauen Vermögen und Altersvorsorge gezielt weiter auf.",
+      "themen": [
+        "Vertragsprüfung",
+        "Kapitalanlagen",
+        "Steueroptimierung"
+      ]
+    },
+    {
+      "titel": "Praxisabgabe und Ruhestand",
+      "text": "Wie sichern Sie Ihr Einkommen nach der Praxis, und was geschieht mit Rücklagen und bestehenden Verträgen? Wir planen den Übergang rechtzeitig und ergänzen Ihre Versorgung aus dem Versorgungswerk.",
+      "themen": [
+        "Altersvorsorge",
+        "Vermögen",
+        "Übergang"
+      ]
+    }
+  ]
+}

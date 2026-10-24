@@ -1,0 +1,97 @@
+---
+import Icon from '../Icon.astro';
+import Rich from '../Rich.astro';
+import { site } from '../../site.config';
+import c from '../../content/startseite/07-ablauf.json';
+---
+<section id="ablauf" class="section section--dark" aria-labelledby="process-title">
+  <div class="container">
+    <header class="process__head reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="process-title" class="h2"><Rich text={c.titel} /></h2>
+    </header>
+    <ol class="process__list">
+      {c.schritte.map((s, i) => (
+        <li class="step reveal" style={`--d: ${i}`}>
+          <span class="step__num" aria-hidden="true">{i + 1}</span>
+          <div>
+            <h3 class="h3">{s.titel}</h3>
+            <p class="muted"><Rich text={s.text} /></p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <!-- Das Erstgespräch im Detail -->
+    <div class="first-call reveal">
+      <div class="first-call__intro">
+        <h3 class="h3">{c.erstgespraechTitel}</h3>
+        <p class="muted"><Rich text={c.erstgespraechText} /></p>
+        <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
+      </div>
+      <dl class="first-call__facts">
+        {c.details.map((d) => <div><dt>{d.titel}</dt><dd><Rich text={d.text} /></dd></div>)}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process__head { display: grid; gap: 1.5rem; margin-bottom: clamp(3rem, 2rem + 3vw, 4.5rem); }
+  .process__list { list-style: none; display: grid; gap: 0; }
+  .step { position: relative; display: grid; grid-template-columns: 3.5rem 1fr; align-content: start; gap: 1.25rem; padding-bottom: 2.5rem; }
+  .step > div { display: grid; gap: 0.5rem; padding-top: 0.6rem; }
+  .step__num {
+    display: grid; place-items: center; width: 3.5rem; height: 3.5rem; border-radius: 50%;
+    border: 1px solid var(--c-gold); background: var(--c-aubergine);
+    font-family: var(--font-display); font-size: 1.5rem; color: var(--c-offwhite); position: relative; z-index: 1;
+  }
+  /* Verbindungslinie zwischen den Schritten */
+  .step:not(:last-child)::before {
+    content: ''; position: absolute; left: 1.75rem; top: 3.5rem; bottom: 0; width: 1px; background: var(--c-gold);
+  }
+  .step::before { transform-origin: top; }
+
+  .first-call {
+    display: grid; gap: 2rem; margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+    padding: clamp(1.75rem, 1rem + 3vw, 3.5rem);
+    background: var(--c-aubergine-soft); border: 1px solid var(--c-aubergine-line);
+  }
+  .first-call__intro { display: grid; gap: 1rem; align-content: start; justify-items: start; }
+  .first-call__intro .btn { margin-top: 0.75rem; }
+  .first-call__facts { display: grid; margin: 0; }
+  .first-call__facts > div { display: grid; gap: 0.25rem; padding: 1rem 0; border-bottom: 1px solid var(--c-aubergine-line); }
+  .first-call__facts > div:first-child { padding-top: 0; }
+  .first-call__facts > div:last-child { border-bottom: 0; padding-bottom: 0; }
+  .first-call__facts dt { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
+  .first-call__facts dd { margin: 0; color: var(--c-offwhite); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .step::before { transform: scale(0); transition: transform 1200ms var(--ease) calc(500ms + var(--d, 0) * 110ms); }
+    :global(.js) .step:global(.is-visible)::before { transform: none; }
+
+    /* Wo möglich: Linie füllt sich direkt mit dem Scrollen, Kreise leuchten Gold auf */
+    @supports (animation-timeline: view()) {
+      .process__list { view-timeline-name: --process; }
+      .step::before {
+        animation: step-line linear both; animation-timeline: --process;
+        animation-range: cover calc(25% + var(--d, 0) * 13%) cover calc(38% + var(--d, 0) * 13%);
+      }
+      .step__num {
+        animation: step-num linear both; animation-timeline: --process;
+        animation-range: cover calc(22% + var(--d, 0) * 13%) cover calc(26% + var(--d, 0) * 13%);
+      }
+    }
+  }
+  @keyframes step-line { from { transform: scale(0); } to { transform: scale(1); } }
+  @keyframes step-num { to { background: var(--c-gold); border-color: var(--c-gold); color: var(--c-aubergine); } }
+
+  @media (min-width: 56rem) {
+    .step::before { transform-origin: left; }
+    .process__list { grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .step { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 0; }
+    .step > div { padding-top: 0; }
+    .step:not(:last-child)::before { left: 3.5rem; right: -3rem; top: 1.75rem; bottom: auto; width: auto; height: 1px; }
+    .first-call { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; }
+  }
+</style>

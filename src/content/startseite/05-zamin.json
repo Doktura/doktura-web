@@ -1,0 +1,26 @@
+{
+  "label": "Ihr Ansprechpartner",
+  "titel": "Mein Name ist Zamin Köhler.",
+  "text": "[TEXT VON ZAMIN – 3 bis 4 Sätze, persönlich: Wer bin ich, was habe ich vorher gemacht, warum habe ich Doktura gegründet?]",
+  "fakten": [
+    {
+      "titel": "Werdegang",
+      "text": "[Ausbildung / Studium, bisherige Stationen]"
+    },
+    {
+      "titel": "Qualifikationen",
+      "text": "[z. B. Versicherungsfachmann (IHK), weitere Abschlüsse]"
+    },
+    {
+      "titel": "Erfahrung",
+      "text": "[seit wann in der Finanzberatung, seit wann mit Ärzten]"
+    },
+    {
+      "titel": "Standort",
+      "text": "[Stadt / Region – Beratung auch online per Video?]"
+    }
+  ],
+  "button": "Persönlich kennenlernen",
+  "zitat": "[ZITAT VON ZAMIN – ein bis zwei Sätze: Warum berate ich ausschließlich Ärzte?]",
+  "zitatUnterschrift": "Zamin Köhler, Gründer von Doktura"
+}

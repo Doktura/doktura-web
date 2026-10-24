@@ -1,0 +1,90 @@
+---
+import Rich from '../Rich.astro';
+import { legal } from '../../site.config';
+import c from '../../content/startseite/06-warum.json';
+---
+<section id="haltung" class="section section--light" aria-labelledby="why-title">
+  <div class="container">
+    <header class="why__head reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="why-title" class="h2"><Rich text={c.titel} /></h2>
+    </header>
+    <ol class="why__list">
+      {c.punkte.map((p, i) => (
+        <li class="why__item reveal" style={`--d: ${i}`}>
+          <span class="why__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="h3">{p.titel}</h3>
+          <p class="muted"><Rich text={p.text} /></p>
+        </li>
+      ))}
+    </ol>
+
+    <!-- Transparenz: offene Antworten auf die Fragen, die Ärzte wirklich haben -->
+    <div class="transparency">
+      <div class="transparency__intro reveal">
+        <p class="label">{c.transparenzLabel}</p>
+        <h3 class="h2 transparency__title"><Rich text={c.transparenzTitel} /></h3>
+        <p class="muted"><Rich text={c.transparenzText} /></p>
+      </div>
+      <dl class="transparency__list">
+        {c.transparenz.map((t, i) => (
+          <div class="reveal" style={`--d: ${i}`}>
+            <dt>{t.titel}</dt>
+            <dd><Rich text={t.text} /></dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- Nachweise: öffentlich prüfbar statt erfundener Siegel (Angaben aus „Einstellungen“) -->
+    <div class="proof reveal">
+      <p class="proof__title">Geprüft und registriert</p>
+      <ul class="proof__list">
+        <li><span>Vermittlerregister</span><strong>Registernummer {legal.registerNo}</strong></li>
+        <li><span>Erlaubnis</span><strong>{legal.permitShort}</strong></li>
+        <li><span>Aufsicht</span><strong>{legal.chamberShort}</strong></li>
+        <li><a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">Eintrag im Register prüfen <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why__head { display: grid; gap: 1.5rem; margin-bottom: clamp(3rem, 2rem + 3vw, 4.5rem); }
+  .why__list { list-style: none; display: grid; gap: 2.5rem; }
+  .why__item { position: relative; display: grid; gap: 0.75rem; padding-top: 1.5rem; }
+  .why__item::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 1px; background: var(--c-gold); transform-origin: left; }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .why__item::before { transform: scaleX(0); transition: transform 1300ms var(--ease) calc(150ms + var(--d, 0) * 110ms); }
+    :global(.js) .why__item:global(.is-visible)::before { transform: none; }
+  }
+  .why__num { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); color: var(--c-gold-text); }
+
+  .transparency { display: grid; gap: 2.5rem; margin-top: clamp(5rem, 3rem + 6vw, 8rem); }
+  .transparency__intro { display: grid; gap: 1.25rem; align-content: start; }
+  .transparency__title { font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem); }
+  .transparency__list { display: grid; margin: 0; border-top: 1px solid var(--c-line-light); }
+  .transparency__list > div { display: grid; gap: 0.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--c-line-light); }
+  .transparency__list dt { font-family: var(--font-serif); font-size: 1.25rem; }
+  .transparency__list dd { margin: 0; color: var(--c-text-muted-light); max-width: var(--measure); }
+
+  .proof {
+    display: grid; gap: 1.25rem; margin-top: clamp(4rem, 3rem + 3vw, 6rem);
+    padding: 1.75rem; background: #fff; border: 1px solid var(--c-line-light); border-left: 3px solid var(--c-gold);
+  }
+  .proof__title { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold-text); }
+  .proof__list { list-style: none; display: grid; gap: 1.25rem; }
+  .proof__list li { display: grid; gap: 0.2rem; }
+  .proof__list span { font-size: 0.875rem; color: var(--c-text-muted-light); }
+  .proof__list strong { font-weight: 600; }
+  .proof__list a { align-self: end; font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; justify-self: start; }
+
+  @media (min-width: 48rem) {
+    .why__list { grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .proof__list { grid-template-columns: repeat(4, auto); justify-content: space-between; align-items: end; }
+  }
+  @media (min-width: 64rem) {
+    .transparency { grid-template-columns: 0.8fr 1.2fr; gap: 6rem; }
+    .transparency__intro { position: sticky; top: 7rem; align-self: start; }
+  }
+</style>

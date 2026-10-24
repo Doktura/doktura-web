@@ -1,0 +1,32 @@
+---
+// Rahmen für Rechtstexte (Impressum, Datenschutz, Erstinformation)
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  updated?: string; // Stand, z. B. „Oktober 2026“
+}
+const { title, description, updated } = Astro.props;
+---
+<Base title={title} description={description}>
+  <section class="section section--light legal">
+    <div class="container">
+      <h1 class="h2 legal__title">{title}</h1>
+      <div class="prose legal__body">
+        <slot />
+      </div>
+      {updated && <p class="legal__updated muted">Stand: {updated}</p>}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal__title { margin-bottom: 2.5rem; }
+  .legal__body :global(h2) { font-family: var(--font-serif); font-size: var(--fs-h3); line-height: 1.25; margin-top: 2.25em; }
+  .legal__body :global(h3) { font-weight: 600; margin-top: 1.5em; }
+  .legal__body :global(ul) { padding-left: 1.25em; }
+  .legal__body :global(li + li) { margin-top: 0.35em; }
+  .legal__body :global(a) { color: inherit; text-decoration-color: var(--c-gold-text); text-underline-offset: 0.15em; overflow-wrap: anywhere; }
+  .legal__updated { margin-top: 3rem; font-size: var(--fs-small); }
+</style>

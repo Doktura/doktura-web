@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<!-- Ziel des Kontaktformulars (Netlify Forms leitet nach dem Absenden hierher) -->
+<Base title="Vielen Dank" noindex>
+  <section class="section section--dark danke">
+    <div class="container danke__inner">
+      <h1 class="h2">Vielen Dank für Ihre Nachricht.</h1>
+      <p class="lead muted">Wir melden uns so bald wie möglich bei Ihnen.</p>
+      <a class="btn" href="/">Zurück zur Startseite</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .danke { min-height: 70vh; display: grid; align-items: center; }
+  .danke__inner { display: grid; justify-items: center; gap: 1.5rem; text-align: center; }
+</style>

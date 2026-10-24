@@ -1,0 +1,41 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site, legal } from '../site.config';
+---
+<Legal title="Erstinformation" description="Statusbezogene Erstinformation nach § 15 VersVermV." updated="Oktober 2026">
+  <p>Statusbezogene Informationen gemäß § 15 Versicherungsvermittlungsverordnung (VersVermV).</p>
+
+  <h2>Name und Anschrift</h2>
+  <p>
+    {legal.company}<br />
+    {legal.legalForm && <>Rechtsform: {legal.legalForm}<br /></>}
+    {legal.representative && <>{legal.representative}<br /></>}
+    {site.contact.address}<br />
+    {site.contact.phone && <>Telefon: {site.contact.phone}<br /></>}
+    E-Mail: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+  </p>
+
+  <h2>Status und Erlaubnis</h2>
+  <ul>{legal.permits.map((p) => <li>{p}</li>)}</ul>
+  <p>Zuständige Erlaubnisbehörde: {legal.chamber}</p>
+
+  <h2>Vermittlerregister</h2>
+  <p>
+    Registrierungsnummer: {legal.registerNo}<br />
+    Deutscher Industrie- und Handelskammertag (DIHK) e. V., Breite Straße 29, 10178 Berlin, Telefon 0180 600 585 0
+    (20 Cent/Anruf aus dem deutschen Festnetz, Mobilfunk max. 60 Cent/Anruf),
+    <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">www.vermittlerregister.info</a>
+  </p>
+
+  <h2>Beteiligungen</h2>
+  <p>{legal.holdings}</p>
+
+  <h2>Schlichtungsstellen</h2>
+  <ul>
+    <li>Versicherungsombudsmann e. V., Postfach 08 06 32, 10006 Berlin, <a href="https://www.versicherungsombudsmann.de" target="_blank" rel="noopener">www.versicherungsombudsmann.de</a></li>
+    <li>Ombudsmann Private Kranken- und Pflegeversicherung, Postfach 06 02 22, 10052 Berlin, <a href="https://www.pkv-ombudsmann.de" target="_blank" rel="noopener">www.pkv-ombudsmann.de</a></li>
+  </ul>
+
+  <h2>Beschwerden</h2>
+  <p>Beschwerden können Sie jederzeit an uns richten, schriftlich oder per E-Mail an die oben genannten Kontaktdaten.</p>
+</Legal>

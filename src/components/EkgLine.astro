@@ -1,0 +1,57 @@
+---
+// Leitmotiv: goldene EKG-Linie, die zum Pfeil nach oben wird.
+// animate = zeichnet sich einmal beim Laden, danach läuft regelmäßig ein Herzschlag-Impuls darüber (Hero)
+// scrub   = zeichnet sich passend zur Scrollposition (Abschluss)
+interface Props { animate?: boolean; scrub?: boolean; class?: string }
+const { animate = false, scrub = false, class: cls = '' } = Astro.props;
+const line = 'M0 62H600L614 44L628 72L644 12L662 86L678 40L690 62H1080Q1090 62 1097 55L1150 4';
+const head = 'M1128 5L1150 4L1149 26';
+---
+<svg
+  class:list={['ekg', { 'ekg--animate': animate, 'ekg--scrub draw': scrub }, cls]}
+  viewBox="0 0 1200 90" fill="none" aria-hidden="true" focusable="false"
+>
+  <path pathLength="1" d={line} />
+  <path pathLength="1" class="ekg__head" d={head} />
+  {animate && <path pathLength="1" class="ekg__pulse" d={line} />}
+</svg>
+
+<style>
+  .ekg { width: 100%; height: auto; overflow: visible; }
+  .ekg path {
+    stroke: var(--c-gold); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .ekg__pulse { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Einmal zeichnen beim Laden */
+    .ekg--animate path:not(.ekg__pulse) { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ekg-draw 2.4s var(--ease) 0.6s forwards; }
+    .ekg--animate .ekg__head { animation-duration: 0.4s; animation-delay: 2.8s; }
+
+    /* Herzschlag-Impuls: ein heller Lichtpunkt wandert alle paar Sekunden über die Linie */
+    .ekg--animate .ekg__pulse {
+      display: block;
+      stroke: #f3dfb0; stroke-width: 2.5;
+      stroke-dasharray: 0.07 1.2; stroke-dashoffset: 0.07;
+      filter: drop-shadow(0 0 4px rgb(243 223 176 / 0.9)) drop-shadow(0 0 12px rgb(191 158 93 / 0.7));
+      animation: ekg-pulse 6s cubic-bezier(0.45, 0, 0.25, 1) 3.4s infinite;
+    }
+
+    /* Zeichnen passend zur Scrollposition */
+    @supports (animation-timeline: view()) {
+      .ekg--scrub path {
+        stroke-dasharray: 1; stroke-dashoffset: 1; transition: none;
+        animation: ekg-draw linear both;
+        animation-timeline: view();
+        animation-range: entry 20% cover 55%;
+      }
+    }
+  }
+  @keyframes ekg-draw { to { stroke-dashoffset: 0; } }
+  @keyframes ekg-pulse {
+    0% { stroke-dashoffset: 0.07; opacity: 1; }
+    45% { stroke-dashoffset: -1; opacity: 1; }
+    46%, 100% { stroke-dashoffset: -1; opacity: 0; }
+  }
+</style>

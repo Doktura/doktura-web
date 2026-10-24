@@ -1,0 +1,39 @@
+{
+  "label": "Warum Doktura",
+  "titel": "Beratung, die Ihren Beruf versteht.",
+  "punkte": [
+    {
+      "titel": "Nur Ärzte.",
+      "text": "Wir kennen Ihren Beruf und Ihre Verträge."
+    },
+    {
+      "titel": "Alles an einem Ort.",
+      "text": "Absicherung, Praxis, Steuern, Vermögen."
+    },
+    {
+      "titel": "Langfristig.",
+      "text": "Transparent und im Interesse unserer Mandanten."
+    }
+  ],
+  "transparenzLabel": "Transparenz",
+  "transparenzTitel": "Was Sie vorher wissen sollten.",
+  "transparenzText": "Vertrauen entsteht durch klare Antworten. Deshalb legen wir offen, wie wir arbeiten – bevor Sie sich für eine Zusammenarbeit entscheiden.",
+  "transparenz": [
+    {
+      "titel": "Unabhängigkeit",
+      "text": "Als Versicherungsmakler sind wir an keine Versicherungsgesellschaft gebunden und vergleichen Angebote verschiedener Anbieter."
+    },
+    {
+      "titel": "Vergütung",
+      "text": "Wie wir vergütet werden, besprechen wir offen im Erstgespräch. [Courtage der Versicherer, Honorar oder beides? – Angabe von Zamin]"
+    },
+    {
+      "titel": "Ihre Steuerberatung",
+      "text": "Wir arbeiten mit Ihrer bestehenden Steuerberatung zusammen, nicht an ihr vorbei. Finanzielle Entscheidungen stimmen wir mit ihr ab."
+    },
+    {
+      "titel": "Ihre Entscheidung",
+      "text": "Sie entscheiden in Ruhe. Das Erstgespräch ist kostenlos und verpflichtet Sie zu nichts."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+---
+// Situationen niedergelassener Ärzte – zeigt, dass wir den Berufsweg kennen
+import Rich from '../Rich.astro';
+import c from '../../content/startseite/04-phasen.json';
+---
+<section class="section section--light" aria-labelledby="phases-title">
+  <div class="container">
+    <header class="phases__head reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="phases-title" class="h2"><Rich text={c.titel} /></h2>
+      <p class="lead muted"><Rich text={c.einleitung} /></p>
+    </header>
+
+    <ol class="phases__list">
+      {c.phasen.map((p, i) => (
+        <li class="phase reveal" style={`--d: ${i}`}>
+          <span class="phase__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="h3">{p.titel}</h3>
+          <p class="muted"><Rich text={p.text} /></p>
+          <ul class="phase__topics" aria-label="Typische Themen">
+            {p.themen.map((t) => <li>{t}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .phases__head { display: grid; gap: 1.5rem; max-width: 52rem; margin-bottom: clamp(3rem, 2rem + 4vw, 5rem); }
+  .phases__list { list-style: none; display: grid; gap: 1.5rem; }
+  .phase {
+    position: relative; display: grid; gap: 1rem; align-content: start;
+    padding: 2rem 1.75rem 2.25rem; background: #fff; border: 1px solid var(--c-line-light);
+    transition: border-color 500ms var(--ease), transform 500ms var(--ease), box-shadow 500ms var(--ease);
+  }
+  .phase:hover { border-color: var(--c-gold); box-shadow: 0 24px 48px -32px rgb(35 5 47 / 0.35); }
+  .phase__num { font-family: var(--font-display); font-size: 3rem; line-height: 1; color: var(--c-gold-text); }
+  .phase__topics { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 0.5rem; }
+  .phase__topics li {
+    padding: 0.3rem 0.75rem; font-size: 0.875rem; font-weight: 500;
+    color: var(--c-aubergine); background: var(--c-offwhite); border-radius: 999px;
+  }
+  .phase p { hyphens: auto; }
+  @media (min-width: 48rem) { .phases__list { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64rem) { .phase { padding: 2.5rem 2.5rem 2.75rem; } }
+</style>

@@ -1,0 +1,43 @@
+{
+  "label": "Ablauf",
+  "titel": "So arbeiten wir zusammen.",
+  "schritte": [
+    {
+      "titel": "Erstgespräch",
+      "text": "Wir lernen Ihre Situation kennen. Kostenlos."
+    },
+    {
+      "titel": "Analyse",
+      "text": "Wir prüfen bestehende Verträge und finden Lücken."
+    },
+    {
+      "titel": "Umsetzung",
+      "text": "Wir setzen um und bleiben Ihr Ansprechpartner."
+    }
+  ],
+  "erstgespraechTitel": "Das Erstgespräch",
+  "erstgespraechText": "Ein ruhiges Kennenlernen, kein Verkaufsgespräch.",
+  "button": "Termin wählen",
+  "details": [
+    {
+      "titel": "Dauer",
+      "text": "[ca. 45 Minuten?]"
+    },
+    {
+      "titel": "Ort",
+      "text": "Online per Video oder [vor Ort in … / in Ihrer Praxis?]"
+    },
+    {
+      "titel": "Kosten",
+      "text": "Keine. Das Gespräch ist kostenlos und unverbindlich."
+    },
+    {
+      "titel": "Mitbringen",
+      "text": "Wenn vorhanden: bestehende Versicherungsverträge, die letzte Mitteilung Ihres Versorgungswerks und den Kontakt Ihrer Steuerberatung. Nichts davon ist Pflicht."
+    },
+    {
+      "titel": "Danach",
+      "text": "Sie erhalten eine Einschätzung Ihrer Situation und entscheiden in Ruhe, ob und wie es weitergeht."
+    }
+  ]
+}

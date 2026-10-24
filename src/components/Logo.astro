@@ -1,0 +1,23 @@
+---
+// Doktura-Logo als SVG. Schrift folgt der Textfarbe (currentColor), die EKG-Linie ist immer Gold.
+import L from './logo-paths.json';
+
+interface Props {
+  withClaim?: boolean; // Unterzeile „Finanzberatung für Ärzte“
+  class?: string;
+  title?: string;
+}
+const { withClaim = true, class: cls = '', title = 'Doktura – Finanzberatung für Ärzte' } = Astro.props;
+
+// Ohne Unterzeile wird der Ausschnitt nach unten gekürzt
+const [x, y, w, h] = L.viewBox.split(' ').map(Number);
+const viewBox = withClaim ? L.viewBox : `${x} ${y} ${w} ${600 - y}`;
+---
+<svg class={`logo ${cls}`} xmlns="http://www.w3.org/2000/svg" viewBox={viewBox} role="img" aria-label={title}>
+  <path fill="currentColor" d={L.word} />
+  {withClaim && <path fill="currentColor" d={L.subline} />}
+  <g fill="none" stroke="var(--c-gold)" stroke-width={L.stroke} stroke-linecap="round" stroke-linejoin="round">
+    <path d={L.ekg} />
+    <path d={L.arrow} />
+  </g>
+</svg>

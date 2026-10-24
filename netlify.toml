@@ -1,0 +1,13 @@
+# Netlify baut die Seite bei jeder Änderung auf GitHub automatisch neu.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Redaktionssystem nicht in Suchmaschinen
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

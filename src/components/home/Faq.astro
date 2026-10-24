@@ -1,0 +1,59 @@
+---
+import Rich from '../Rich.astro';
+import c from '../../content/startseite/09-faq.json';
+---
+<section id="fragen" class="section section--dark" aria-labelledby="faq-title">
+  <div class="container faq">
+    <header class="faq__head reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="faq-title" class="h2"><Rich text={c.titel} /></h2>
+      <p class="muted"><Rich text={c.einleitung} /></p>
+    </header>
+
+    <div class="faq__list reveal">
+      {c.fragen.map((f) => (
+        <details name="faq">
+          <summary>{f.frage}</summary>
+          <div class="faq__answer"><Rich text={f.antwort} paragraphs /></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq { display: grid; gap: 3rem; }
+  .faq__head { display: grid; gap: 1.25rem; align-content: start; }
+  .faq__list { border-top: 1px solid var(--c-aubergine-line); }
+  details { border-bottom: 1px solid var(--c-aubergine-line); }
+  summary {
+    position: relative; display: block; cursor: pointer; list-style: none;
+    padding: 1.5rem 3rem 1.5rem 0; font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.35;
+    transition: color 300ms var(--ease);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--c-gold-light); }
+  /* Plus, das zum Minus wird */
+  summary::before, summary::after {
+    content: ''; position: absolute; right: 0.25rem; top: 50%; width: 1rem; height: 1px; background: var(--c-gold);
+    transition: transform 400ms var(--ease);
+  }
+  summary::after { transform: rotate(90deg); }
+  details[open] summary::after { transform: rotate(0deg); }
+  .faq__answer { padding: 0 3rem 1.75rem 0; color: var(--c-text-muted-dark); max-width: var(--measure); }
+  .faq__answer a { color: var(--c-offwhite); }
+
+  /* Weiches Auf- und Zuklappen (in Browsern, die das können) */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (interpolate-size: allow-keywords) {
+      .faq__list { interpolate-size: allow-keywords; }
+      details::details-content { block-size: 0; overflow: clip; transition: block-size 500ms var(--ease), content-visibility 500ms allow-discrete; }
+      details[open]::details-content { block-size: auto; }
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .faq { grid-template-columns: 0.8fr 1.2fr; gap: 6rem; }
+    .faq__head { position: sticky; top: 7rem; align-self: start; }
+  }
+</style>

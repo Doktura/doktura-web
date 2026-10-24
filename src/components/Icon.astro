@@ -1,0 +1,15 @@
+---
+// Kleine Linien-Icons für Buttons und Links
+interface Props { name: 'arrow-right' | 'arrow-up-right' | 'menu' | 'close' | 'check'; class?: string }
+const { name, class: cls = '' } = Astro.props;
+const paths: Record<string, string> = {
+  'arrow-right': 'M4 12h15M13 6l6 6-6 6',
+  'arrow-up-right': 'M6 18L18 6M9 6h9v9',
+  menu: 'M3 7h18M3 17h18',
+  close: 'M5 5l14 14M19 5L5 19',
+  check: 'M4 12.5l5 5L20 6.5',
+};
+---
+<svg class={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  <path d={paths[name]} />
+</svg>

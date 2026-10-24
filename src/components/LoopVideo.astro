@@ -1,0 +1,29 @@
+---
+// Stummer Video-Loop als Stimmungsbild. Lädt erst, wenn er ins Bild kommt, und pausiert außerhalb.
+// Bei „reduzierter Bewegung“ oder Datensparmodus bleibt nur das Standbild (Poster) stehen.
+// Dateien: public/video/<name>.mp4 und <name>-poster.webp  (erzeugt mit tools/make-loop.mjs)
+interface Props {
+  name: string;          // z. B. "wer-wir-sind"
+  mobile?: string;       // optional eigener Zuschnitt fürs Handy, z. B. "hero-mobil"
+  ratio?: string;        // CSS aspect-ratio; leer = füllt den Eltern-Container
+  eager?: boolean;       // true = sofort laden (nur Hero)
+  class?: string;
+}
+const { name, mobile, ratio, eager = false, class: cls = '' } = Astro.props;
+---
+<video
+  class:list={['loop-video', cls]}
+  style={ratio ? `aspect-ratio: ${ratio}` : undefined}
+  muted loop playsinline disablepictureinpicture
+  preload="none"
+  poster={`/video/${name}-poster.webp`}
+  data-loop data-src={`/video/${name}.mp4`}
+  data-src-mobile={mobile ? `/video/${mobile}.mp4` : undefined}
+  data-poster-mobile={mobile ? `/video/${mobile}-poster.webp` : undefined}
+  data-eager={eager ? '' : undefined}
+  aria-hidden="true" tabindex="-1"
+></video>
+
+<style>
+  .loop-video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--c-aubergine-soft); }
+</style>

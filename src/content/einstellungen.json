@@ -1,0 +1,22 @@
+{
+  "calUrl": "https://cal.com/[PLATZHALTER]",
+  "instagram": "https://www.instagram.com/[PLATZHALTER]",
+  "kontakt": {
+    "person": "Zamin Köhler",
+    "email": "info@koeundkofinanz.de",
+    "telefon": "+49 211 23044225",
+    "adresse": "Rheydter Str. 142, 41464 Neuss"
+  },
+  "rechtliches": {
+    "firma": "Kö und Ko Finanz",
+    "rechtsform": "Einzelunternehmen",
+    "vertreten": "Inhaber: Zamin Köhler",
+    "handelsregister": "",
+    "ustId": "",
+    "erlaubnisse": ["Versicherungsmakler mit Erlaubnis nach § 34d Abs. 1 GewO"],
+    "registernummer": "D-X1X0-4R35G-09",
+    "ihk": "Industrie- und Handelskammer Mittlerer Niederrhein, Nordwall 39, 47798 Krefeld",
+    "ihkKurz": "IHK Mittlerer Niederrhein",
+    "erlaubnisKurz": "Versicherungsmakler nach § 34d Abs. 1 GewO"
+  }
+}

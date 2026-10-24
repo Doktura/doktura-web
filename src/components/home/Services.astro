@@ -1,0 +1,62 @@
+---
+import ServiceIcon from '../ServiceIcon.astro';
+import Rich from '../Rich.astro';
+import c from '../../content/startseite/03-leistungen.json';
+---
+<section id="leistungen" class="section section--dark" aria-labelledby="services-title">
+  <div class="container">
+    <header class="services__head reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="services-title" class="h2"><Rich text={c.titel} /></h2>
+      <p class="lead muted"><Rich text={c.einleitung} /></p>
+    </header>
+
+    <ul class="services__grid">
+      {c.leistungen.map((s, i) => (
+        <li class="service reveal" style={`--d: ${i % 4}`} data-spotlight>
+          <ServiceIcon name={s.icon} />
+          <h3 class="service__title">{s.titel}</h3>
+          <p class="service__text"><Rich text={s.text} /></p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services__head { display: grid; gap: 1.5rem; max-width: 52rem; margin-bottom: clamp(3rem, 2rem + 4vw, 5rem); }
+  .services__grid { list-style: none; display: grid; padding: 1px 0 0 1px; }
+  .service {
+    position: relative; display: grid; gap: 1rem; align-content: start; overflow: hidden;
+    padding: 2rem 1.5rem 2.25rem; margin: -1px 0 0 -1px;
+    border: 1px solid var(--c-aubergine-line);
+    transition: background-color 500ms var(--ease), border-color 500ms var(--ease);
+  }
+  /* Lichtkegel, der der Maus folgt */
+  .service::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0;
+    background: radial-gradient(22rem circle at var(--x, 50%) var(--y, 50%), rgb(191 158 93 / 0.14), transparent 60%);
+    transition: opacity 500ms var(--ease);
+  }
+  /* Goldlinie oben, die beim Überfahren hereinläuft */
+  .service::after {
+    content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--c-gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 700ms var(--ease);
+  }
+  .service > * { position: relative; z-index: 1; }
+  .service :global(.service-icon) { transition: transform 600ms var(--ease); }
+  .service:hover { background: var(--c-aubergine-soft); }
+  .service:hover::before { opacity: 1; }
+  .service:hover::after { transform: scaleX(1); }
+  .service:hover :global(.service-icon) { transform: translateY(-4px); }
+  .service__title { font-family: var(--font-serif); font-size: 1.3125rem; line-height: 1.3; hyphens: auto; }
+  .service__text { color: var(--c-text-muted-dark); }
+
+  @media (min-width: 40rem) {
+    .services__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 72rem) {
+    .services__grid { grid-template-columns: repeat(4, 1fr); }
+    .service { padding: 2.5rem 2rem 3rem; min-height: 22rem; }
+  }
+</style>

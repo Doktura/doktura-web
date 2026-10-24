@@ -1,0 +1,225 @@
+# Redaktionssystem für doktura.de (Sveltia CMS, kompatibel mit Decap CMS)
+# Aufruf: https://doktura.de/admin
+# Jede Änderung wird als Commit auf GitHub gespeichert; Netlify baut die Seite danach automatisch neu (1–2 Minuten).
+
+backend:
+  name: github
+  repo: GITHUB-BENUTZER/doktura-web # wird beim Einrichten ersetzt
+  branch: main
+  commit_messages:
+    update: 'Text geändert: {{slug}}'
+
+locale: de
+publish_mode: simple
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: startseite
+    label: Startseite
+    description: Alle Texte der Startseite, von oben nach unten.
+    format: json
+    files:
+      - name: hero
+        label: '1 · Kopfbereich (ganz oben)'
+        file: src/content/startseite/01-hero.json
+        fields:
+          - { name: kicker, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titelZeile1, label: 'Überschrift, Zeile 1', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: titelZeile2, label: 'Überschrift, Zeile 2', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: einleitung, label: 'Einleitungstext', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: button, label: 'Button-Text (öffnet die Terminbuchung)', widget: string }
+          - { name: link, label: 'Link-Text neben dem Button', widget: string }
+          - { name: karteLabel, label: 'Ansprechpartner-Karte: kleine Zeile', widget: string }
+          - { name: karteName, label: 'Ansprechpartner-Karte: Name', widget: string }
+          - { name: karteRolle, label: 'Ansprechpartner-Karte: Rolle', widget: string }
+          - { name: vorteile, label: 'Vorteile (Leiste mit Häkchen)', widget: list, field: { name: vorteil, label: Vorteil, widget: string } }
+
+      - name: ueber-uns
+        label: '2 · Wer wir sind'
+        file: src/content/startseite/02-ueber-uns.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: text, label: 'Text', widget: text, hint: 'Leerzeile = neuer Absatz · *Wort* = kursiv · [Linktext](/seite) = Link' }
+          - { name: statement, label: 'Großes Statement (füllt sich beim Scrollen)', widget: text }
+          - { name: statementGold, label: 'Wort im Statement, das golden erscheint', widget: string, required: false, hint: 'Genau ein Wort aus dem Statement, oder leer lassen.' }
+
+      - name: leistungen
+        label: '3 · Leistungen'
+        file: src/content/startseite/03-leistungen.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: einleitung, label: 'Einleitungstext', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - name: leistungen
+            label: Leistungen
+            widget: list
+            summary: '{{fields.titel}}'
+            fields:
+              - name: icon
+                label: Symbol
+                widget: select
+                options:
+                  - { label: 'Berufsunfähigkeit', value: bu }
+                  - { label: 'Praxis', value: praxis }
+                  - { label: 'Optimierung', value: optimierung }
+                  - { label: 'Waage', value: waage }
+                  - { label: 'Steuer', value: steuer }
+                  - { label: 'Kapitalanlage', value: anlage }
+                  - { label: 'Vorsorge', value: vorsorge }
+                  - { label: 'Liquidität', value: liquiditaet }
+              - { name: titel, label: 'Titel', widget: string }
+              - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+
+      - name: phasen
+        label: '4 · Phasen der Praxis'
+        file: src/content/startseite/04-phasen.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: einleitung, label: 'Einleitungstext', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - name: phasen
+            label: Phasen
+            widget: list
+            summary: '{{fields.titel}}'
+            fields:
+              - { name: titel, label: 'Titel', widget: string }
+              - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+              - { name: themen, label: 'Themen (kleine Schlagworte)', widget: list, field: { name: thema, label: Thema, widget: string } }
+
+      - name: zamin
+        label: '5 · Zamin (Ansprechpartner)'
+        file: src/content/startseite/05-zamin.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: text, label: 'Vorstellungstext', widget: text, hint: 'Leerzeile = neuer Absatz · *Wort* = kursiv · [Linktext](/seite) = Link' }
+          - name: fakten
+            label: 'Fakten (Werdegang, Qualifikationen …)'
+            widget: list
+            summary: '{{fields.titel}}'
+            fields:
+              - { name: titel, label: 'Bezeichnung', widget: string }
+              - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: button, label: 'Button-Text', widget: string }
+          - { name: zitat, label: 'Zitat', widget: text, required: false, hint: 'Leer lassen blendet das Zitat aus.' }
+          - { name: zitatUnterschrift, label: 'Unterschrift unter dem Zitat', widget: string, required: false }
+
+      - name: warum
+        label: '6 · Warum Doktura & Transparenz'
+        file: src/content/startseite/06-warum.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - name: punkte
+            label: 'Drei Gründe'
+            widget: list
+            summary: '{{fields.titel}}'
+            fields:
+              - { name: titel, label: 'Titel', widget: string }
+              - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: transparenzLabel, label: 'Transparenz: kleine Zeile', widget: string }
+          - { name: transparenzTitel, label: 'Transparenz: Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: transparenzText, label: 'Transparenz: Einleitung', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - name: transparenz
+            label: 'Transparenz: Punkte'
+            widget: list
+            summary: '{{fields.titel}}'
+            fields:
+              - { name: titel, label: 'Titel', widget: string }
+              - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+
+      - name: ablauf
+        label: '7 · Ablauf & Erstgespräch'
+        file: src/content/startseite/07-ablauf.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - name: schritte
+            label: Schritte
+            widget: list
+            summary: '{{fields.titel}}'
+            fields:
+              - { name: titel, label: 'Titel', widget: string }
+              - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: erstgespraechTitel, label: 'Erstgespräch: Überschrift', widget: string }
+          - { name: erstgespraechText, label: 'Erstgespräch: Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: button, label: 'Button-Text', widget: string }
+          - name: details
+            label: 'Erstgespräch: Details'
+            widget: list
+            summary: '{{fields.titel}}'
+            fields:
+              - { name: titel, label: 'Bezeichnung', widget: string }
+              - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+
+      - name: infektionsklausel
+        label: '8 · Infektionsklausel'
+        file: src/content/startseite/08-infektionsklausel.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: button, label: 'Button-Text', widget: string }
+
+      - name: faq
+        label: '9 · Häufige Fragen'
+        file: src/content/startseite/09-faq.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: einleitung, label: 'Einleitungstext', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - name: fragen
+            label: Fragen
+            widget: list
+            summary: '{{fields.frage}}'
+            fields:
+              - { name: frage, label: 'Frage', widget: string }
+              - { name: antwort, label: 'Antwort', widget: text, hint: 'Leerzeile = neuer Absatz · *Wort* = kursiv · [Linktext](/seite) = Link' }
+
+      - name: kontakt
+        label: '10 · Kontakt & Abschluss'
+        file: src/content/startseite/10-kontakt.json
+        fields:
+          - { name: label, label: 'Kontakt: kleine Zeile', widget: string }
+          - { name: titel, label: 'Kontakt: Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: text, label: 'Kontakt: Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: button, label: 'Kontakt: Button-Text', widget: string }
+          - { name: abschlussTitel, label: 'Abschluss (ganz unten): Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: abschlussText, label: 'Abschluss: Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: abschlussButton, label: 'Abschluss: Button-Text', widget: string }
+
+  - name: einstellungen
+    label: Einstellungen
+    description: Kontaktdaten, Links und Pflichtangaben (erscheinen im Footer, im Impressum, in der Erstinformation und im Datenschutz).
+    format: json
+    files:
+      - name: einstellungen
+        label: 'Kontakt, Links & Rechtliches'
+        file: src/content/einstellungen.json
+        fields:
+          - { name: calUrl, label: 'Terminbuchung (Cal.com-Link)', widget: string, hint: 'Alle Termin-Buttons führen hierhin.' }
+          - { name: instagram, label: 'Instagram-Link', widget: string }
+          - name: kontakt
+            label: Kontakt
+            widget: object
+            fields:
+              - { name: person, label: 'Ansprechpartner', widget: string }
+              - { name: email, label: 'E-Mail', widget: string }
+              - { name: telefon, label: 'Telefon', widget: string, required: false, hint: 'Leer lassen blendet die Telefonnummer aus.' }
+              - { name: adresse, label: 'Adresse (eine Zeile)', widget: string }
+          - name: rechtliches
+            label: 'Rechtliche Angaben (Änderungen bitte vorher prüfen)'
+            widget: object
+            fields:
+              - { name: firma, label: 'Firmenname', widget: string }
+              - { name: rechtsform, label: 'Rechtsform', widget: string }
+              - { name: vertreten, label: 'Inhaber / Geschäftsführer', widget: string, hint: 'z. B. „Inhaber: Zamin Köhler“' }
+              - { name: handelsregister, label: 'Handelsregister', widget: string, required: false, hint: 'Leer lassen, falls nicht eingetragen.' }
+              - { name: ustId, label: 'USt-IdNr.', widget: string, required: false, hint: 'Leer lassen, falls nicht vorhanden.' }
+              - { name: erlaubnisse, label: 'Gewerbeerlaubnis(se)', widget: list, field: { name: erlaubnis, label: Erlaubnis, widget: string } }
+              - { name: erlaubnisKurz, label: 'Erlaubnis (Kurzform für die Startseite)', widget: string }
+              - { name: registernummer, label: 'Vermittlerregister-Nummer', widget: string }
+              - { name: ihk, label: 'Zuständige IHK mit Adresse', widget: string }
+              - { name: ihkKurz, label: 'IHK (Kurzform für die Startseite)', widget: string }

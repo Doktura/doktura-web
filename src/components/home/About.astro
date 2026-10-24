@@ -1,0 +1,68 @@
+---
+import LoopVideo from '../LoopVideo.astro';
+import Rich from '../Rich.astro';
+import c from '../../content/startseite/02-ueber-uns.json';
+
+const words = c.statement.trim().split(/\s+/);
+const gold = c.statementGold.trim().toLowerCase();
+const isGold = (w: string) => gold !== '' && w.toLowerCase().replace(/[.,;:!?–]+$/, '') === gold;
+---
+<section id="ueber-uns" class="section section--light" aria-labelledby="about-title">
+  <div class="container about">
+    <div class="about__text reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="about-title" class="h2"><Rich text={c.titel} /></h2>
+      <div class="prose about__body">
+        <Rich text={c.text} paragraphs />
+      </div>
+      <p class="about__name"><span>Doktura</span> = Doktor + Struktur</p>
+    </div>
+
+    <div class="about__media reveal-media">
+      <LoopVideo name="wer-wir-sind" ratio="4 / 5" />
+    </div>
+  </div>
+
+  <!-- Großes Statement: füllt sich beim Scrollen Wort für Wort -->
+  <div class="container">
+    <p class="statement">
+      {words.map((w, i) => (
+        <span class:list={['statement__word', { 'statement__word--gold': isGold(w) }]} style={`--p: ${(i / words.length).toFixed(3)}`}>{w}</span>
+      ))}
+    </p>
+  </div>
+</section>
+
+<style>
+  .about { display: grid; gap: 3rem; align-items: center; }
+  .about__text { display: grid; gap: 1.75rem; }
+  .about__body { color: var(--c-text-muted-light); }
+  .statement {
+    margin-top: clamp(5rem, 3rem + 8vw, 10rem);
+    font-family: var(--font-display); font-size: clamp(2.25rem, 1.2rem + 4.6vw, 5.5rem);
+    line-height: 1.08; letter-spacing: -0.015em; max-width: 18ch; text-wrap: balance;
+    view-timeline-name: --statement;
+  }
+  .statement__word { display: inline-block; margin-right: 0.24em; color: var(--c-aubergine); }
+  .statement__word--gold { color: var(--c-gold-text); }
+
+  /* Wort für Wort einfärben, passend zur Scrollposition */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .statement__word {
+        animation: word-fill linear both;
+        animation-timeline: --statement;
+        animation-range: cover calc(22% + var(--p) * 30%) cover calc(30% + var(--p) * 30%);
+      }
+    }
+  }
+  @keyframes word-fill { from { color: #cdc4da; transform: translateY(0.12em); } }
+  .about__name {
+    padding-top: 1.5rem; border-top: 1px solid var(--c-line-light); max-width: var(--measure);
+    font-size: var(--fs-small); color: var(--c-text-muted-light);
+  }
+  .about__name span { font-family: var(--font-serif); color: var(--c-aubergine); }
+  @media (min-width: 64rem) {
+    .about { grid-template-columns: 1.15fr 0.85fr; gap: 6rem; }
+  }
+</style>

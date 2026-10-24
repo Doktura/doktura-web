@@ -1,0 +1,84 @@
+---
+import Icon from '../Icon.astro';
+import Rich from '../Rich.astro';
+import { site } from '../../site.config';
+import c from '../../content/startseite/10-kontakt.json';
+---
+<section id="kontakt" class="section section--light" aria-labelledby="contact-title">
+  <div class="container contact">
+    <div class="contact__intro reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="contact-title" class="h2"><Rich text={c.titel} /></h2>
+      <p class="prose muted"><Rich text={c.text} /></p>
+      <div class="contact__cal">
+        <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
+      </div>
+      <dl class="contact__details">
+        <div><dt>Ansprechpartner</dt><dd>{site.contact.person}</dd></div>
+        <div><dt>E-Mail</dt><dd><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></dd></div>
+        {site.contact.phone && <div><dt>Telefon</dt><dd><a href={`tel:${site.contact.phone.replace(/[^+\d]/g, '')}`}>{site.contact.phone}</a></dd></div>}
+      </dl>
+    </div>
+
+    <form class="form reveal" name="kontakt" method="POST" action="/danke" data-netlify="true" netlify-honeypot="firma-website">
+      <input type="hidden" name="form-name" value="kontakt" />
+      <p class="visually-hidden" aria-hidden="true">
+        <label>Bitte nicht ausfüllen <input name="firma-website" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <div class="field">
+        <label for="f-name">Name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="f-email">E-Mail</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="f-phone">Telefon <span class="optional">(optional)</span></label>
+        <input id="f-phone" name="telefon" type="tel" autocomplete="tel" />
+      </div>
+      <div class="field">
+        <label for="f-message">Nachricht</label>
+        <textarea id="f-message" name="nachricht" rows="5" required></textarea>
+      </div>
+      <div class="check">
+        <input id="f-privacy" name="datenschutz" type="checkbox" value="akzeptiert" required />
+        <label for="f-privacy">
+          Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner
+          Angaben zur Beantwortung meiner Anfrage einverstanden.
+        </label>
+      </div>
+      <button class="btn form__submit" type="submit">Nachricht senden <Icon name="arrow-right" /></button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact { display: grid; gap: 3.5rem; align-items: start; }
+  .contact__intro { display: grid; gap: 1.5rem; }
+  .contact__cal { margin-top: 0.5rem; }
+  .contact__details { display: grid; gap: 1rem; margin: 1rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--c-line-light); }
+  .contact__details dt { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold-text); }
+  .contact__details dd { margin: 0.125rem 0 0; }
+  .contact__details a { display: inline-block; padding-block: 0.375rem; text-decoration: none; border-bottom: 1px solid var(--c-line-light); }
+
+  .form { display: grid; gap: 1.25rem; padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); background: #fff; border: 1px solid var(--c-line-light); }
+  .field { display: grid; gap: 0.5rem; }
+  .field label { font-weight: 600; font-size: var(--fs-small); }
+  .optional { font-weight: 400; color: var(--c-text-muted-light); }
+  .field input, .field textarea {
+    width: 100%; min-height: 3.25rem; padding: 0.75rem 1rem;
+    font-size: 1rem; background: var(--c-offwhite); border: 1px solid var(--c-line-light); border-radius: var(--radius);
+    transition: border-color 200ms var(--ease), background-color 200ms var(--ease);
+  }
+  .field textarea { resize: vertical; min-height: 8rem; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--c-aubergine); background: #fff; }
+  .check { display: grid; grid-template-columns: auto 1fr; gap: 0.875rem; align-items: start; font-size: var(--fs-small); color: var(--c-text-muted-light); }
+  .check input { width: 1.375rem; height: 1.375rem; margin: 0.15rem 0 0; accent-color: var(--c-aubergine); }
+  .form__submit { justify-self: start; margin-top: 0.5rem; }
+
+  @media (min-width: 64rem) {
+    .contact { grid-template-columns: 0.9fr 1.1fr; gap: 6rem; }
+  }
+</style>

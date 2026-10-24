@@ -1,0 +1,13 @@
+---
+// Platzhalter für Bilder, die noch kommen: Fläche in Markenfarbe mit Dateiname und Maßen
+interface Props {
+  file: string;      // z. B. "hero-haende.jpg"
+  size: string;      // z. B. "1600 × 1200"
+  ratio?: string;    // CSS aspect-ratio, z. B. "4 / 3"
+  class?: string;
+}
+const { file, size, ratio = '4 / 3', class: cls = '' } = Astro.props;
+---
+<div class={`placeholder ${cls}`} style={`aspect-ratio: ${ratio}`} role="img" aria-label={`Platzhalter für Bild ${file}`}>
+  <p class="placeholder__text"><strong>{file}</strong>{size} px · {ratio.replace(/\s/g, '')}</p>
+</div>

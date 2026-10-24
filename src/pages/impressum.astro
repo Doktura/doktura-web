@@ -1,0 +1,82 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site, legal } from '../site.config';
+---
+<Legal title="Impressum" description="Impressum und Anbieterkennzeichnung von Doktura." updated="Oktober 2026">
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>Doktura ist ein Angebot von:</p>
+  <p>
+    {legal.company}<br />
+    {legal.legalForm && <>Rechtsform: {legal.legalForm}<br /></>}
+    {site.contact.address}
+  </p>
+  {legal.representative && <p>{legal.representative}</p>}
+  {legal.register && <p>Registereintrag: {legal.register}</p>}
+
+  <h2>Kontakt</h2>
+  <p>
+    {site.contact.phone && <>Telefon: {site.contact.phone}<br /></>}
+    E-Mail: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+  </p>
+
+  {legal.vatId && (
+    <>
+      <h2>Umsatzsteuer-Identifikationsnummer</h2>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: {legal.vatId}</p>
+    </>
+  )}
+
+  <h2>Berufsrechtliche Angaben</h2>
+  <p>Gewerbeerlaubnis:</p>
+  <ul>{legal.permits.map((p) => <li>{p}</li>)}</ul>
+  <p>Zuständige Erlaubnis- und Aufsichtsbehörde: {legal.chamber}</p>
+  <p>
+    Registrierung im Vermittlerregister unter der Nummer {legal.registerNo}. Das Register kann eingesehen werden
+    bei: Deutscher Industrie- und Handelskammertag (DIHK) e. V., Breite Straße 29, 10178 Berlin, Telefon 0180 600 585 0
+    (20 Cent/Anruf aus dem deutschen Festnetz, Mobilfunk max. 60 Cent/Anruf),
+    <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">www.vermittlerregister.info</a>.
+  </p>
+  <p>
+    Berufsrechtliche Regelungen: § 34d Gewerbeordnung (GewO), §§ 59–68 Versicherungsvertragsgesetz (VVG),
+    Verordnung über die Versicherungsvermittlung und -beratung (VersVermV). Die Regelungen sind abrufbar unter
+    <a href="https://www.gesetze-im-internet.de" target="_blank" rel="noopener">www.gesetze-im-internet.de</a>.
+  </p>
+  <p>Weitere Pflichtangaben finden Sie in unserer <a href="/erstinformation">Erstinformation</a>.</p>
+
+  <h2>Schlichtungsstellen</h2>
+  <p>Bei Streitigkeiten zwischen Versicherungsvermittlern und Versicherungsnehmern können Sie folgende Schlichtungsstellen anrufen:</p>
+  <ul>
+    <li>Versicherungsombudsmann e. V., Postfach 08 06 32, 10006 Berlin, <a href="https://www.versicherungsombudsmann.de" target="_blank" rel="noopener">www.versicherungsombudsmann.de</a></li>
+    <li>Ombudsmann Private Kranken- und Pflegeversicherung, Postfach 06 02 22, 10052 Berlin, <a href="https://www.pkv-ombudsmann.de" target="_blank" rel="noopener">www.pkv-ombudsmann.de</a></li>
+  </ul>
+
+  <h2>Verbraucherstreitbeilegung</h2>
+  <p>
+    Abgesehen von den oben genannten Schlichtungsstellen sind wir nicht bereit und nicht verpflichtet, an
+    Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+  </p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <p>{site.contact.person}, {site.contact.address}</p>
+
+  <h2>Haftung für Inhalte</h2>
+  <p>
+    Die Inhalte dieser Webseite wurden mit größter Sorgfalt erstellt. Sie ersetzen keine individuelle Beratung.
+    Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir keine Gewähr. Als Diensteanbieter
+    sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.
+  </p>
+
+  <h2>Haftung für Links</h2>
+  <p>
+    Unsere Webseite enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese
+    fremden Inhalte ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Bei Bekanntwerden von
+    Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+  </p>
+
+  <h2>Urheberrecht</h2>
+  <p>
+    Die Inhalte und Werke auf dieser Webseite unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung,
+    Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen
+    Zustimmung des jeweiligen Autors bzw. Erstellers.
+  </p>
+</Legal>

@@ -1,0 +1,125 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import Rich from '../Rich.astro';
+import { site } from '../../site.config';
+import c from '../../content/startseite/05-zamin.json';
+import photo from '../../assets/images/zamin-portrait.png';
+
+// Vorstellungsvideo von Zamin (60–90 s, Querformat). Solange leer, steht hier ein Platzhalter.
+// Beispiel: { src: '/video/zamin-vorstellung.mp4', poster: '/video/zamin-vorstellung.jpg' }
+const introVideo: { src: string; poster: string } | null = null;
+---
+<section id="zamin" class="section section--dark" aria-labelledby="founder-title">
+  <div class="container">
+    <div class="founder">
+      <div class="founder__media reveal">
+        <div class="founder__frame reveal-media">
+          <Picture
+            src={photo}
+            formats={['avif', 'webp']}
+            widths={[480, 720, 1040]}
+            sizes="(min-width: 64rem) 32rem, 100vw"
+            alt="Porträt von Zamin Köhler, Gründer von Doktura"
+            class="founder__img"
+          />
+        </div>
+      </div>
+
+      <div class="founder__text reveal" style="--d: 1">
+        <p class="label">{c.label}</p>
+        <h2 id="founder-title" class="h2"><Rich text={c.titel} /></h2>
+        <div class="prose muted">
+          <Rich text={c.text} paragraphs />
+        </div>
+
+        <dl class="founder__facts">
+          {c.fakten.map((f) => <div><dt>{f.titel}</dt><dd><Rich text={f.text} /></dd></div>)}
+        </dl>
+
+        <div class="actions">
+          <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Persönliche Antwort auf „Warum nur Ärzte?“ -->
+    {c.zitat && (
+      <figure class="founder__quote reveal">
+        <blockquote><p><Rich text={c.zitat} /></p></blockquote>
+        <figcaption>{c.zitatUnterschrift}</figcaption>
+      </figure>
+    )}
+
+    <!-- Vorstellungsvideo -->
+    <div class="founder__video reveal-media">
+      {introVideo ? (
+        <video controls preload="none" playsinline poster={introVideo.poster}>
+          <source src={introVideo.src} type="video/mp4" />
+        </video>
+      ) : (
+        <div class="video-ph" role="img" aria-label="Platzhalter für das Vorstellungsvideo von Zamin Köhler">
+          <span class="video-ph__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg>
+          </span>
+          <p><strong>zamin-vorstellung.mp4</strong>Vorstellungsvideo · 60–90 Sekunden · Querformat 16:9 · 1920 × 1080</p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .founder { display: grid; gap: 3rem; align-items: center; }
+  .founder__text { display: grid; gap: 1.5rem; }
+  .founder__media { position: relative; max-width: 32rem; }
+  .founder__media::after {
+    content: ''; position: absolute; inset: 1.25rem -1.25rem -1.25rem 1.25rem; z-index: 0;
+    border: 1px solid var(--c-gold); pointer-events: none;
+  }
+  .founder__frame { position: relative; z-index: 1; }
+  .founder__media :global(.founder__img) { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 0; }
+  .founder .actions { margin-top: 0.5rem; }
+
+  .founder__facts { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--c-aubergine-line); }
+  .founder__facts > div { display: grid; gap: 0.25rem; padding: 0.875rem 0; border-bottom: 1px solid var(--c-aubergine-line); }
+  .founder__facts dt { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
+  .founder__facts dd { margin: 0; color: var(--c-offwhite); }
+
+  .founder__quote { margin: clamp(4rem, 3rem + 4vw, 7rem) auto 0; max-width: 54rem; text-align: center; }
+  .founder__quote blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem); line-height: 1.25; }
+  .founder__quote blockquote::before { content: '\201C'; display: block; height: 0.55em; margin-bottom: 0.25em; font-size: 3em; line-height: 1; color: var(--c-gold); }
+  .founder__quote figcaption { margin-top: 1.5rem; font-size: var(--fs-small); color: var(--c-text-muted-dark); }
+
+  .founder__video { margin-top: clamp(3rem, 2rem + 4vw, 5rem); }
+  .founder__video video, .video-ph { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--c-aubergine-soft); }
+  .video-ph {
+    display: grid; place-content: center; justify-items: center; gap: 1.25rem; text-align: center;
+    border: 1px solid var(--c-aubergine-line); color: var(--c-lavender);
+    background:
+      radial-gradient(circle at 50% 45%, rgb(191 158 93 / 0.12), transparent 55%),
+      repeating-linear-gradient(135deg, transparent 0 14px, rgb(162 159 206 / 0.08) 14px 15px),
+      var(--c-aubergine-soft);
+  }
+  .video-ph p { padding-inline: 1rem; font-size: 0.9375rem; }
+  .video-ph strong { display: block; color: var(--c-offwhite); }
+  .video-ph__play {
+    display: grid; place-items: center; width: 5rem; height: 5rem; border-radius: 50%;
+    border: 1px solid var(--c-gold); color: var(--c-gold);
+  }
+  .video-ph__play svg { width: 1.75rem; height: 1.75rem; fill: currentColor; margin-left: 4px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .video-ph__play { animation: play-ring 2.8s ease-out infinite; }
+  }
+  @keyframes play-ring { 0% { box-shadow: 0 0 0 0 rgb(191 158 93 / 0.45); } 70%, 100% { box-shadow: 0 0 0 1.25rem rgb(191 158 93 / 0); } }
+
+  @media (max-width: 40rem) { .founder__media { margin-right: 1.25rem; } }
+  @media (min-width: 64rem) {
+    .founder { grid-template-columns: 0.9fr 1.1fr; gap: 6rem; }
+  }
+  /* Goldrahmen gleitet beim Einblenden an seinen Platz */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .founder__media::after { transform: translate(-1.25rem, -1.25rem); opacity: 0; transition: transform 1400ms var(--ease) 500ms, opacity 900ms var(--ease) 500ms; }
+    :global(.js) .founder__media:global(.is-visible)::after { transform: none; opacity: 1; }
+  }
+</style>

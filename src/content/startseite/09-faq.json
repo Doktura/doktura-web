@@ -1,0 +1,43 @@
+{
+  "label": "Häufige Fragen",
+  "titel": "Offene Antworten.",
+  "einleitung": "Ihre Frage ist nicht dabei? Schreiben Sie uns, wir antworten persönlich.",
+  "fragen": [
+    {
+      "frage": "Was kostet das Erstgespräch?",
+      "antwort": "Nichts. Das Erstgespräch ist kostenlos und unverbindlich."
+    },
+    {
+      "frage": "Wie wird Doktura vergütet?",
+      "antwort": "[Angabe von Zamin: Courtage der Versicherer, Honorar oder beides – und wie das für den Mandanten sichtbar wird.]"
+    },
+    {
+      "frage": "Sind Sie an bestimmte Versicherer oder Banken gebunden?",
+      "antwort": "[Angabe von Zamin: Makler mit Zugang zu vielen Gesellschaften oder Bindung an bestimmte Anbieter?]"
+    },
+    {
+      "frage": "Ich habe bereits einen Berater. Lohnt sich ein Gespräch trotzdem?",
+      "antwort": "Ein zweiter Blick kann sinnvoll sein. Wir prüfen Ihre bestehenden Verträge und sagen Ihnen offen, wenn alles passt."
+    },
+    {
+      "frage": "Arbeiten Sie mit meiner Steuerberatung zusammen?",
+      "antwort": "Ja. Wir arbeiten mit Ihrer bestehenden Steuerberatung zusammen und stimmen finanzielle Entscheidungen mit ihr ab."
+    },
+    {
+      "frage": "Beraten Sie auch Ärzte, die ihre Niederlassung erst planen?",
+      "antwort": "[Angabe von Zamin: Ja / nein, und ab wann ist eine Beratung sinnvoll?]"
+    },
+    {
+      "frage": "Wo finden die Termine statt?",
+      "antwort": "Online per Video oder [vor Ort in … / in Ihrer Praxis?]"
+    },
+    {
+      "frage": "Was ist eine Infektionsklausel?",
+      "antwort": "Eine Regelung in der Berufsunfähigkeitsversicherung: Wenn das Gesundheitsamt Ihnen wegen einer Infektion die Arbeit verbietet, zahlt die Versicherung, obwohl Sie nicht im klassischen Sinn berufsunfähig sind."
+    },
+    {
+      "frage": "Was passiert mit meinen Daten?",
+      "antwort": "Ihre Angaben behandeln wir vertraulich und nutzen sie nur für Ihre Beratung. Details finden Sie in unserer [Datenschutzerklärung](/datenschutz)."
+    }
+  ]
+}

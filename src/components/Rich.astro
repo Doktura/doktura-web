@@ -1,0 +1,47 @@
+---
+// Gibt Text aus dem Redaktionssystem (src/content/*.json) aus.
+// Erlaubte Auszeichnungen im Text:
+//   *Wort*            → hervorgehoben (kursiv)
+//   [Linktext](/url)  → Link
+//   [Platzhalter]     → sichtbar markierter Platzhalter (wie <Ph>)
+// Mit `paragraphs` wird der Text an Leerzeilen in Absätze (<p>) geteilt.
+interface Props {
+  text?: string;
+  paragraphs?: boolean;
+}
+const { text = '', paragraphs = false } = Astro.props;
+
+type Part =
+  | { kind: 'text'; value: string }
+  | { kind: 'em'; value: string }
+  | { kind: 'link'; value: string; href: string }
+  | { kind: 'ph'; value: string };
+
+function parse(input: string): Part[] {
+  const parts: Part[] = [];
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)|\[([^\]]+)\]|\*([^*]+)\*/g;
+  let last = 0;
+  for (const m of input.matchAll(re)) {
+    if (m.index! > last) parts.push({ kind: 'text', value: input.slice(last, m.index) });
+    if (m[1] !== undefined) parts.push({ kind: 'link', value: m[1], href: m[2] });
+    else if (m[3] !== undefined) parts.push({ kind: 'ph', value: m[3] });
+    else parts.push({ kind: 'em', value: m[4] });
+    last = m.index! + m[0].length;
+  }
+  if (last < input.length) parts.push({ kind: 'text', value: input.slice(last) });
+  return parts;
+}
+
+const blocks = paragraphs
+  ? text.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean).map(parse)
+  : [parse(text.trim())];
+---
+{blocks.map((parts) => {
+  const inner = parts.map((p) =>
+    p.kind === 'em' ? <em>{p.value}</em>
+    : p.kind === 'link' ? <a href={p.href} {...(/^https?:/.test(p.href) ? { target: '_blank', rel: 'noopener' } : {})}>{p.value}</a>
+    : p.kind === 'ph' ? <span class="ph">[{p.value}]</span>
+    : p.value
+  );
+  return paragraphs ? <p>{inner}</p> : inner;
+})}

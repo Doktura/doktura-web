@@ -1,0 +1,31 @@
+---
+import Icon from '../Icon.astro';
+import LoopVideo from '../LoopVideo.astro';
+import Rich from '../Rich.astro';
+import { site } from '../../site.config';
+import c from '../../content/startseite/08-infektionsklausel.json';
+---
+<section class="section section--light" aria-labelledby="infection-title">
+  <div class="container infection">
+    <div class="infection__media reveal-media">
+      <LoopVideo name="infektionsklausel" ratio="4 / 3" />
+    </div>
+    <div class="infection__text reveal" style="--d: 1">
+      <p class="label">{c.label}</p>
+      <h2 id="infection-title" class="h2"><Rich text={c.titel} /></h2>
+      <p class="prose muted"><Rich text={c.text} /></p>
+      <div class="actions">
+        <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .infection { display: grid; gap: 3rem; align-items: center; }
+  .infection__text { display: grid; gap: 1.5rem; }
+  .infection .actions { margin-top: 0.5rem; }
+  @media (min-width: 64rem) {
+    .infection { grid-template-columns: 1fr 1fr; gap: 6rem; }
+  }
+</style>
