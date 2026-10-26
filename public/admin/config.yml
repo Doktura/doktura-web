@@ -193,6 +193,35 @@ collections:
           - { name: abschlussText, label: 'Abschluss: Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
           - { name: abschlussButton, label: 'Abschluss: Button-Text', widget: string }
 
+  - name: bilder
+    label: Bilder
+    description: Fotos und Vorschaubild austauschen. Einfach ein neues Bild hochladen, die Seite verkleinert und optimiert es beim Bauen automatisch.
+    format: json
+    files:
+      - name: bilder
+        label: 'Fotos & Vorschaubild'
+        file: src/content/bilder.json
+        fields:
+          - name: portrait
+            label: 'Großes Porträt (Abschnitt „Ihr Ansprechpartner“)'
+            widget: image
+            media_folder: /src/assets/images
+            public_folder: /src/assets/images
+            hint: 'Querformat oder Hochformat, mindestens ca. 1200 px breit. Angezeigt wird ein Hochformat-Ausschnitt (4:5), oben bündig – das Gesicht sollte im oberen Drittel und mittig sein.'
+          - { name: portraitAlt, label: 'Bildbeschreibung zum Porträt (für Screenreader und Google)', widget: string, hint: 'Kurz beschreiben, was zu sehen ist, z. B. „Zamin Köhler im dunklen Anzug“.' }
+          - name: avatar
+            label: 'Rundes Bild oben (Ansprechpartner-Karte)'
+            widget: image
+            media_folder: /src/assets/images
+            public_folder: /src/assets/images
+            hint: 'Quadratisch, Gesicht mittig, mindestens 400 × 400 px. Wird rund zugeschnitten.'
+          - name: vorschaubild
+            label: 'Vorschaubild für geteilte Links (WhatsApp, LinkedIn, Facebook …)'
+            widget: image
+            media_folder: /src/assets/images
+            public_folder: /src/assets/images
+            hint: 'Ideal 1200 × 630 px. Andere Formate werden automatisch auf dieses Format zugeschnitten (Mitte bleibt erhalten). Messenger zeigen ein neues Bild teils erst nach Tagen.'
+
   - name: einstellungen
     label: Einstellungen
     description: Kontaktdaten, Links und Pflichtangaben (erscheinen im Footer, im Impressum, in der Erstinformation und im Datenschutz).

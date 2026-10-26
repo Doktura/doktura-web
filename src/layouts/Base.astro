@@ -2,7 +2,9 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getImage } from 'astro:assets';
 import { site } from '../site.config';
+import { images } from '../images';
 
 interface Props {
   title?: string;        // Seitentitel; ohne Angabe nur „Doktura – Finanzberatung für Ärzte“
@@ -13,13 +15,15 @@ interface Props {
 const {
   title,
   description = site.description,
-  ogImage = '/og-image.jpg',
+  ogImage,
   noindex = false,
 } = Astro.props;
 
 const fullTitle = title ? `${title} | Doktura` : `Doktura – ${site.claim}`;
 const canonical = new URL(Astro.url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/', Astro.site);
-const ogUrl = new URL(ogImage, Astro.site);
+// Vorschaubild für geteilte Links: aus dem CMS, beim Bauen auf 1200 × 630 zugeschnitten
+const og = ogImage ?? (await getImage({ src: images.vorschaubild, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 85 })).src;
+const ogUrl = new URL(og, Astro.site);
 ---
 <!doctype html>
 <html lang="de">

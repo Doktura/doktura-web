@@ -5,7 +5,7 @@ import LoopVideo from '../LoopVideo.astro';
 import Rich from '../Rich.astro';
 import { site } from '../../site.config';
 import c from '../../content/startseite/01-hero.json';
-import avatar from '../../assets/images/zamin-avatar.jpg';
+import { images } from '../../images';
 
 // EKG-Linie quer durch den unteren Hero
 const line = 'M0 300H760L782 262L804 322L830 170L858 410L884 248L902 300H1500Q1516 300 1528 288L1600 216';
@@ -42,7 +42,7 @@ const head = 'M1572 218L1600 216L1598 244';
     <a class="hero__card" href="#zamin">
       <span class="hero__avatar">
         <Picture
-          src={avatar}
+          src={images.avatar}
           formats={['avif', 'webp']}
           widths={[160, 320]}
           sizes="5rem"
@@ -121,7 +121,7 @@ const head = 'M1572 218L1600 216L1598 244';
   .hero__card:hover { border-color: var(--c-gold); background: rgb(35 5 47 / 0.7); }
   .hero__avatar { flex: none; width: 4rem; height: 4rem; border-radius: 50%; overflow: hidden; border: 1px solid var(--c-gold); }
   /* Ausschnitt aufs Gesicht */
-  .hero__avatar :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero__avatar :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
   .hero__card-text { display: grid; line-height: 1.3; }
   .hero__card-label { font-size: 0.75rem; font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
   .hero__card-name { font-family: var(--font-serif); font-size: 1.1875rem; color: var(--c-offwhite); }

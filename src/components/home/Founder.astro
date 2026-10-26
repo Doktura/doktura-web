@@ -4,7 +4,7 @@ import Icon from '../Icon.astro';
 import Rich from '../Rich.astro';
 import { site, legal } from '../../site.config';
 import c from '../../content/startseite/05-zamin.json';
-import photo from '../../assets/images/zamin-portrait.jpg';
+import { images } from '../../images';
 import { ready, showPlaceholders } from '../../placeholders';
 
 // Vorstellungsvideo von Zamin (60–90 s, Querformat). Solange leer, steht hier ein Platzhalter.
@@ -28,11 +28,11 @@ const zitat = ready(c.zitat);
       <div class="founder__media reveal">
         <div class="founder__frame reveal-media">
           <Picture
-            src={photo}
+            src={images.portrait}
             formats={['avif', 'webp']}
             widths={[480, 720, 1040]}
             sizes="(min-width: 64rem) 32rem, 100vw"
-            alt="Zamin Köhler, Gründer von Doktura, im dunklen Anzug mit verschränkten Armen"
+            alt={images.portraitAlt}
             class="founder__img"
           />
         </div>
