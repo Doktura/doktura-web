@@ -6,6 +6,9 @@ backend:
   name: github
   repo: Doktura/doktura-web
   branch: main
+  # Login läuft über Netlify (GitHub-OAuth-Provider unter Netlify → Access & security → OAuth)
+  base_url: https://api.netlify.com
+  site_domain: doktura.de
   commit_messages:
     update: 'Text geändert: {{slug}}'
 
