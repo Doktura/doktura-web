@@ -10,7 +10,7 @@ import c from '../../content/startseite/10-kontakt.json';
   <div class="container closing__inner reveal">
     <h2 id="closing-title" class="h2 closing__title"><Rich text={c.abschlussTitel} /></h2>
     <p class="lead muted"><Rich text={c.abschlussText} /></p>
-    <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.abschlussButton} <Icon name="arrow-up-right" /></a>
+    <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.abschlussButton} <Icon name={site.calIcon} /></a>
   </div>
   <!-- Große EKG-Linie, die sich beim Scrollen über die ganze Breite zieht -->
   <div class="container closing__line reveal"><EkgLine scrub /></div>

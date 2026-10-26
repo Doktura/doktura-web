@@ -73,7 +73,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
   letter-spacing: var(--tracking-label); text-transform: uppercase;
   color: var(--c-gold-text);
 }
-.label::before { content: ''; width: 2rem; height: 1px; background: currentColor; }
+.label::before { content: ''; flex: none; align-self: flex-start; width: 2rem; height: 1px; margin-top: calc(0.5lh - 0.5px); background: currentColor; }
 .section--dark .label { color: var(--c-gold); }
 
 /* ---------- Button (ein einheitlicher Stil) ---------- */

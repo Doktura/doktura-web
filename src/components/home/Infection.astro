@@ -15,7 +15,7 @@ import c from '../../content/startseite/08-infektionsklausel.json';
       <h2 id="infection-title" class="h2"><Rich text={c.titel} /></h2>
       <p class="prose muted"><Rich text={c.text} /></p>
       <div class="actions">
-        <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
+        <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
       </div>
     </div>
   </div>

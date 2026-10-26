@@ -13,7 +13,7 @@ import { nav, site } from '../site.config';
       <ul>
         {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
-      <a class="btn site-nav__cta" href={site.calUrl} target="_blank" rel="noopener">Erstgespräch vereinbaren</a>
+      <a class="btn site-nav__cta" href={site.calUrl} {...site.calAttrs}>Erstgespräch vereinbaren</a>
     </nav>
 
     <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" data-menu-toggle>

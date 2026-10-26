@@ -50,7 +50,7 @@ import c from '../../content/startseite/03-leistungen.json';
   .service:hover::after { transform: scaleX(1); }
   .service:hover :global(.service-icon) { transform: translateY(-4px); }
   .service__title { font-family: var(--font-serif); font-size: 1.3125rem; line-height: 1.3; hyphens: auto; }
-  .service__text { color: var(--c-text-muted-dark); }
+  .service__text { color: var(--c-text-muted-dark); hyphens: auto; overflow-wrap: break-word; }
 
   @media (min-width: 40rem) {
     .services__grid { grid-template-columns: repeat(2, 1fr); }

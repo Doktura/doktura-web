@@ -2,6 +2,8 @@
 import Rich from '../Rich.astro';
 import { legal } from '../../site.config';
 import c from '../../content/startseite/06-warum.json';
+import { ready } from '../../placeholders';
+const transparenz = c.transparenz.map((t) => ({ ...t, text: ready(t.text) })).filter((t) => t.text);
 ---
 <section id="haltung" class="section section--light" aria-labelledby="why-title">
   <div class="container">
@@ -27,7 +29,7 @@ import c from '../../content/startseite/06-warum.json';
         <p class="muted"><Rich text={c.transparenzText} /></p>
       </div>
       <dl class="transparency__list">
-        {c.transparenz.map((t, i) => (
+        {transparenz.map((t, i) => (
           <div class="reveal" style={`--d: ${i}`}>
             <dt>{t.titel}</dt>
             <dd><Rich text={t.text} /></dd>
@@ -52,7 +54,7 @@ import c from '../../content/startseite/06-warum.json';
 <style>
   .why__head { display: grid; gap: 1.5rem; margin-bottom: clamp(3rem, 2rem + 3vw, 4.5rem); }
   .why__list { list-style: none; display: grid; gap: 2.5rem; }
-  .why__item { position: relative; display: grid; gap: 0.75rem; padding-top: 1.5rem; }
+  .why__item { position: relative; display: grid; gap: 0.75rem; align-content: start; padding-top: 1.5rem; }
   .why__item::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 1px; background: var(--c-gold); transform-origin: left; }
   @media (prefers-reduced-motion: no-preference) {
     :global(.js) .why__item::before { transform: scaleX(0); transition: transform 1300ms var(--ease) calc(150ms + var(--d, 0) * 110ms); }

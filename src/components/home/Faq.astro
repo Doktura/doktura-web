@@ -1,6 +1,9 @@
 ---
 import Rich from '../Rich.astro';
 import c from '../../content/startseite/09-faq.json';
+import { ready } from '../../placeholders';
+// Fragen ohne fertige Antwort erscheinen auf der Live-Seite (noch) nicht
+const fragen = c.fragen.map((f) => ({ ...f, antwort: ready(f.antwort) })).filter((f) => f.antwort);
 ---
 <section id="fragen" class="section section--dark" aria-labelledby="faq-title">
   <div class="container faq">
@@ -11,10 +14,10 @@ import c from '../../content/startseite/09-faq.json';
     </header>
 
     <div class="faq__list reveal">
-      {c.fragen.map((f) => (
+      {fragen.map((f) => (
         <details name="faq">
           <summary>{f.frage}</summary>
-          <div class="faq__answer"><Rich text={f.antwort} paragraphs /></div>
+          <div class="faq__answer"><Rich text={f.antwort!} paragraphs /></div>
         </details>
       ))}
     </div>

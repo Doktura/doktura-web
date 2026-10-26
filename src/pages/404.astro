@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<!-- Eigene Fehlerseite (Netlify zeigt sie automatisch für nicht vorhandene Adressen) -->
+<Base title="Seite nicht gefunden" noindex>
+  <section class="section section--dark notfound">
+    <div class="container notfound__inner">
+      <p class="label">Fehler 404</p>
+      <h1 class="h2">Diese Seite gibt es leider nicht.</h1>
+      <p class="lead muted">Vielleicht hat sich die Adresse geändert oder der Link ist nicht mehr aktuell.</p>
+      <div class="actions">
+        <a class="btn" href="/">Zur Startseite</a>
+        <a class="link-arrow" href="/#kontakt"><span>Kontakt aufnehmen</span><Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notfound { min-height: 70vh; display: grid; align-items: center; }
+  .notfound__inner { display: grid; justify-items: center; gap: 1.5rem; text-align: center; }
+  .notfound .actions { justify-content: center; margin-top: 0.5rem; }
+</style>

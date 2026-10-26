@@ -10,7 +10,7 @@ export default defineConfig({
   build: { format: 'file', inlineStylesheets: 'auto' },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/styleguide') && !page.includes('/danke'),
+      filter: (page) => !page.includes('/styleguide') && !page.includes('/danke') && !page.includes('/404'),
     }),
   ],
 });

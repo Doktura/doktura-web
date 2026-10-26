@@ -3,6 +3,8 @@ import Icon from '../Icon.astro';
 import Rich from '../Rich.astro';
 import { site } from '../../site.config';
 import c from '../../content/startseite/07-ablauf.json';
+import { ready } from '../../placeholders';
+const details = c.details.map((d) => ({ ...d, text: ready(d.text) })).filter((d) => d.text);
 ---
 <section id="ablauf" class="section section--dark" aria-labelledby="process-title">
   <div class="container">
@@ -27,10 +29,10 @@ import c from '../../content/startseite/07-ablauf.json';
       <div class="first-call__intro">
         <h3 class="h3">{c.erstgespraechTitel}</h3>
         <p class="muted"><Rich text={c.erstgespraechText} /></p>
-        <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
+        <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
       </div>
       <dl class="first-call__facts">
-        {c.details.map((d) => <div><dt>{d.titel}</dt><dd><Rich text={d.text} /></dd></div>)}
+        {details.map((d) => <div><dt>{d.titel}</dt><dd><Rich text={d.text} /></dd></div>)}
       </dl>
     </div>
   </div>

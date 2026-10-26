@@ -2,6 +2,10 @@
 // Kontaktdaten, Links und Rechtsangaben stehen in src/content/einstellungen.json
 // und lassen sich im Redaktionssystem (doktura.de/admin) unter „Einstellungen“ ändern.
 import s from './content/einstellungen.json';
+import { hasPlaceholder } from './placeholders';
+
+// Solange kein echter Terminlink (cal.com) eingetragen ist, führen die Termin-Buttons zum Kontaktformular.
+const calReady = !!s.calUrl && !hasPlaceholder(s.calUrl);
 
 export const site = {
   name: 'Doktura',
@@ -9,7 +13,10 @@ export const site = {
   description:
     'Finanzberatung ausschließlich für niedergelassene Ärzte: Absicherung, Praxis, Steuern und Vermögen aus einer Hand.',
 
-  calUrl: s.calUrl,
+  calReady,
+  calUrl: calReady ? s.calUrl : '/#kontakt',
+  calAttrs: (calReady ? { target: '_blank', rel: 'noopener' } : {}) as Record<string, string>,
+  calIcon: (calReady ? 'arrow-up-right' : 'arrow-right') as 'arrow-up-right' | 'arrow-right',
 
   contact: {
     person: s.kontakt.person,
@@ -18,7 +25,8 @@ export const site = {
     address: s.kontakt.adresse,
   },
 
-  instagram: s.instagram,
+  // leer oder Platzhalter: Instagram-Link wird ausgeblendet
+  instagram: s.instagram && !hasPlaceholder(s.instagram) ? s.instagram : '',
 
   // Meta Pixel: bleibt aus, solange hier nichts steht.
   // Lädt nur nach Zustimmung im Cookie-Banner (Kategorie „Marketing“).

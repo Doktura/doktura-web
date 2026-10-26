@@ -6,3 +6,6 @@ dist/
 .DS_Store
 Thumbs.db
 .claude/settings.local.json
+
+# Rohbilder zum Austauschen (werden nach src/assets/images übernommen)
+neue-bilder/

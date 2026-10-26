@@ -9,6 +9,7 @@ interface Props {
   text?: string;
   paragraphs?: boolean;
 }
+import { showPlaceholders } from '../placeholders';
 const { text = '', paragraphs = false } = Astro.props;
 
 type Part =
@@ -40,7 +41,7 @@ const blocks = paragraphs
   const inner = parts.map((p) =>
     p.kind === 'em' ? <em>{p.value}</em>
     : p.kind === 'link' ? <a href={p.href} {...(/^https?:/.test(p.href) ? { target: '_blank', rel: 'noopener' } : {})}>{p.value}</a>
-    : p.kind === 'ph' ? <span class="ph">[{p.value}]</span>
+    : p.kind === 'ph' ? (showPlaceholders ? <span class="ph">[{p.value}]</span> : null)
     : p.value
   );
   return paragraphs ? <p>{inner}</p> : inner;

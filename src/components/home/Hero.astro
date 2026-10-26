@@ -5,7 +5,7 @@ import LoopVideo from '../LoopVideo.astro';
 import Rich from '../Rich.astro';
 import { site } from '../../site.config';
 import c from '../../content/startseite/01-hero.json';
-import avatar from '../../assets/images/zamin-avatar.png';
+import avatar from '../../assets/images/zamin-avatar.jpg';
 
 // EKG-Linie quer durch den unteren Hero
 const line = 'M0 300H760L782 262L804 322L830 170L858 410L884 248L902 300H1500Q1516 300 1528 288L1600 216';
@@ -33,7 +33,7 @@ const head = 'M1572 218L1600 216L1598 244';
       </h1>
       <p class="lead hero__lead"><Rich text={c.einleitung} /></p>
       <div class="actions">
-        <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
+        <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
         <a class="link-arrow" href="#leistungen"><span>{c.link}</span><Icon name="arrow-right" /></a>
       </div>
     </div>

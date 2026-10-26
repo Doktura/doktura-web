@@ -10,9 +10,9 @@ import c from '../../content/startseite/10-kontakt.json';
       <p class="label">{c.label}</p>
       <h2 id="contact-title" class="h2"><Rich text={c.titel} /></h2>
       <p class="prose muted"><Rich text={c.text} /></p>
-      <div class="contact__cal">
-        <a class="btn" href={site.calUrl} target="_blank" rel="noopener">{c.button} <Icon name="arrow-up-right" /></a>
-      </div>
+      {site.calReady && <div class="contact__cal">
+        <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
+      </div>}
       <dl class="contact__details">
         <div><dt>Ansprechpartner</dt><dd>{site.contact.person}</dd></div>
         <div><dt>E-Mail</dt><dd><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></dd></div>
