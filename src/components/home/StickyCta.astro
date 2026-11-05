@@ -1,0 +1,25 @@
+---
+// Handy: Termin-Button bleibt beim Scrollen unten erreichbar.
+// Erscheint erst, wenn der Hero aus dem Bild ist, und verschwindet im Kontaktbereich (siehe scripts/motion.ts).
+import Icon from '../Icon.astro';
+import { site } from '../../site.config';
+import c from '../../content/startseite/01-hero.json';
+---
+<div class="sticky-cta" data-sticky-cta>
+  <a class="btn sticky-cta__btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
+</div>
+
+<style>
+  .sticky-cta { display: none; }
+  @media (max-width: 47.99rem) {
+    .sticky-cta {
+      display: block; position: fixed; z-index: 40; left: 0; right: 0; bottom: 0;
+      padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
+      background: rgb(35 5 47 / 0.92); border-top: 1px solid var(--c-aubergine-line);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      transform: translateY(110%); transition: transform 400ms var(--ease);
+    }
+    .sticky-cta:global(.is-shown) { transform: none; }
+    .sticky-cta__btn { width: 100%; justify-content: center; }
+  }
+</style>

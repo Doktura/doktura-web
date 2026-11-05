@@ -110,11 +110,10 @@ collections:
           - { name: zitatUnterschrift, label: 'Unterschrift unter dem Zitat', widget: string, required: false }
 
       - name: warum
-        label: '6 · Warum Doktura & Transparenz'
+        label: '6 · Drei Gründe & Transparenz (Gründe erscheinen unter „Über uns“, Transparenz über den häufigen Fragen)'
         file: src/content/startseite/06-warum.json
         fields:
-          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
-          - { name: titel, label: 'Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
+          - { name: titel, label: 'Überschrift über den drei Gründen', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
           - name: punkte
             label: 'Drei Gründe'
             widget: list
@@ -158,7 +157,7 @@ collections:
               - { name: text, label: 'Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
 
       - name: infektionsklausel
-        label: '8 · Infektionsklausel'
+        label: '8 · Infektionsklausel (Hinweis unter den Phasen)'
         file: src/content/startseite/08-infektionsklausel.json
         fields:
           - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
@@ -182,16 +181,13 @@ collections:
               - { name: antwort, label: 'Antwort', widget: text, hint: 'Leerzeile = neuer Absatz · *Wort* = kursiv · [Linktext](/seite) = Link' }
 
       - name: kontakt
-        label: '10 · Kontakt & Abschluss'
+        label: '10 · Kontakt'
         file: src/content/startseite/10-kontakt.json
         fields:
           - { name: label, label: 'Kontakt: kleine Zeile', widget: string }
           - { name: titel, label: 'Kontakt: Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
           - { name: text, label: 'Kontakt: Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
           - { name: button, label: 'Kontakt: Button-Text', widget: string }
-          - { name: abschlussTitel, label: 'Abschluss (ganz unten): Überschrift', widget: string, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
-          - { name: abschlussText, label: 'Abschluss: Text', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird als Platzhalter markiert' }
-          - { name: abschlussButton, label: 'Abschluss: Button-Text', widget: string }
 
   - name: bilder
     label: Bilder

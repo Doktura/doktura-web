@@ -11,7 +11,7 @@ import c from '../../content/startseite/03-leistungen.json';
       <p class="lead muted"><Rich text={c.einleitung} /></p>
     </header>
 
-    <ul class="services__grid">
+    <ul class="services__grid" data-carousel>
       {c.leistungen.map((s, i) => (
         <li class="service reveal" style={`--d: ${i % 4}`} data-spotlight>
           <ServiceIcon name={s.icon} />
@@ -20,6 +20,11 @@ import c from '../../content/startseite/03-leistungen.json';
         </li>
       ))}
     </ul>
+    <!-- Nur auf dem Handy: Hinweis zum Wischen + Fortschritt -->
+    <div class="services__swipe" aria-hidden="true">
+      <span>Wischen für alle {c.leistungen.length} Leistungen</span>
+      <i><b data-carousel-bar></b></i>
+    </div>
   </div>
 </section>
 
@@ -52,6 +57,24 @@ import c from '../../content/startseite/03-leistungen.json';
   .service__title { font-family: var(--font-serif); font-size: 1.3125rem; line-height: 1.3; hyphens: auto; }
   .service__text { color: var(--c-text-muted-dark); hyphens: auto; overflow-wrap: break-word; }
 
+  .services__swipe { display: none; }
+
+  /* Handy: Leistungen als Karten zum Wischen statt einer langen Liste */
+  @media (max-width: 39.99rem) {
+    .services__grid {
+      grid-auto-flow: column; grid-auto-columns: 82%; gap: 0.75rem; padding: 0;
+      overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+      margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+    }
+    .services__grid::-webkit-scrollbar { display: none; }
+    .service { margin: 0; scroll-snap-align: start; background: var(--c-aubergine-soft); min-height: 17rem; }
+    .services__swipe {
+      display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem;
+      font-size: 0.875rem; color: var(--c-text-muted-dark);
+    }
+    .services__swipe i { position: relative; flex: 1; height: 1px; background: var(--c-aubergine-line); overflow: hidden; }
+    .services__swipe b { position: absolute; inset: 0; background: var(--c-gold); transform-origin: left; transform: scaleX(var(--progress, 0.125)); transition: transform 150ms linear; }
+  }
   @media (min-width: 40rem) {
     .services__grid { grid-template-columns: repeat(2, 1fr); }
   }

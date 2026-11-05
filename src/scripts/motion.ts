@@ -67,3 +67,55 @@ if (!reduce && matchMedia('(hover: hover)').matches) {
     });
   });
 }
+
+// ---- Karten zum Wischen (Handy): Fortschrittsbalken unter der Reihe ----
+document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((row) => {
+  const bar = row.parentElement?.querySelector<HTMLElement>('[data-carousel-bar]');
+  if (!bar) return;
+  const update = () => {
+    const max = row.scrollWidth - row.clientWidth;
+    const visible = row.clientWidth / row.scrollWidth;
+    const p = max > 0 ? visible + (1 - visible) * (row.scrollLeft / max) : 1;
+    bar.style.setProperty('--progress', p.toFixed(3));
+  };
+  row.addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+});
+
+// ---- Reiter (z. B. Phasen): ohne JavaScript sind alle Inhalte sichtbar ----
+document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((box) => {
+  const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+  const panels = [...box.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+  const select = (i: number, focus = false) => {
+    tabs.forEach((t, j) => {
+      const on = i === j;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      panels[j].hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', (e) => {
+      const n = tabs.length;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); select((i + 1) % n, true); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); select((i - 1 + n) % n, true); }
+    });
+  });
+  box.classList.add('tabs-ready');
+  select(0);
+});
+
+// ---- Handy: fester Termin-Button, sobald der Hero aus dem Bild ist (aus beim Kontaktbereich) ----
+const sticky = document.querySelector<HTMLElement>('[data-sticky-cta]');
+const heroEl = document.querySelector('.hero');
+const contactEl = document.getElementById('kontakt');
+if (sticky && heroEl && 'IntersectionObserver' in window) {
+  let heroVisible = true;
+  let contactVisible = false;
+  const set = () => sticky.classList.toggle('is-shown', !heroVisible && !contactVisible);
+  new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; set(); }).observe(heroEl);
+  if (contactEl) new IntersectionObserver(([e]) => { contactVisible = e.isIntersecting || e.boundingClientRect.top < 0; set(); }).observe(contactEl);
+}

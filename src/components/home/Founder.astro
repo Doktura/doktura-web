@@ -59,6 +59,17 @@ const zitat = ready(c.zitat);
       </div>
     </div>
 
+    <!-- Nachweise: öffentlich prüfbar statt erfundener Siegel (Angaben aus „Einstellungen“) -->
+    <div class="proof reveal">
+      <p class="proof__title">Geprüft und registriert</p>
+      <ul class="proof__list">
+        <li><span>Vermittlerregister</span><strong>{legal.registerNo}</strong></li>
+        <li><span>Erlaubnis</span><strong>{legal.permitShort}</strong></li>
+        <li><span>Aufsicht</span><strong>{legal.chamberShort}</strong></li>
+        <li><a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">Eintrag im Register prüfen <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </div>
+
     <!-- Persönliche Antwort auf „Warum nur Ärzte?“ -->
     {zitat && (
       <figure class="founder__quote reveal">
@@ -101,6 +112,21 @@ const zitat = ready(c.zitat);
   .founder__facts > div { display: grid; gap: 0.25rem; padding: 0.875rem 0; border-bottom: 1px solid var(--c-aubergine-line); }
   .founder__facts dt { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
   .founder__facts dd { margin: 0; color: var(--c-offwhite); }
+
+  .proof {
+    display: grid; gap: 1.25rem; margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+    padding: 1.5rem 1.75rem; border: 1px solid var(--c-aubergine-line); border-left: 3px solid var(--c-gold);
+    background: var(--c-aubergine-soft);
+  }
+  .proof__title { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
+  .proof__list { list-style: none; display: grid; gap: 1rem; }
+  .proof__list li { display: grid; gap: 0.15rem; }
+  .proof__list span { font-size: 0.875rem; color: var(--c-text-muted-dark); }
+  .proof__list strong { font-weight: 600; }
+  .proof__list a { font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--c-gold); justify-self: start; }
+  @media (min-width: 48rem) {
+    .proof__list { grid-template-columns: repeat(4, auto); justify-content: space-between; align-items: end; }
+  }
 
   .founder__quote { margin: clamp(4rem, 3rem + 4vw, 7rem) auto 0; max-width: 54rem; text-align: center; }
   .founder__quote blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem); line-height: 1.25; }

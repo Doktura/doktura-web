@@ -2,6 +2,7 @@
 import LoopVideo from '../LoopVideo.astro';
 import Rich from '../Rich.astro';
 import c from '../../content/startseite/02-ueber-uns.json';
+import w from '../../content/startseite/06-warum.json';
 
 const words = c.statement.trim().split(/\s+/);
 const gold = c.statementGold.trim().toLowerCase();
@@ -23,6 +24,20 @@ const isGold = (w: string) => gold !== '' && w.toLowerCase().replace(/[.,;:!?–
     </div>
   </div>
 
+  <!-- Drei Gründe für Doktura (Texte aus „Warum Doktura“) -->
+  <div class="container">
+    <h3 class="why__title reveal"><Rich text={w.titel} /></h3>
+    <ol class="why__list">
+      {w.punkte.map((p, i) => (
+        <li class="why__item reveal" style={`--d: ${i}`}>
+          <span class="why__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h4 class="h3">{p.titel}</h4>
+          <p class="muted"><Rich text={p.text} /></p>
+        </li>
+      ))}
+    </ol>
+  </div>
+
   <!-- Großes Statement: füllt sich beim Scrollen Wort für Wort -->
   <div class="container">
     <p class="statement">
@@ -37,8 +52,19 @@ const isGold = (w: string) => gold !== '' && w.toLowerCase().replace(/[.,;:!?–
   .about { display: grid; gap: 3rem; align-items: center; }
   .about__text { display: grid; gap: 1.75rem; }
   .about__body { color: var(--c-text-muted-light); }
+  .why__title { margin: clamp(4rem, 3rem + 4vw, 7rem) 0 clamp(2rem, 1.5rem + 2vw, 3rem); font-family: var(--font-display); font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem); line-height: var(--lh-head); }
+  .why__list { list-style: none; display: grid; gap: 2rem; }
+  .why__item { position: relative; display: grid; gap: 0.5rem; align-content: start; padding-top: 1.25rem; }
+  .why__item::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 1px; background: var(--c-gold); transform-origin: left; }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .why__item::before { transform: scaleX(0); transition: transform 1300ms var(--ease) calc(150ms + var(--d, 0) * 110ms); }
+    :global(.js) .why__item:global(.is-visible)::before { transform: none; }
+  }
+  .why__num { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); color: var(--c-gold-text); }
+  @media (min-width: 48rem) { .why__list { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
+
   .statement {
-    margin-top: clamp(5rem, 3rem + 8vw, 10rem);
+    margin-top: clamp(4rem, 3rem + 5vw, 8rem);
     font-family: var(--font-display); font-size: clamp(2.25rem, 1.2rem + 4.6vw, 5.5rem);
     line-height: 1.08; letter-spacing: -0.015em; max-width: 18ch; text-wrap: balance;
     view-timeline-name: --statement;
@@ -62,6 +88,8 @@ const isGold = (w: string) => gold !== '' && w.toLowerCase().replace(/[.,;:!?–
     font-size: var(--fs-small); color: var(--c-text-muted-light);
   }
   .about__name span { font-family: var(--font-serif); color: var(--c-aubergine); }
+  /* Handy: Bild flacher, damit der Abschnitt nicht so lang wird */
+  @media (max-width: 63.99rem) { .about__media :global(video) { aspect-ratio: 16 / 10 !important; } }
   @media (min-width: 64rem) {
     .about { grid-template-columns: 1.15fr 0.85fr; gap: 6rem; }
   }

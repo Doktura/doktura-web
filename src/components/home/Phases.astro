@@ -1,9 +1,15 @@
 ---
-// Situationen niedergelassener Ärzte – zeigt, dass wir den Berufsweg kennen
+// Situationen niedergelassener Ärzte – zeigt, dass wir den Berufsweg kennen.
+// Als Reiter: man wählt seine Phase und sieht nur, was dazu passt (ohne JavaScript: alle untereinander).
+// Darunter die Infektionsklausel als Hinweis „Das wird oft übersehen“.
+import Icon from '../Icon.astro';
+import LoopVideo from '../LoopVideo.astro';
 import Rich from '../Rich.astro';
+import { site } from '../../site.config';
 import c from '../../content/startseite/04-phasen.json';
+import inf from '../../content/startseite/08-infektionsklausel.json';
 ---
-<section class="section section--light" aria-labelledby="phases-title">
+<section id="phasen" class="section section--light" aria-labelledby="phases-title">
   <div class="container">
     <header class="phases__head reveal">
       <p class="label">{c.label}</p>
@@ -11,37 +17,112 @@ import c from '../../content/startseite/04-phasen.json';
       <p class="lead muted"><Rich text={c.einleitung} /></p>
     </header>
 
-    <ol class="phases__list">
+    <div class="phases reveal" data-tabs>
+      <div class="phases__tabs" role="tablist" aria-label="Phase wählen">
+        {c.phasen.map((p, i) => (
+          <button class="phases__tab" role="tab" type="button" id={`phase-tab-${i}`} aria-controls={`phase-${i}`} aria-selected={i === 0 ? 'true' : 'false'}>
+            <span class="phases__tab-num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="phases__tab-title">{p.titel}</span>
+          </button>
+        ))}
+      </div>
+
       {c.phasen.map((p, i) => (
-        <li class="phase reveal" style={`--d: ${i}`}>
+        <div class="phase" role="tabpanel" id={`phase-${i}`} aria-labelledby={`phase-tab-${i}`}>
           <span class="phase__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="h3">{p.titel}</h3>
-          <p class="muted"><Rich text={p.text} /></p>
-          <ul class="phase__topics" aria-label="Typische Themen">
-            {p.themen.map((t) => <li>{t}</li>)}
-          </ul>
-        </li>
+          <div class="phase__body">
+            <h3 class="h3">{p.titel}</h3>
+            <p class="muted"><Rich text={p.text} /></p>
+            <ul class="phase__topics" aria-label="Typische Themen">
+              {p.themen.map((t) => <li>{t}</li>)}
+            </ul>
+          </div>
+        </div>
       ))}
-    </ol>
+    </div>
+
+    <!-- Das wird oft übersehen: Infektionsklausel -->
+    <aside class="infection reveal" aria-labelledby="infection-title">
+      <div class="infection__media">
+        <LoopVideo name="infektionsklausel" ratio="4 / 3" />
+      </div>
+      <div class="infection__text">
+        <p class="label">{inf.label}</p>
+        <h3 id="infection-title" class="infection__title"><Rich text={inf.titel} /></h3>
+        <p class="muted"><Rich text={inf.text} /></p>
+        <a class="btn" href={site.calUrl} {...site.calAttrs}>{inf.button} <Icon name={site.calIcon} /></a>
+      </div>
+    </aside>
   </div>
 </section>
 
 <style>
-  .phases__head { display: grid; gap: 1.5rem; max-width: 52rem; margin-bottom: clamp(3rem, 2rem + 4vw, 5rem); }
-  .phases__list { list-style: none; display: grid; gap: 1.5rem; }
-  .phase {
-    position: relative; display: grid; gap: 1rem; align-content: start;
-    padding: 2rem 1.75rem 2.25rem; background: #fff; border: 1px solid var(--c-line-light);
-    transition: border-color 500ms var(--ease), transform 500ms var(--ease), box-shadow 500ms var(--ease);
+  .phases__head { display: grid; gap: 1.5rem; max-width: 52rem; margin-bottom: clamp(2.5rem, 2rem + 3vw, 4rem); }
+
+  /* ---------- Reiter ---------- */
+  .phases__tabs { display: none; }
+  .phases { display: grid; gap: 1.5rem; }
+  :global(.tabs-ready).phases { gap: 0; }
+  :global(.tabs-ready) .phases__tabs {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 0.5rem;
   }
-  .phase:hover { border-color: var(--c-gold); box-shadow: 0 24px 48px -32px rgb(35 5 47 / 0.35); }
+  .phases__tab {
+    position: relative; display: grid; gap: 0.25rem; align-content: start; text-align: left; cursor: pointer;
+    padding: 0.875rem 1rem 1rem; background: transparent; border: 1px solid var(--c-line-light); border-radius: var(--radius);
+    transition: background-color 300ms var(--ease), border-color 300ms var(--ease), color 300ms var(--ease);
+  }
+  .phases__tab:hover { border-color: var(--c-gold); }
+  .phases__tab-num { font-family: var(--font-display); font-size: 1.5rem; line-height: 1; color: var(--c-gold-text); }
+  .phases__tab-title { font-weight: 600; font-size: 0.9375rem; line-height: 1.3; hyphens: auto; }
+  .phases__tab[aria-selected='true'] { background: var(--c-aubergine); border-color: var(--c-aubergine); color: var(--c-offwhite); }
+  .phases__tab[aria-selected='true'] .phases__tab-num { color: var(--c-gold); }
+
+  .phase {
+    position: relative; display: grid; gap: 1rem; overflow: hidden;
+    padding: 2rem 1.5rem 2.25rem; background: #fff; border: 1px solid var(--c-line-light);
+  }
+  .phase[hidden] { display: none; }
+  .phase__body { display: grid; gap: 1rem; max-width: 46rem; position: relative; }
   .phase__num { font-family: var(--font-display); font-size: 3rem; line-height: 1; color: var(--c-gold-text); }
-  .phase__topics { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 0.5rem; }
+  .phase__topics { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 0.5rem; }
   .phase__topics li {
     padding: 0.3rem 0.75rem; font-size: 0.875rem; font-weight: 500;
     color: var(--c-aubergine); background: var(--c-offwhite); border-radius: 999px;
   }
   .phase p { hyphens: auto; }
-  @media (min-width: 48rem) { .phases__list { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 64rem) { .phase { padding: 2.5rem 2.5rem 2.75rem; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .phase:not([hidden]) .phase__body { animation: phase-in 600ms var(--ease) both; }
+    :global(.tabs-ready) .phase:not([hidden]) .phase__num { animation: phase-num 900ms var(--ease) both; }
+  }
+  @keyframes phase-in { from { opacity: 0; transform: translateY(12px); } }
+  @keyframes phase-num { from { opacity: 0; transform: translateY(30%); } }
+
+  /* Handy: die Nummer steht schon im Reiter */
+  @media (max-width: 55.99rem) { :global(.tabs-ready) .phase__num { display: none; } }
+
+  @media (min-width: 56rem) {
+    :global(.tabs-ready) .phases__tabs { grid-template-columns: repeat(4, 1fr); }
+    .phases__tab { padding: 1.25rem 1.25rem 1.375rem; }
+    .phase { grid-template-columns: auto 1fr; gap: 3rem; align-items: start; padding: 3rem 3.5rem; }
+    /* große Ziffer als ruhiges Gestaltungselement */
+    :global(.tabs-ready) .phase__num { font-size: clamp(6rem, 3rem + 6vw, 9rem); opacity: 0.9; }
+  }
+
+  /* ---------- Infektionsklausel ---------- */
+  .infection {
+    display: grid; margin-top: clamp(3rem, 2rem + 4vw, 5.5rem);
+    background: var(--c-aubergine); color: var(--c-offwhite);
+  }
+  .infection__media { min-height: 12rem; }
+  .infection__media :global(video) { height: 100%; }
+  .infection__text { display: grid; gap: 1.25rem; justify-items: start; padding: clamp(1.75rem, 1rem + 3vw, 3.5rem); }
+  .infection .label { color: var(--c-gold); }
+  .infection .muted { color: var(--c-text-muted-dark); max-width: var(--measure); }
+  .infection__title { font-family: var(--font-display); font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: var(--lh-tight); }
+  .infection .btn { margin-top: 0.5rem; }
+  @media (min-width: 56rem) {
+    .infection { grid-template-columns: 0.9fr 1.1fr; align-items: stretch; }
+    .infection__media :global(video) { aspect-ratio: auto !important; }
+    .infection__text { align-content: center; }
+  }
 </style>

@@ -129,6 +129,13 @@ const head = 'M1572 218L1600 216L1598 244';
 
   .hero__scroll { display: none; }
 
+  /* Handy/Tablet: die EKG-Linie läuft in einem eigenen Streifen unter der Ansprechpartner-Karte,
+     damit kein Ausschlag hinter der Karte oder den Buttons liegt */
+  @media (max-width: 63.99rem) {
+    .hero__inner { padding-bottom: 7.5rem; }
+    .hero__ekg { height: 6.5rem; bottom: 0.5rem; }
+  }
+
   @media (min-width: 64rem) {
     .hero { min-height: calc(100svh - 4.5rem); }
     .hero__shade {
