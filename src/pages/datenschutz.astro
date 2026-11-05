@@ -1,10 +1,13 @@
 ---
 import Legal from '../layouts/Legal.astro';
 import { site, legal } from '../site.config';
+// Mit Meta Pixel kommt ein eigener Abschnitt dazu; die folgenden Nummern verschieben sich
+const px = !!site.metaPixelId;
+const o = px ? 1 : 0;
 ---
 <!-- Stand der Technik: Hosting Netlify, Formular über Netlify Forms, Schriften lokal, keine Cookies, kein Tracking.
      Kommen Meta Pixel, Cookie-Banner, eingebettete Videos o. Ä. dazu, muss dieser Text ergänzt werden. -->
-<Legal title="Datenschutzerklärung" description="Informationen zur Verarbeitung personenbezogener Daten auf doktura.de." updated="Oktober 2026">
+<Legal title="Datenschutzerklärung" description="Informationen zur Verarbeitung personenbezogener Daten auf doktura.de." updated={px ? "November 2026" : "Oktober 2026"}>
   <h2>1. Verantwortlicher</h2>
   <p>
     Verantwortlich für die Datenverarbeitung auf dieser Webseite im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:
@@ -19,7 +22,9 @@ import { site, legal } from '../site.config';
 
   <h2>2. Das Wichtigste in Kürze</h2>
   <ul>
-    <li>Wir setzen keine Cookies und keine Analyse- oder Werbetools ein.</li>
+    {px
+      ? <li>Cookies und das Meta Pixel (Werbemessung) setzen wir nur ein, wenn Sie im Cookie-Banner zustimmen. Ohne Zustimmung findet kein Tracking statt.</li>
+      : <li>Wir setzen keine Cookies und keine Analyse- oder Werbetools ein.</li>}
     <li>Schriften und Videos liegen auf unserem eigenen Server. Beim Besuch werden keine Daten an Google o. Ä. übertragen.</li>
     <li>Personenbezogene Daten verarbeiten wir nur, wenn Sie uns über das Kontaktformular, per E-Mail oder Telefon kontaktieren.</li>
   </ul>
@@ -66,7 +71,32 @@ import { site, legal } from '../site.config';
     jeweiligen Anbieters öffnen. Dort gilt die Datenschutzerklärung dieses Anbieters.
   </p>
 
-  <h2>7. Ihre Rechte</h2>
+  {px && <>
+  <h2 id="meta-pixel">7. Cookies, Einwilligung und Meta Pixel</h2>
+  <p>
+    Wir nutzen das Meta Pixel der Meta Platforms Ireland Ltd., Merrie Hall, 4 Grand Canal Square, Grand Canal Harbour,
+    Dublin 2, Irland („Meta“), um zu messen, ob Besucher über unsere Anzeigen auf Instagram und Facebook zu uns kommen
+    und z. B. das Kontaktformular absenden oder einen Termin buchen. So können wir unsere Werbung auswerten und
+    verbessern. Dabei werden Cookies bzw. ähnliche Technologien auf Ihrem Gerät gespeichert und Daten wie IP-Adresse,
+    Browser- und Geräteinformationen, besuchte Seiten und die genannten Ereignisse an Meta übertragen. Meta kann diese
+    Daten mit Ihrem Konto bei Facebook oder Instagram verknüpfen und auch für eigene Zwecke nutzen.
+  </p>
+  <p>
+    Das Pixel wird erst geladen, wenn Sie im Cookie-Banner in die Kategorie „Marketing“ einwilligen. Rechtsgrundlage ist
+    Ihre Einwilligung nach § 25 Abs. 1 TDDDG und Art. 6 Abs. 1 lit. a DSGVO. Sie können Ihre Einwilligung jederzeit
+    über den Link „Cookie-Einstellungen“ im Footer mit Wirkung für die Zukunft widerrufen. Für die Erhebung und
+    Übermittlung der Daten an Meta sind wir mit Meta gemeinsam verantwortlich (Art. 26 DSGVO); die Vereinbarung dazu
+    finden Sie unter <a href="https://www.facebook.com/legal/controller_addendum" target="_blank" rel="noopener">facebook.com/legal/controller_addendum</a>.
+    Eine Übermittlung in die USA ist möglich; Meta Platforms, Inc. ist nach dem EU-US Data Privacy Framework zertifiziert.
+    Weitere Informationen: <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">facebook.com/privacy/policy</a>.
+  </p>
+  <p>
+    Ihre Auswahl im Cookie-Banner speichern wir in einem technisch notwendigen Cookie („cc_cookie“) für bis zu sechs
+    Monate, damit das Banner nicht bei jedem Besuch erneut erscheint (§ 25 Abs. 2 Nr. 2 TDDDG, Art. 6 Abs. 1 lit. f DSGVO).
+  </p>
+  </>}
+
+  <h2>{7+o}. Ihre Rechte</h2>
   <p>Sie haben jederzeit das Recht auf:</p>
   <ul>
     <li>Auskunft über Ihre bei uns gespeicherten Daten (Art. 15 DSGVO)</li>
@@ -81,7 +111,7 @@ import { site, legal } from '../site.config';
     E-Mail: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. Eine formlose Nachricht genügt.
   </p>
 
-  <h2>8. Beschwerderecht bei einer Aufsichtsbehörde</h2>
+  <h2>{8+o}. Beschwerderecht bei einer Aufsichtsbehörde</h2>
   <p>
     Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren, insbesondere in dem Bundesland
     Ihres Wohnsitzes, Ihres Arbeitsplatzes oder unseres Firmensitzes. Für uns zuständig ist die Landesbeauftragte für
@@ -89,12 +119,12 @@ import { site, legal } from '../site.config';
     <a href="https://www.ldi.nrw.de" target="_blank" rel="noopener">www.ldi.nrw.de</a>.
   </p>
 
-  <h2>9. Verschlüsselung</h2>
+  <h2>{9+o}. Verschlüsselung</h2>
   <p>
     Diese Webseite nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung. Sie erkennen eine verschlüsselte
     Verbindung an „https://“ und dem Schloss-Symbol in der Adresszeile Ihres Browsers.
   </p>
 
-  <h2>10. Keine automatisierte Entscheidungsfindung</h2>
+  <h2>{10+o}. Keine automatisierte Entscheidungsfindung</h2>
   <p>Wir nutzen keine automatisierte Entscheidungsfindung oder Profiling im Sinne von Art. 22 DSGVO.</p>
 </Legal>

@@ -28,9 +28,9 @@ export const site = {
   // leer oder Platzhalter: Instagram-Link wird ausgeblendet
   instagram: s.instagram && !hasPlaceholder(s.instagram) ? s.instagram : '',
 
-  // Meta Pixel: bleibt aus, solange hier nichts steht.
-  // Lädt nur nach Zustimmung im Cookie-Banner (Kategorie „Marketing“).
-  metaPixelId: '',
+  // Meta Pixel: bleibt aus, solange in „Einstellungen“ keine ID steht.
+  // Mit ID erscheint das Cookie-Banner; das Pixel lädt nur nach Zustimmung (Kategorie „Marketing“).
+  metaPixelId: /^\d{6,20}$/.test((s as any).metaPixelId?.trim() ?? '') ? (s as any).metaPixelId.trim() as string : '',
 
   year: new Date().getFullYear(),
 };

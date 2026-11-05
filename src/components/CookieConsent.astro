@@ -1,0 +1,119 @@
+---
+// Cookie-Banner + Meta Pixel. Wird nur eingebunden, wenn in „Einstellungen“ eine Meta Pixel ID steht.
+// Das Pixel lädt erst nach Zustimmung (Kategorie „Marketing“). Ablehnen ist genauso einfach wie Zustimmen.
+// Auf /danke (nach dem Kontaktformular) wird zusätzlich das Ereignis „Lead“ gesendet.
+import { site } from '../site.config';
+---
+<div data-cookie-consent data-pixel={site.metaPixelId} hidden></div>
+
+<script>
+  import 'vanilla-cookieconsent/dist/cookieconsent.css';
+  import * as CC from 'vanilla-cookieconsent';
+
+  const pixelId = document.querySelector<HTMLElement>('[data-cookie-consent]')?.dataset.pixel ?? '';
+  let loaded = false;
+
+  function loadPixel() {
+    if (loaded || !pixelId) return;
+    loaded = true;
+    const w = window as any;
+    if (!w.fbq) {
+      const n: any = (w.fbq = function (...args: unknown[]) {
+        n.callMethod ? n.callMethod(...args) : n.queue.push(args);
+      });
+      w._fbq = n; n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      document.head.appendChild(s);
+    }
+    w.fbq('init', pixelId);
+    w.fbq('track', 'PageView');
+    if (location.pathname.replace(/\/$/, '') === '/danke') w.fbq('track', 'Lead');
+    // Klick auf einen Termin-Button (Cal.com) als „Schedule“ zählen
+    document.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest?.('a[href*="cal.com"]');
+      if (a) w.fbq('track', 'Schedule');
+    });
+  }
+
+  const check = () => { if (CC.acceptedCategory('marketing')) loadPixel(); };
+
+  if (pixelId) {
+    CC.run({
+      guiOptions: {
+        consentModal: { layout: 'box', position: 'bottom left', equalWeightButtons: true },
+        preferencesModal: { layout: 'box', equalWeightButtons: true },
+      },
+      categories: {
+        necessary: { enabled: true, readOnly: true },
+        marketing: { autoClear: { cookies: [{ name: /^_fb/ }] } },
+      },
+      onConsent: check,
+      onChange: () => {
+        check();
+        // Zustimmung widerrufen: Seite neu laden, damit das Pixel sicher nicht mehr läuft
+        if (loaded && !CC.acceptedCategory('marketing')) location.reload();
+      },
+      language: {
+        default: 'de',
+        translations: {
+          de: {
+            consentModal: {
+              title: 'Ihre Privatsphäre',
+              description:
+                'Wir möchten mit dem Meta Pixel messen, ob unsere Anzeigen auf Instagram und Facebook ankommen. Dafür brauchen wir Ihre Einwilligung. Sie können sie jederzeit unter „Cookie-Einstellungen“ im Footer widerrufen. Mehr in der <a href="/datenschutz#meta-pixel">Datenschutzerklärung</a>.',
+              acceptAllBtn: 'Zustimmen',
+              acceptNecessaryBtn: 'Ablehnen',
+              showPreferencesBtn: 'Einstellungen',
+            },
+            preferencesModal: {
+              title: 'Cookie-Einstellungen',
+              acceptAllBtn: 'Alle zustimmen',
+              acceptNecessaryBtn: 'Alle ablehnen',
+              savePreferencesBtn: 'Auswahl speichern',
+              closeIconLabel: 'Schließen',
+              sections: [
+                {
+                  title: 'Notwendig',
+                  description: 'Speichert nur Ihre Auswahl in diesem Banner. Ohne diese Angabe würde das Banner bei jedem Besuch erneut erscheinen.',
+                  linkedCategory: 'necessary',
+                },
+                {
+                  title: 'Marketing (Meta Pixel)',
+                  description: 'Meta Platforms Ireland Ltd. misst, ob Besucher über unsere Anzeigen kommen und z. B. das Kontaktformular nutzen. Dabei werden Cookies gesetzt und Daten an Meta übertragen, auch in die USA.',
+                  linkedCategory: 'marketing',
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+  }
+</script>
+
+<style is:global>
+  /* Banner in den Doktura-Farben */
+  #cc-main {
+    --cc-font-family: var(--font-sans);
+    --cc-bg: var(--c-offwhite);
+    --cc-primary-color: var(--c-aubergine);
+    --cc-secondary-color: var(--c-text-muted-light);
+    --cc-btn-primary-bg: var(--c-aubergine);
+    --cc-btn-primary-color: var(--c-offwhite);
+    --cc-btn-primary-border-color: var(--c-aubergine);
+    --cc-btn-primary-hover-bg: #3a1550;
+    --cc-btn-primary-hover-border-color: #3a1550;
+    --cc-btn-secondary-bg: var(--c-offwhite-deep);
+    --cc-btn-secondary-color: var(--c-aubergine);
+    --cc-btn-secondary-hover-bg: var(--c-line-light);
+    --cc-btn-border-radius: var(--radius);
+    --cc-modal-border-radius: 4px;
+    --cc-separator-border-color: var(--c-line-light);
+    --cc-toggle-on-bg: var(--c-aubergine);
+    --cc-link-color: var(--c-aubergine);
+    --cc-z-index: 60;
+  }
+  #cc-main .cm__title, #cc-main .pm__title { font-family: var(--font-serif); font-weight: 400; }
+</style>

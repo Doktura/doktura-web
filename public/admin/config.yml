@@ -229,6 +229,7 @@ collections:
         fields:
           - { name: calUrl, label: 'Terminbuchung (Cal.com-Link)', widget: string, hint: 'Alle Termin-Buttons führen hierhin.' }
           - { name: instagram, label: 'Instagram-Link', widget: string }
+          - { name: metaPixelId, label: 'Meta Pixel ID (nur Ziffern)', widget: string, required: false, hint: 'Leer = kein Tracking, kein Cookie-Banner. Mit ID erscheint automatisch das Cookie-Banner; das Pixel lädt nur nach Zustimmung. Datenschutzerklärung wird automatisch ergänzt.' }
           - name: kontakt
             label: Kontakt
             widget: object

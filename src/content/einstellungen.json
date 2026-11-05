@@ -1,6 +1,7 @@
 {
   "calUrl": "https://cal.com/[PLATZHALTER]",
   "instagram": "https://www.instagram.com/[PLATZHALTER]",
+  "metaPixelId": "",
   "kontakt": {
     "person": "Zamin Köhler",
     "email": "info@koeundkofinanz.de",
@@ -13,7 +14,9 @@
     "vertreten": "Inhaber: Zamin Köhler",
     "handelsregister": "",
     "ustId": "",
-    "erlaubnisse": ["Versicherungsmakler mit Erlaubnis nach § 34d Abs. 1 GewO"],
+    "erlaubnisse": [
+      "Versicherungsmakler mit Erlaubnis nach § 34d Abs. 1 GewO"
+    ],
     "registernummer": "D-X1X0-4R35G-09",
     "ihk": "Industrie- und Handelskammer Mittlerer Niederrhein, Nordwall 39, 47798 Krefeld",
     "ihkKurz": "IHK Mittlerer Niederrhein",

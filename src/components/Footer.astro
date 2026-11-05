@@ -21,7 +21,7 @@ import { site } from '../site.config';
           <li><a href="/impressum">Impressum</a></li>
           <li><a href="/datenschutz">Datenschutz</a></li>
           <li><a href="/erstinformation">Erstinformation</a></li>
-          {/* Cookie-Einstellungen: wieder einblenden, sobald es ein Cookie-Banner gibt (z. B. für das Meta Pixel) */}
+          {site.metaPixelId && <li><button type="button" class="site-footer__linkbtn" data-cc="show-preferencesModal">Cookie-Einstellungen</button></li>}
         </ul>
       </div>
 
