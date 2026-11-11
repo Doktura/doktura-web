@@ -1,0 +1,107 @@
+---
+// 5-Punkte-Check: fünf konkrete Fragen statt allgemeiner Versprechen.
+// Antippen markiert eine Frage als „unsicher“ und klappt die Antwort auf; unten zählt der Button mit.
+// Ohne JavaScript bleibt es eine lesbare Liste mit aufklappbaren Antworten.
+import Icon from '../Icon.astro';
+import Rich from '../Rich.astro';
+import { site } from '../../site.config';
+import c from '../../content/startseite/02-check.json';
+---
+<section id="check" class="section section--light check" aria-labelledby="check-title"
+  data-check data-none={c.ergebnisKeine} data-one={c.ergebnisEine} data-many={c.ergebnisMehrere}>
+  <div class="container check__grid">
+    <header class="check__head reveal">
+      <p class="label">{c.label}</p>
+      <h2 id="check-title" class="h2 check__title"><Rich text={c.titel} /></h2>
+      <p class="muted">{c.einleitung}</p>
+    </header>
+
+    <ol class="check__list">
+      {c.punkte.map((p, i) => (
+        <li class="check__item reveal" style={`--d: ${i}`}>
+          <details data-check-item>
+            <summary>
+              <span class="check__no">0{i + 1}</span>
+              <span class="check__q">
+                <span class="check__topic">{p.thema}</span>
+                <span class="check__question">{p.frage}</span>
+              </span>
+              <span class="check__mark" aria-hidden="true">?</span>
+            </summary>
+            <p class="check__answer"><Rich text={p.antwort} /></p>
+          </details>
+        </li>
+      ))}
+    </ol>
+
+    <div class="check__result reveal">
+      <p data-check-text aria-live="polite">{c.ergebnisKeine}</p>
+      <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-check]').forEach((box) => {
+    const items = [...box.querySelectorAll<HTMLDetailsElement>('[data-check-item]')];
+    const out = box.querySelector<HTMLElement>('[data-check-text]');
+    const update = () => {
+      const n = items.filter((d) => d.open).length;
+      box.style.setProperty('--open', String(n));
+      box.classList.toggle('has-open', n > 0);
+      if (out) out.textContent = n === 0 ? box.dataset.none! : n === 1 ? box.dataset.one! : box.dataset.many!.replace('{n}', String(n));
+    };
+    items.forEach((d) => d.addEventListener('toggle', update));
+    update();
+  });
+</script>
+
+<style>
+  .check__grid { display: grid; gap: clamp(2rem, 1.5rem + 2vw, 3rem); }
+  .check__head { display: grid; gap: 1.25rem; max-width: 46rem; }
+  .check__title :global(em) { font-style: normal; color: var(--c-gold-text); }
+
+  .check__list { list-style: none; border-top: 1px solid var(--c-line-light); }
+  .check__item { border-bottom: 1px solid var(--c-line-light); }
+  summary {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 1rem 1.25rem; align-items: center;
+    padding: 1.375rem 0; cursor: pointer; list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .check__no { align-self: start; padding-top: 0.2rem; font-family: var(--font-display); font-size: 1.375rem; color: var(--c-gold-text); }
+  .check__q { display: grid; gap: 0.25rem; }
+  .check__topic { font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-text-muted-light); }
+  .check__question { font-family: var(--font-serif); font-size: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.3; }
+  summary:hover .check__question { color: var(--c-gold-text); }
+
+  /* Fragezeichen wird zur goldenen Markierung „unsicher“ */
+  .check__mark {
+    display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    border: 1px solid var(--c-line-light); font-family: var(--font-display); font-size: 1.25rem; color: var(--c-text-muted-light);
+    transition: background-color 300ms var(--ease), color 300ms var(--ease), border-color 300ms var(--ease), transform 400ms var(--ease);
+  }
+  details[open] .check__mark { background: var(--c-gold); border-color: var(--c-gold); color: var(--c-aubergine); transform: rotate(360deg); }
+  .check__answer {
+    margin: -0.25rem 0 1.5rem calc(1.25rem + 2.2ch); padding-left: 1.25rem; max-width: 44rem;
+    border-left: 2px solid var(--c-gold); color: var(--c-text-muted-light);
+  }
+
+  .check__result {
+    display: grid; gap: 1.25rem; justify-items: start; padding: 1.75rem; background: var(--c-aubergine); color: var(--c-offwhite);
+  }
+  .check__result p { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.35; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (interpolate-size: allow-keywords) {
+      .check__list { interpolate-size: allow-keywords; }
+      details::details-content { block-size: 0; overflow: clip; transition: block-size 500ms var(--ease), content-visibility 500ms allow-discrete; }
+      details[open]::details-content { block-size: auto; }
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .check__grid { grid-template-columns: 0.85fr 1.15fr; column-gap: 6rem; }
+    .check__head { grid-row: span 2; align-self: start; position: sticky; top: 7rem; }
+    .check__result { grid-template-columns: 1fr auto; align-items: center; padding: 1.75rem 2rem; }
+  }
+</style>

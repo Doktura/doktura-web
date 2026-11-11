@@ -11,7 +11,7 @@ export const site = {
   name: 'Doktura',
   claim: 'Finanzberatung für Ärzte',
   description:
-    'Finanzberatung ausschließlich für niedergelassene Ärzte: Absicherung, Praxis, Steuern und Vermögen aus einer Hand.',
+    'Finanzberatung nur für Ärztinnen, Ärzte und Zahnärzte: Berufsunfähigkeit, Praxisabsicherung und Altersvorsorge. Kostenloses Erstgespräch, persönlich oder per Video.',
 
   calReady,
   calUrl: calReady ? s.calUrl : '/#kontakt',
@@ -54,8 +54,8 @@ export const legal = {
 };
 
 export const nav = [
+  { label: 'Check', href: '/#check' },
   { label: 'Leistungen', href: '/#leistungen' },
-  { label: 'Über uns', href: '/#ueber-uns' },
-  { label: 'Ablauf', href: '/#ablauf' },
-  { label: 'Kontakt', href: '/#kontakt' },
+  { label: 'Über mich', href: '/#zamin' },
+  { label: 'Fragen', href: '/#fragen' },
 ];

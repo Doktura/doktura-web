@@ -1,11 +1,15 @@
 ---
 import Logo from './Logo.astro';
-import { site } from '../site.config';
+import { site, legal } from '../site.config';
 ---
 <footer class="site-footer section--dark">
   <div class="container">
     <div class="site-footer__top">
-      <a href="/" class="site-footer__logo" aria-label="Doktura – zur Startseite"><Logo /></a>
+      <div class="site-footer__brand">
+        <a href="/" class="site-footer__logo" aria-label="Doktura – zur Startseite"><Logo withClaim={false} /></a>
+        <p class="site-footer__claim">Finanzberatung für Ärzte</p>
+        <p class="site-footer__note">Doktura ist eine Marke der {legal.company}, Versicherungsmakler nach § 34d Abs. 1 GewO.</p>
+      </div>
 
       <div class="site-footer__col">
         <h2 class="site-footer__title">Kontakt</h2>
@@ -40,7 +44,9 @@ import { site } from '../site.config';
 <style>
   .site-footer { padding-block: clamp(4rem, 3rem + 4vw, 6rem) 2rem; border-top: 1px solid var(--c-aubergine-line); }
   .site-footer__top { display: grid; gap: 2.5rem; }
-  .site-footer__logo { display: block; width: min(15rem, 70%); color: var(--c-offwhite); }
+  .site-footer__logo { display: block; width: min(13rem, 60%); color: var(--c-offwhite); }
+  .site-footer__claim { margin-top: 0.75rem; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-text-muted-dark); }
+  .site-footer__note { margin-top: 1.25rem; max-width: 20rem; font-size: 0.875rem; line-height: 1.5; color: var(--c-text-muted-dark); }
   .site-footer__title {
     margin-bottom: 0.875rem; font-size: var(--fs-label); font-weight: 600;
     letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold);

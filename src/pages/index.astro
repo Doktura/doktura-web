@@ -1,25 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
-import TrustBar from '../components/home/TrustBar.astro';
-import About from '../components/home/About.astro';
+import Check from '../components/home/Check.astro';
 import Services from '../components/home/Services.astro';
-import Phases from '../components/home/Phases.astro';
 import Founder from '../components/home/Founder.astro';
+import Erstgespraech from '../components/home/Erstgespraech.astro';
 import Faq from '../components/home/Faq.astro';
-import Process from '../components/home/Process.astro';
-import Contact from '../components/home/Contact.astro';
 import StickyCta from '../components/home/StickyCta.astro';
 ---
 <Base>
-  <Hero />          <!-- Aubergine: Wer, für wen, Zamin -->
-  <TrustBar />      <!-- Aubergine, gehört zum Hero -->
-  <About />         <!-- Off-White: Wer wir sind, drei Gründe, großes Statement -->
-  <Services />      <!-- Aubergine: 8 Leistungen (Handy: zum Wischen) -->
-  <Phases />        <!-- Off-White: Phasen als Reiter + Infektionsklausel -->
-  <Founder />       <!-- Aubergine: Zamin, Zitat, Nachweise -->
-  <Faq />           <!-- Off-White: Transparenz + häufige Fragen -->
-  <Process />       <!-- Aubergine: Ablauf + Erstgespräch im Detail -->
-  <Contact />       <!-- Off-White: Formular + Termin -->
+  <Hero />          <!-- Aubergine: Zamin, „Ich berate nur Ärzte.“ (wie die Anzeigen) -->
+  <Check />         <!-- Off-White: 5-Punkte-Check zum Antippen -->
+  <Services />      <!-- Aubergine: 4 Leistungen + Phasen als Zeitleiste -->
+  <Founder />       <!-- Off-White: Zamin, Zitat, Nachweise -->
+  <Erstgespraech /> <!-- Aubergine: Ablauf, Kosten, Vergütung, Formular -->
+  <Faq />           <!-- Off-White: häufige Fragen -->
   <StickyCta />     <!-- Nur Handy: fester Termin-Button beim Scrollen -->
 </Base>

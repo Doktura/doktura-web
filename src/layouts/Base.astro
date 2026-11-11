@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import { getImage } from 'astro:assets';
-import { site } from '../site.config';
+import { site, legal } from '../site.config';
 import { images } from '../images';
 
 interface Props {
@@ -55,6 +55,19 @@ const ogUrl = new URL(og, Astro.site);
     <link rel="sitemap" href="/sitemap-index.xml" />
     <!-- Markiert, dass JavaScript läuft (für das Einblenden beim Scrollen) -->
     <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'InsuranceAgency',
+      name: 'Doktura',
+      legalName: legal.company,
+      description: site.description,
+      url: 'https://doktura.de/',
+      email: site.contact.email,
+      telephone: site.contact.phone,
+      founder: { '@type': 'Person', name: site.contact.person },
+      address: { '@type': 'PostalAddress', streetAddress: site.contact.address.split(',')[0], postalCode: site.contact.address.match(/\d{5}/)?.[0], addressLocality: site.contact.address.split(/\d{5}\s*/)[1], addressCountry: 'DE' },
+      areaServed: 'DE',
+    })} />
     <slot name="head" />
   </head>
   <body>

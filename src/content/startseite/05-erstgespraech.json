@@ -1,0 +1,34 @@
+{
+  "label": "Erstgespräch",
+  "titel": "Ein Gespräch. *Kostenlos.* Ohne Verpflichtung.",
+  "schritte": [
+    {
+      "titel": "Kennenlernen",
+      "text": "Wir sprechen über Ihre Situation, persönlich oder per Video."
+    },
+    {
+      "titel": "Prüfen",
+      "text": "Ich sehe mir Ihre bestehenden Verträge an und zeige, wo Lücken oder Doppelungen sind."
+    },
+    {
+      "titel": "Entscheiden",
+      "text": "Sie bekommen eine klare Einschätzung und entscheiden in Ruhe."
+    }
+  ],
+  "details": [
+    {
+      "titel": "Kosten",
+      "text": "Keine. Das Erstgespräch ist kostenlos und unverbindlich."
+    },
+    {
+      "titel": "Vergütung",
+      "text": "Als Makler werde ich bei einem Abschluss vom Versicherer vergütet (Courtage). Für die Beratung zahlen Sie nichts extra."
+    },
+    {
+      "titel": "Mitbringen",
+      "text": "Wenn vorhanden: Ihre Versicherungsverträge und die letzte Mitteilung Ihres Versorgungswerks. Nichts davon ist Pflicht."
+    }
+  ],
+  "formularTitel": "Oder schreiben Sie mir",
+  "button": "Termin online buchen"
+}

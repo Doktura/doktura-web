@@ -1,0 +1,120 @@
+---
+// Ablauf, Kosten und Kontakt in einem Abschnitt: alles, was man vor dem ersten Schritt wissen muss.
+import Icon from '../Icon.astro';
+import Rich from '../Rich.astro';
+import { site } from '../../site.config';
+import { ready } from '../../placeholders';
+import c from '../../content/startseite/05-erstgespraech.json';
+const details = c.details.map((d) => ({ ...d, text: ready(d.text) })).filter((d) => d.text);
+---
+<section id="erstgespraech" class="section section--dark eg" aria-labelledby="eg-title">
+  <div class="container eg__grid">
+    <div class="eg__info">
+      <header class="reveal">
+        <p class="label">{c.label}</p>
+        <h2 id="eg-title" class="h2 eg__title"><Rich text={c.titel} /></h2>
+      </header>
+
+      <ol class="eg__steps">
+        {c.schritte.map((s, i) => (
+          <li class="reveal" style={`--d: ${i}`}>
+            <span class="eg__no">{i + 1}</span>
+            <div><h3>{s.titel}</h3><p>{s.text}</p></div>
+          </li>
+        ))}
+      </ol>
+
+      <dl class="eg__details reveal">
+        {details.map((d) => <div><dt>{d.titel}</dt><dd><Rich text={d.text!} /></dd></div>)}
+      </dl>
+
+      {site.calReady && <div class="reveal"><a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a></div>}
+    </div>
+
+    <div id="kontakt" class="eg__form reveal">
+      <h3 class="eg__form-title">{site.calReady ? c.formularTitel : 'Schreiben Sie mir'}</h3>
+      <p class="eg__form-sub">Ich melde mich innerhalb eines Werktags. Oder rufen Sie an: <a href={`tel:${site.contact.phone.replace(/[^+\d]/g, '')}`}>{site.contact.phone}</a></p>
+      <form class="form" name="kontakt" method="POST" action="/danke" data-netlify="true" netlify-honeypot="firma-website">
+        <input type="hidden" name="form-name" value="kontakt" />
+        <p class="visually-hidden" aria-hidden="true">
+          <label>Bitte nicht ausfüllen <input name="firma-website" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-email">E-Mail</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="f-phone">Telefon <span class="optional">(optional)</span></label>
+            <input id="f-phone" name="telefon" type="tel" autocomplete="tel" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-message">Worum geht es? <span class="optional">(optional)</span></label>
+          <textarea id="f-message" name="nachricht" rows="3" placeholder="z. B. Niederlassung geplant, BU prüfen, Zweitmeinung"></textarea>
+        </div>
+        <div class="check">
+          <input id="f-privacy" name="datenschutz" type="checkbox" value="akzeptiert" required />
+          <label for="f-privacy">
+            Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner
+            Angaben zur Beantwortung meiner Anfrage einverstanden.
+          </label>
+        </div>
+        <button class="btn form__submit" type="submit">Erstgespräch anfragen <Icon name="arrow-right" /></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .eg__grid { display: grid; gap: 3.5rem; align-items: start; }
+  .eg__info { display: grid; gap: 2.5rem; }
+  .eg__title { margin-top: 1.25rem; }
+  .eg__title :global(em) { font-family: var(--font-serif); color: var(--c-gold); }
+
+  .eg__steps { list-style: none; display: grid; gap: 1.5rem; }
+  .eg__steps li { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; }
+  .eg__no {
+    display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--c-gold); border-radius: 50%;
+    font-family: var(--font-display); font-size: 1.25rem; color: var(--c-gold);
+  }
+  .eg__steps h3 { font-family: var(--font-serif); font-size: 1.375rem; line-height: 1.25; }
+  .eg__steps p { color: var(--c-text-muted-dark); }
+
+  .eg__details { display: grid; margin: 0; border-top: 1px solid var(--c-aubergine-line); }
+  .eg__details > div { display: grid; gap: 0.25rem; padding: 1rem 0; border-bottom: 1px solid var(--c-aubergine-line); }
+  .eg__details dt { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
+  .eg__details dd { margin: 0; color: var(--c-offwhite); }
+
+  .eg__form { padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); background: #fff; color: var(--c-aubergine); }
+  .eg__form-title { font-family: var(--font-serif); font-size: 1.625rem; line-height: 1.2; }
+  .eg__form-sub { margin: 0.5rem 0 1.5rem; font-size: 0.9375rem; color: var(--c-text-muted-light); }
+  .eg__form-sub a { color: var(--c-aubergine); font-weight: 600; white-space: nowrap; }
+
+  .form { display: grid; gap: 1.125rem; }
+  .field-row { display: grid; gap: 1.125rem; }
+  .field { display: grid; gap: 0.5rem; }
+  .field label { font-weight: 600; font-size: var(--fs-small); }
+  .optional { font-weight: 400; color: var(--c-text-muted-light); }
+  .field input, .field textarea {
+    width: 100%; min-height: 3.25rem; padding: 0.75rem 1rem;
+    font-size: 1rem; background: var(--c-offwhite); border: 1px solid var(--c-line-light); border-radius: var(--radius);
+    transition: border-color 200ms var(--ease), background-color 200ms var(--ease);
+  }
+  .field textarea { resize: vertical; min-height: 6rem; }
+  .field textarea::placeholder { color: #8a7d93; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--c-aubergine); background: #fff; }
+  .check { display: grid; grid-template-columns: auto 1fr; gap: 0.875rem; align-items: start; font-size: 0.875rem; color: var(--c-text-muted-light); }
+  .check input { width: 1.375rem; height: 1.375rem; margin: 0.15rem 0 0; accent-color: var(--c-aubergine); }
+  .form__submit { width: 100%; margin-top: 0.25rem; }
+
+  @media (min-width: 40rem) { .field-row { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 64rem) {
+    .eg__grid { grid-template-columns: 1fr 1fr; gap: 6rem; }
+    .eg__form { position: sticky; top: 7rem; }
+  }
+</style>

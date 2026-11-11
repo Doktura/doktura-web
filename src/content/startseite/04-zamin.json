@@ -1,0 +1,20 @@
+{
+  "label": "Ihr Ansprechpartner",
+  "zitat": "Ärzte brauchen keinen Generalisten. Sie brauchen einen *Spezialisten.*",
+  "text": "Ich bin Zamin Köhler, Gründer von Doktura. [Mein Vater ist Arzt.] Ich weiß, wie viel neben der Medizin auf dem Tisch landet: Praxisversicherungen, Finanzierung, Vorsorge. Und wie wenig Zeit dafür bleibt.\n\nDeshalb berate ich ausschließlich Ärztinnen und Ärzte. Ihr Beruf ist es, sich um Patienten zu kümmern. Um den Rest kümmere ich mich.",
+  "fakten": [
+    {
+      "titel": "Zulassung",
+      "text": "Versicherungsmakler nach § 34d Abs. 1 GewO"
+    },
+    {
+      "titel": "Ausbildung",
+      "text": "Wirtschaftsingenieur"
+    },
+    {
+      "titel": "Beratung",
+      "text": "Persönlich oder per Video"
+    }
+  ],
+  "button": "Persönlich kennenlernen"
+}

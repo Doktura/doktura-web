@@ -1,47 +1,34 @@
 {
-  "label": "Unsere Leistungen",
-  "titel": "Ihre finanzielle Situation besteht nicht aus einzelnen Verträgen.",
-  "einleitung": "Deshalb betrachten wir Absicherung, Praxis, Vermögen und Vorsorge als zusammenhängendes System und entwickeln daraus eine Struktur, die zu Ihnen passt.",
+  "label": "Leistungen",
+  "titel": "Alles, was Ihre Arbeitskraft und Ihre Praxis absichert.",
+  "einleitung": "Als Versicherungsmakler vergleiche ich Angebote vieler Versicherer und betrachte Ihre Verträge als Ganzes, nicht einzeln.",
   "leistungen": [
     {
       "icon": "bu",
-      "titel": "Berufsunfähigkeits­versicherung",
-      "text": "Absicherung Ihrer Arbeitskraft mit Fokus auf ärztespezifische Vertragsbedingungen – etwa Infektionsklauseln und Nachversicherungsmöglichkeiten."
+      "titel": "Berufsunfähigkeit",
+      "text": "Ärztespezifische Bedingungen: Infektionsklausel, Verzicht auf abstrakte Verweisung, Nachversicherung bei der Niederlassung."
     },
     {
       "icon": "praxis",
-      "titel": "Praxisversicherung",
-      "text": "Wir prüfen Ihre Praxisabsicherung auf Lücken, Leistungen, Versicherungssummen und Kosten."
-    },
-    {
-      "icon": "optimierung",
-      "titel": "Praxisoptimierung",
-      "text": "Bestehende Verträge und Strukturen werden gebündelt, geprüft und sinnvoll aufeinander abgestimmt."
-    },
-    {
-      "icon": "waage",
-      "titel": "Leistungs- und Kostenoptimierung",
-      "text": "Wir analysieren Leistungen, Kosten und Überschneidungen – für mehr Klarheit und weniger unnötige Komplexität."
-    },
-    {
-      "icon": "steuer",
-      "titel": "Steuerliche Abstimmung",
-      "text": "Finanzielle Entscheidungen betrachten wir immer im Zusammenspiel mit Ihrer steuerlichen Situation – in Abstimmung mit Ihrem Steuerberater."
-    },
-    {
-      "icon": "anlage",
-      "titel": "Vermögensaufbau",
-      "text": "Für den langfristigen Vermögensaufbau arbeiten wir mit spezialisierten Partnern zusammen und behalten Ihre Ziele, Ihre Liquidität und Ihre Absicherung gemeinsam im Blick."
+      "titel": "Praxisabsicherung",
+      "text": "Praxisausfall, Inhalt und Elektronik, Berufs- und Betriebshaftpflicht. Lücken finden, Doppelungen streichen."
     },
     {
       "icon": "vorsorge",
-      "titel": "Private Altersvorsorge",
-      "text": "Wir ergänzen bestehende Versorgung gezielt und schaffen eine langfristige Strategie für Ihren Ruhestand."
+      "titel": "Altersvorsorge",
+      "text": "Ergänzend zum Versorgungswerk, passend zu Ihrem Ruhestandsplan. Für Geldanlagen arbeite ich mit einem spezialisierten Partner zusammen."
     },
     {
-      "icon": "liquiditaet",
-      "titel": "Liquidität und Rücklagen",
-      "text": "Private Rücklagen, Praxisliquidität und geplante Investitionen werden sinnvoll aufeinander abgestimmt."
+      "icon": "waage",
+      "titel": "Vertrags-Check und Zweitmeinung",
+      "text": "Sie haben schon Verträge oder einen Berater? Ich prüfe, was passt, und sage es offen, wenn nichts zu tun ist."
     }
+  ],
+  "phasenTitel": "In jeder Phase Ihres Berufs",
+  "phasen": [
+    "Niederlassung planen",
+    "Gründung oder Übernahme",
+    "Etablierte Praxis",
+    "Praxisabgabe und Ruhestand"
   ]
 }

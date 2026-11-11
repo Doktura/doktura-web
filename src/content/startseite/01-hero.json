@@ -1,16 +1,15 @@
 {
-  "kicker": "Finanzberatung ausschließlich für niedergelassene Ärzte",
-  "titelZeile1": "Nur für *Ärzte.*",
-  "titelZeile2": "Finanzen mit Struktur.",
-  "einleitung": "Ein Ansprechpartner für alles, was Praxis und Privatleben finanziell betrifft.",
+  "kicker": "Für Ärztinnen, Ärzte und Zahnärzte",
+  "titelZeile1": "Ich berate",
+  "titelZeile2": "*nur Ärzte.*",
+  "einleitung": "Berufsunfähigkeit, Praxisabsicherung, Vorsorge: ein Ansprechpartner, der die Fragen Ihres Berufs kennt. Für Ihre Praxis und für alle, die eine planen.",
   "button": "Kostenloses Erstgespräch",
-  "link": "Leistungen ansehen",
-  "karteLabel": "Ihr Ansprechpartner",
-  "karteName": "Zamin Köhler",
-  "karteRolle": "Gründer von Doktura",
+  "link": "So läuft es ab",
+  "bildName": "Zamin Köhler",
+  "bildRolle": "Gründer von Doktura · Versicherungsmakler",
   "vorteile": [
-    "Nur für niedergelassene Ärzte",
-    "Kostenloses Erstgespräch",
-    "Abgestimmt mit Ihrer Steuerberatung"
+    "Erstgespräch kostenlos",
+    "Persönlich oder per Video",
+    "Makler nach § 34d GewO"
   ]
 }

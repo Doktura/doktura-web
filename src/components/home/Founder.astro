@@ -3,165 +3,59 @@ import { Picture } from 'astro:assets';
 import Icon from '../Icon.astro';
 import Rich from '../Rich.astro';
 import { site, legal } from '../../site.config';
-import c from '../../content/startseite/05-zamin.json';
-import { images } from '../../images';
-import { ready, showPlaceholders } from '../../placeholders';
-
-// Vorstellungsvideo von Zamin (60–90 s, Querformat). Solange leer, steht hier ein Platzhalter.
-// Beispiel: { src: '/video/zamin-vorstellung.mp4', poster: '/video/zamin-vorstellung.jpg' }
-const introVideo: { src: string; poster: string } | null = null;
-
-// Noch nicht ausgefüllte Angaben (Platzhalter in [eckigen Klammern]) erscheinen auf der Live-Seite nicht.
-const text = ready(c.text);
-const eigeneFakten = c.fakten.map((f) => ({ ...f, text: ready(f.text) })).filter((f) => f.text);
-// Solange Zamin keine eigenen Fakten eingetragen hat: belegte Angaben aus Impressum/Erstinformation
-const sitz = site.contact.address.split(',').pop()?.replace(/[0-9]+/g, '').trim();
-const fakten = eigeneFakten.length > 0 ? eigeneFakten : [
-  legal.permitShort && { titel: 'Zulassung', text: `${legal.permitShort}, ${legal.chamberShort}` },
-  sitz && { titel: 'Sitz', text: sitz },
-].filter(Boolean) as { titel: string; text: string }[];
-const zitat = ready(c.zitat);
+import c from '../../content/startseite/04-zamin.json';
+import buero from '../../assets/images/zamin-buero.jpg';
 ---
-<section id="zamin" class="section section--dark" aria-labelledby="founder-title">
-  <div class="container">
-    <div class="founder">
-      <div class="founder__media reveal">
-        <div class="founder__frame reveal-media">
-          <Picture
-            src={images.portrait}
-            formats={['avif', 'webp']}
-            widths={[480, 720, 1040]}
-            sizes="(min-width: 64rem) 32rem, 100vw"
-            alt={images.portraitAlt}
-            class="founder__img"
-          />
-        </div>
-      </div>
-
-      <div class="founder__text reveal" style="--d: 1">
-        <p class="label">{c.label}</p>
-        <h2 id="founder-title" class="h2"><Rich text={c.titel} /></h2>
-        {text && (
-          <div class="prose muted">
-            <Rich text={text} paragraphs />
-          </div>
-        )}
-
-        {fakten.length > 0 && (
-          <dl class="founder__facts">
-            {fakten.map((f) => <div><dt>{f.titel}</dt><dd><Rich text={f.text!} /></dd></div>)}
-          </dl>
-        )}
-
-        <div class="actions">
-          <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
-        </div>
-      </div>
+<section id="zamin" class="section section--light founder" aria-labelledby="founder-title">
+  <div class="container founder__grid">
+    <div class="founder__photo reveal-media">
+      <Picture src={buero} formats={['avif', 'webp']} widths={[400, 640]} sizes="(min-width: 64rem) 34vw, 90vw" alt="Zamin Köhler im Büro" />
     </div>
 
-    <!-- Nachweise: öffentlich prüfbar statt erfundener Siegel (Angaben aus „Einstellungen“) -->
-    <div class="proof reveal">
-      <p class="proof__title">Geprüft und registriert</p>
-      <ul class="proof__list">
-        <li><span>Vermittlerregister</span><strong>{legal.registerNo}</strong></li>
-        <li><span>Erlaubnis</span><strong>{legal.permitShort}</strong></li>
-        <li><span>Aufsicht</span><strong>{legal.chamberShort}</strong></li>
-        <li><a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">Eintrag im Register prüfen <span aria-hidden="true">↗</span></a></li>
-      </ul>
-    </div>
+    <div class="founder__text">
+      <p class="label reveal">{c.label}</p>
+      <blockquote class="reveal" style="--d: 1">
+        <p id="founder-title" class="h2 founder__quote">„<Rich text={c.zitat} />“</p>
+      </blockquote>
+      <div class="prose founder__body reveal" style="--d: 2"><Rich text={c.text} paragraphs /></div>
 
-    <!-- Persönliche Antwort auf „Warum nur Ärzte?“ -->
-    {zitat && (
-      <figure class="founder__quote reveal">
-        <blockquote><p><Rich text={zitat} /></p></blockquote>
-        <figcaption>{c.zitatUnterschrift}</figcaption>
-      </figure>
-    )}
-
-    <!-- Vorstellungsvideo (der Platzhalter dafür erscheint nur lokal, nicht auf der Live-Seite) -->
-    {(introVideo || showPlaceholders) && <div class="founder__video reveal-media">
-      {introVideo ? (
-        <video controls preload="none" playsinline poster={introVideo.poster}>
-          <source src={introVideo.src} type="video/mp4" />
-        </video>
-      ) : (
-        <div class="video-ph" role="img" aria-label="Platzhalter für das Vorstellungsvideo von Zamin Köhler">
-          <span class="video-ph__play" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg>
-          </span>
-          <p><strong>zamin-vorstellung.mp4</strong>Vorstellungsvideo · 60–90 Sekunden · Querformat 16:9 · 1920 × 1080</p>
+      <dl class="founder__facts reveal" style="--d: 3">
+        {c.fakten.map((f) => <div><dt>{f.titel}</dt><dd>{f.text}</dd></div>)}
+        <div>
+          <dt>Vermittlerregister</dt>
+          <dd><a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">{legal.registerNo} <Icon name="arrow-up-right" /></a></dd>
         </div>
-      )}
-    </div>}
+      </dl>
+
+      <div class="reveal" style="--d: 4">
+        <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-  .founder { display: grid; gap: 3rem; align-items: center; }
-  .founder__text { display: grid; gap: 1.5rem; }
-  .founder__media { position: relative; max-width: 32rem; }
-  .founder__media::after {
-    content: ''; position: absolute; inset: 1.25rem -1.25rem -1.25rem 1.25rem; z-index: 0;
-    border: 1px solid var(--c-gold); pointer-events: none;
-  }
-  .founder__frame { position: relative; z-index: 1; }
-  .founder__media :global(.founder__img) { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 0; }
-  .founder .actions { margin-top: 0.5rem; }
+  .founder__grid { display: grid; gap: 2.5rem; align-items: center; }
+  .founder__photo { max-width: 26rem; aspect-ratio: 4 / 5; overflow: hidden; }
+  .founder__photo :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .founder__text { display: grid; gap: 1.5rem; justify-items: start; }
+  blockquote { margin: 0; }
+  .founder__quote { font-size: clamp(2rem, 1.4rem + 2.6vw, 3.5rem); line-height: 1.1; }
+  .founder__quote :global(em) { font-family: var(--font-serif); color: var(--c-gold-text); }
+  .founder__body { color: var(--c-text-muted-light); }
+  .founder__facts { display: grid; gap: 0; width: 100%; margin: 0; border-top: 1px solid var(--c-line-light); }
+  .founder__facts > div { display: grid; grid-template-columns: 12.5rem 1fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--c-line-light); font-size: 0.9375rem; }
+  .founder__facts dt { font-weight: 600; font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-gold-text); padding-top: 0.1rem; }
+  .founder__facts dd { margin: 0; }
+  .founder__facts a { display: inline-flex; align-items: center; gap: 0.375rem; text-decoration: none; border-bottom: 1px solid var(--c-line-light); }
+  .founder__facts :global(svg) { width: 0.875rem; height: 0.875rem; }
 
-  .founder__facts { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--c-aubergine-line); }
-  .founder__facts > div { display: grid; gap: 0.25rem; padding: 0.875rem 0; border-bottom: 1px solid var(--c-aubergine-line); }
-  .founder__facts dt { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
-  .founder__facts dd { margin: 0; color: var(--c-offwhite); }
-
-  .proof {
-    display: grid; gap: 1.25rem; margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
-    padding: 1.5rem 1.75rem; border: 1px solid var(--c-aubergine-line); border-left: 3px solid var(--c-gold);
-    background: var(--c-aubergine-soft);
+  @media (max-width: 39.99rem) {
+    .founder__photo { max-width: 13rem; }
+    .founder__facts > div { grid-template-columns: 1fr; gap: 0.125rem; }
   }
-  .proof__title { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
-  .proof__list { list-style: none; display: grid; gap: 1rem; }
-  .proof__list li { display: grid; gap: 0.15rem; }
-  .proof__list span { font-size: 0.875rem; color: var(--c-text-muted-dark); }
-  .proof__list strong { font-weight: 600; }
-  .proof__list a { font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--c-gold); justify-self: start; }
-  @media (min-width: 48rem) {
-    .proof__list { grid-template-columns: repeat(4, auto); justify-content: space-between; align-items: end; }
-  }
-
-  .founder__quote { margin: clamp(4rem, 3rem + 4vw, 7rem) auto 0; max-width: 54rem; text-align: center; }
-  .founder__quote blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem); line-height: 1.25; }
-  .founder__quote blockquote::before { content: '\201C'; display: block; height: 0.55em; margin-bottom: 0.25em; font-size: 3em; line-height: 1; color: var(--c-gold); }
-  .founder__quote figcaption { margin-top: 1.5rem; font-size: var(--fs-small); color: var(--c-text-muted-dark); }
-
-  .founder__video { margin-top: clamp(3rem, 2rem + 4vw, 5rem); }
-  .founder__video video, .video-ph { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--c-aubergine-soft); }
-  .video-ph {
-    display: grid; place-content: center; justify-items: center; gap: 1.25rem; text-align: center;
-    border: 1px solid var(--c-aubergine-line); color: var(--c-lavender);
-    background:
-      radial-gradient(circle at 50% 45%, rgb(191 158 93 / 0.12), transparent 55%),
-      repeating-linear-gradient(135deg, transparent 0 14px, rgb(162 159 206 / 0.08) 14px 15px),
-      var(--c-aubergine-soft);
-  }
-  .video-ph p { padding-inline: 1rem; font-size: 0.9375rem; }
-  .video-ph strong { display: block; color: var(--c-offwhite); }
-  .video-ph__play {
-    display: grid; place-items: center; width: 5rem; height: 5rem; border-radius: 50%;
-    border: 1px solid var(--c-gold); color: var(--c-gold);
-  }
-  .video-ph__play svg { width: 1.75rem; height: 1.75rem; fill: currentColor; margin-left: 4px; }
-  @media (prefers-reduced-motion: no-preference) {
-    .video-ph__play { animation: play-ring 2.8s ease-out infinite; }
-  }
-  @keyframes play-ring { 0% { box-shadow: 0 0 0 0 rgb(191 158 93 / 0.45); } 70%, 100% { box-shadow: 0 0 0 1.25rem rgb(191 158 93 / 0); } }
-
-  @media (max-width: 40rem) { .founder__media { margin-right: 1.25rem; } }
   @media (min-width: 64rem) {
-    .founder { grid-template-columns: 0.9fr 1.1fr; gap: 6rem; }
-  }
-  /* Goldrahmen gleitet beim Einblenden an seinen Platz */
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .founder__media::after { transform: translate(-1.25rem, -1.25rem); opacity: 0; transition: transform 1400ms var(--ease) 500ms, opacity 900ms var(--ease) 500ms; }
-    :global(.js) .founder__media:global(.is-visible)::after { transform: none; opacity: 1; }
+    .founder__grid { grid-template-columns: 0.8fr 1.2fr; gap: 6rem; }
+    .founder__photo { max-width: none; }
   }
 </style>
