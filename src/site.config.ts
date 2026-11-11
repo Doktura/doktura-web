@@ -4,7 +4,7 @@
 import s from './content/einstellungen.json';
 import { hasPlaceholder } from './placeholders';
 
-// Solange kein echter Terminlink (cal.com) eingetragen ist, führen die Termin-Buttons zum Kontaktformular.
+// Solange kein echter Terminlink (Calendly oder Cal.com) eingetragen ist, führen die Termin-Buttons zum Kontaktformular.
 const calReady = !!s.calUrl && !hasPlaceholder(s.calUrl);
 
 export const site = {
