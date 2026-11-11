@@ -8,6 +8,7 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import Rich from '../../components/Rich.astro';
 import { images } from '../../images';
+import { site } from '../../site.config';
 import c from '../../content/erstgespraech.json';
 
 const line = 'M0 300H760L782 262L804 322L830 170L858 410L884 248L902 300H1500Q1516 300 1528 288L1600 216';
@@ -50,7 +51,7 @@ const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_ter
         <span class="quiz__progress" aria-hidden="true"><i data-progress></i></span>
       </div>
 
-      <form class="quiz__form" name="erstgespraech" method="POST" action="/erstgespraech/danke" data-netlify="true" netlify-honeypot="firma-website" data-funnel-form novalidate>
+      <form class="quiz__form" name="erstgespraech" method="POST" action="/erstgespraech/danke" data-netlify="true" netlify-honeypot="firma-website" data-funnel-form data-cal={site.calReady ? site.calUrl : undefined} novalidate>
         <input type="hidden" name="form-name" value="erstgespraech" />
         {utm.map((n) => <input type="hidden" name={n} value="" />)}
         <p class="visually-hidden" aria-hidden="true">
@@ -95,7 +96,7 @@ const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_ter
         <!-- Kontaktdaten -->
         <div class="step step--contact" data-panel>
           <h2 class="step__q step__q--big" tabindex="-1"><Rich text={c.kontaktTitel} /></h2>
-          <p class="muted step__text"><Rich text={c.kontaktText} /></p>
+          <p class="muted step__text"><Rich text={site.calReady ? c.kontaktTextKalender : c.kontaktText} /></p>
           <div class="card">
             <div class="field">
               <label for="e-name">Name</label>
@@ -121,7 +122,7 @@ const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_ter
               </label>
             </div>
             <p class="step__error" data-error hidden>Bitte füllen Sie die markierten Felder aus.</p>
-            <button class="btn card__submit" type="submit">{c.formButton} <Icon name="arrow-right" /></button>
+            <button class="btn card__submit" type="submit">{site.calReady ? c.formButtonKalender : c.formButton} <Icon name="arrow-right" /></button>
             <p class="card__note">{c.formHinweis}</p>
           </div>
         </div>
@@ -242,6 +243,26 @@ const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_ter
         h.type = 'hidden'; h.name = name; h.value = boxes.filter((b) => b.checked).map((b) => b.value).join(', ');
         boxes.forEach((b) => { b.disabled = true; });
         form.appendChild(h);
+      }
+
+      // Mit Kalender-Link: Anfrage im Hintergrund an Netlify senden, dann direkt zur Terminwahl
+      // (Name und E-Mail sind im Kalender schon eingetragen). Klappt das Senden nicht, normal absenden.
+      const cal = form.dataset.cal;
+      if (cal) {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        const data = new URLSearchParams(new FormData(form)).toString();
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
+          .then((r) => {
+            if (!r.ok) throw new Error(String(r.status));
+            try { window.fbq?.('track', 'Lead'); } catch {}
+            const url = new URL(cal);
+            url.searchParams.set('name', form.querySelector('#e-name').value);
+            url.searchParams.set('email', form.querySelector('#e-email').value);
+            setTimeout(() => { location.href = url.toString(); }, 300);
+          })
+          .catch(() => { btn.disabled = false; form.submit(); });
       }
     });
 

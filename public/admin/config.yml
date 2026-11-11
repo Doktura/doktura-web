@@ -167,6 +167,8 @@ collections:
           - { name: kontaktTitel, label: 'Letzter Schritt: Überschrift', widget: string, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
           - { name: kontaktText, label: 'Letzter Schritt: Text', widget: text, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
           - { name: formButton, label: 'Letzter Schritt: Button-Text', widget: string }
+          - { name: kontaktTextKalender, label: 'Letzter Schritt: Text, sobald ein Kalender-Link eingetragen ist', widget: text }
+          - { name: formButtonKalender, label: 'Letzter Schritt: Button-Text mit Kalender-Link', widget: string }
           - { name: formHinweis, label: 'Letzter Schritt: Hinweis unter dem Button', widget: string }
           - { name: dankeTitel, label: 'Danke-Seite: Überschrift', widget: string, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
           - { name: dankeText, label: 'Danke-Seite: Text', widget: text, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }

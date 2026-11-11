@@ -85,5 +85,7 @@
   "formButton": "Erstgespräch anfragen",
   "formHinweis": "Kostenlos und unverbindlich. Ihre Angaben behandeln wir vertraulich.",
   "dankeTitel": "Vielen Dank. *Wir melden uns.*",
-  "dankeText": "Ihre Anfrage ist angekommen. Zamin Köhler meldet sich persönlich bei Ihnen, um einen Termin zu finden."
+  "dankeText": "Ihre Anfrage ist angekommen. Zamin Köhler meldet sich persönlich bei Ihnen, um einen Termin zu finden.",
+  "kontaktTextKalender": "Im nächsten Schritt wählen Sie direkt einen freien Termin in Zamin Köhlers Kalender. Ihre Angaben sind dort schon eingetragen.",
+  "formButtonKalender": "Weiter zur Terminwahl"
 }
