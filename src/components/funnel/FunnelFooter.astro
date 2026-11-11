@@ -1,0 +1,28 @@
+---
+// Schlanker Fuß der Landingpage: Pflichtangaben und Rechtsseiten, sonst nichts.
+import { site, legal } from '../../site.config';
+---
+<footer class="funnel-footer section--dark">
+  <div class="container funnel-footer__inner">
+    <p>{legal.company} · {legal.permitShort} · Vermittlerregister {legal.registerNo}</p>
+    <ul>
+      <li><a href="/">Zur Startseite</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/erstinformation">Erstinformation</a></li>
+      {site.metaPixelId && <li><button type="button" class="funnel-footer__btn" data-cc="show-preferencesModal">Cookie-Einstellungen</button></li>}
+    </ul>
+    <p>© {site.year} Doktura</p>
+  </div>
+</footer>
+
+<style>
+  .funnel-footer { padding-block: 2.5rem; border-top: 1px solid var(--c-aubergine-line); font-size: 0.9375rem; color: var(--c-text-muted-dark); }
+  .funnel-footer__inner { display: grid; gap: 1rem; }
+  .funnel-footer ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+  .funnel-footer a, .funnel-footer__btn {
+    display: inline-block; padding-block: 0.375rem; color: inherit; text-decoration: none;
+    background: none; border: 0; padding-inline: 0; cursor: pointer; font: inherit;
+  }
+  .funnel-footer a:hover, .funnel-footer__btn:hover { color: var(--c-offwhite); }
+</style>

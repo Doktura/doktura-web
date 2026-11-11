@@ -29,7 +29,7 @@ import { site } from '../site.config';
     }
     w.fbq('init', pixelId);
     w.fbq('track', 'PageView');
-    if (location.pathname.replace(/\/$/, '') === '/danke') w.fbq('track', 'Lead');
+    if (/\/danke\/?$/.test(location.pathname)) w.fbq('track', 'Lead');
     // Klick auf einen Termin-Button (Cal.com) als „Schedule“ zählen
     document.addEventListener('click', (e) => {
       const a = (e.target as HTMLElement).closest?.('a[href*="cal.com"]');

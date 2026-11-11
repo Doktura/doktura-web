@@ -1,0 +1,15 @@
+---
+// Kopf der Anzeigen-Landingpage: nur das Logo, kein Menü – damit niemand vom Termin abgelenkt wird.
+import Logo from '../Logo.astro';
+---
+<header class="funnel-header">
+  <div class="container funnel-header__inner">
+    <span class="funnel-header__logo"><Logo withClaim={true} /></span>
+  </div>
+</header>
+
+<style>
+  .funnel-header { position: absolute; top: 0; left: 0; right: 0; z-index: 20; color: var(--c-offwhite); }
+  .funnel-header__inner { padding-block: 1.5rem; }
+  .funnel-header__logo { display: block; width: clamp(9.5rem, 7rem + 8vw, 12.5rem); }
+</style>

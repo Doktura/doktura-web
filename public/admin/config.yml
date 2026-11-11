@@ -137,6 +137,40 @@ collections:
               - { name: frage, label: 'Frage', widget: string }
               - { name: antwort, label: 'Antwort', widget: text, hint: '*Wort* = kursiv · [Linktext](/seite) = Link · Text in [eckigen Klammern] wird auf der Live-Seite ausgeblendet' }
 
+  - name: landingpage
+    label: Anzeigen-Landingpage
+    description: 'Der Fragen-Funnel unter doktura.de/erstgespraech, auf den die Meta-Anzeigen verlinken. Bitte keine Ausrufezeichen und keine Aussagen wie „garantiert“ oder „Steuern sparen“ (§ 34d / Meta-Regeln).'
+    format: json
+    files:
+      - name: erstgespraech
+        label: 'Fragen-Funnel /erstgespraech'
+        file: src/content/erstgespraech.json
+        fields:
+          - { name: kicker, label: 'Start: kleine Zeile über der Überschrift', widget: string }
+          - { name: titelZeile1, label: 'Start: Überschrift, Zeile 1', widget: string, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
+          - { name: titelZeile2, label: 'Start: Überschrift, Zeile 2', widget: string, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
+          - { name: einleitung, label: 'Start: Einleitungstext', widget: text, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
+          - { name: startButton, label: 'Start: Button-Text', widget: string }
+          - { name: startHinweis, label: 'Start: kleiner Text neben dem Button', widget: string }
+          - { name: vorteile, label: 'Start: Vorteile mit Häkchen', widget: list, field: { name: vorteil, label: Vorteil, widget: string } }
+          - name: fragen
+            label: 'Fragen (je eine pro Schritt)'
+            widget: list
+            fields:
+              - { name: feld, label: 'Interner Name (nicht ändern, steht so in den Formular-Eingängen)', widget: string, pattern: ['^[a-z_]+$', 'Nur Kleinbuchstaben und _'] }
+              - { name: frage, label: Frage, widget: string }
+              - { name: hinweis, label: 'Kleiner Hinweis unter der Frage', widget: string, required: false }
+              - { name: mehrfach, label: 'Mehrere Antworten möglich', widget: boolean, default: false }
+              - { name: nurWennFeld, label: 'Nur zeigen, wenn bei Frage … (interner Name)', widget: string, required: false, hint: 'Leer lassen = Frage wird immer gezeigt. Beispiel: situation' }
+              - { name: nurWennAntwort, label: '… diese Antwort gewählt wurde', widget: string, required: false, hint: 'Genau wie die Antwort geschrieben, z. B. Niederlassung geplant' }
+              - { name: antworten, label: Antworten, widget: list, field: { name: antwort, label: Antwort, widget: string } }
+          - { name: kontaktTitel, label: 'Letzter Schritt: Überschrift', widget: string, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
+          - { name: kontaktText, label: 'Letzter Schritt: Text', widget: text, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
+          - { name: formButton, label: 'Letzter Schritt: Button-Text', widget: string }
+          - { name: formHinweis, label: 'Letzter Schritt: Hinweis unter dem Button', widget: string }
+          - { name: dankeTitel, label: 'Danke-Seite: Überschrift', widget: string, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
+          - { name: dankeText, label: 'Danke-Seite: Text', widget: text, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
+
   - name: bilder
     label: Bilder
     description: Fotos und Vorschaubild austauschen. Einfach ein neues Bild hochladen, die Seite verkleinert und optimiert es beim Bauen automatisch.

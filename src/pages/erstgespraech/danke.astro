@@ -1,0 +1,26 @@
+---
+// Ziel des Formulars auf der Anzeigen-Landingpage. Hier zählt der Meta Pixel (nur mit Zustimmung) eine Anfrage („Lead“).
+import Base from '../../layouts/Base.astro';
+import Rich from '../../components/Rich.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../site.config';
+import c from '../../content/erstgespraech.json';
+---
+<Base funnel noindex title="Vielen Dank">
+  <section class="section section--dark fdanke">
+    <div class="container fdanke__inner">
+      <p class="label">Anfrage erhalten</p>
+      <h1 class="h2"><Rich text={c.dankeTitel} /></h1>
+      <p class="lead muted"><Rich text={c.dankeText} /></p>
+      {site.calReady && <a class="btn" href={site.calUrl} {...site.calAttrs}>Oder direkt einen Termin wählen <Icon name="arrow-up-right" /></a>}
+      <a class="link-arrow" href="/"><span>Mehr über Doktura</span><Icon name="arrow-right" /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .fdanke { min-height: 100svh; display: grid; align-items: center; }
+  .fdanke__inner { display: grid; justify-items: center; gap: 1.5rem; text-align: center; padding-top: 4rem; }
+  .fdanke :global(em) { font-family: var(--font-serif); font-style: italic; color: var(--c-gold); }
+  .fdanke .label::before { display: none; }
+</style>

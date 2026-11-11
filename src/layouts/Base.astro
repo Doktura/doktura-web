@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import FunnelHeader from '../components/funnel/FunnelHeader.astro';
+import FunnelFooter from '../components/funnel/FunnelFooter.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import { getImage } from 'astro:assets';
 import { site, legal } from '../site.config';
@@ -12,12 +14,14 @@ interface Props {
   description?: string;  // Meta-Beschreibung (ca. 150 Zeichen)
   ogImage?: string;      // Vorschaubild für Links (1200 × 630)
   noindex?: boolean;
+  funnel?: boolean;      // Landingpage für Anzeigen: ohne Menü, nur Logo und schlanker Fuß
 }
 const {
   title,
   description = site.description,
   ogImage,
   noindex = false,
+  funnel = false,
 } = Astro.props;
 
 const fullTitle = title ? `${title} | Doktura` : `Doktura – ${site.claim}`;
@@ -72,11 +76,11 @@ const ogUrl = new URL(og, Astro.site);
   </head>
   <body>
     <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
-    <Header />
+    {funnel ? <FunnelHeader /> : <Header />}
     <main id="inhalt">
       <slot />
     </main>
-    <Footer />
+    {funnel ? <FunnelFooter /> : <Footer />}
     {site.metaPixelId && <CookieConsent />}
 
     <script>

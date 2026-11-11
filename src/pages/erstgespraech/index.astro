@@ -1,0 +1,391 @@
+---
+// Fragen-Funnel für die Meta-Anzeigen: Start → Fragen (je ein Klick) → Kontaktdaten → Danke-Seite.
+// Kein Menü, keine Ablenkung. Fragen und Texte im Redaktionssystem unter „Anzeigen-Landingpage“.
+// Nicht für Google gedacht (noindex, nicht in der Sitemap).
+// Ohne JavaScript stehen alle Schritte untereinander und das Formular funktioniert trotzdem.
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Rich from '../../components/Rich.astro';
+import { images } from '../../images';
+import c from '../../content/erstgespraech.json';
+
+const line = 'M0 300H760L782 262L804 322L830 170L858 410L884 248L902 300H1500Q1516 300 1528 288L1600 216';
+const head = 'M1572 218L1600 216L1598 244';
+// Herkunft der Anfrage (aus dem Anzeigen-Link) – wird unsichtbar mit dem Formular gesendet
+const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+---
+<Base
+  funnel
+  noindex
+  title="Kostenloses Erstgespräch"
+  description="Finanzberatung ausschließlich für Ärztinnen und Ärzte. Ein paar kurze Fragen, dann meldet sich Zamin Köhler für Ihr kostenloses Erstgespräch."
+>
+  <section class="quiz section--dark" data-quiz data-step="0" aria-label="Erstgespräch anfragen">
+    <div class="quiz__bg" aria-hidden="true">
+      <div class="quiz__photo">
+        <Picture
+          src={images.portrait}
+          formats={['avif', 'webp']}
+          widths={[640, 960, 1440]}
+          sizes="(min-width: 64rem) 60vw, 100vw"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="quiz__shade"></div>
+      <svg class="quiz__ekg" viewBox="0 0 1600 480" preserveAspectRatio="xMidYMid slice" fill="none">
+        <path class="quiz__ekg-line" pathLength="1" d={line} />
+        <path class="quiz__ekg-line quiz__ekg-head" pathLength="1" d={head} />
+      </svg>
+      <div class="quiz__grain"></div>
+    </div>
+
+    <div class="container quiz__inner">
+      <!-- Fortschritt + Zurück (nur während der Fragen) -->
+      <div class="quiz__bar" data-quiz-bar>
+        <button type="button" class="quiz__back" data-back><Icon name="arrow-right" /><span>Zurück</span></button>
+        <span class="quiz__count" data-count aria-live="polite"></span>
+        <span class="quiz__progress" aria-hidden="true"><i data-progress></i></span>
+      </div>
+
+      <form class="quiz__form" name="erstgespraech" method="POST" action="/erstgespraech/danke" data-netlify="true" netlify-honeypot="firma-website" data-funnel-form novalidate>
+        <input type="hidden" name="form-name" value="erstgespraech" />
+        {utm.map((n) => <input type="hidden" name={n} value="" />)}
+        <p class="visually-hidden" aria-hidden="true">
+          <label>Bitte nicht ausfüllen <input name="firma-website" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <!-- Start -->
+        <div class="step step--start" data-panel>
+          <p class="label"><Rich text={c.kicker} /></p>
+          <h1 class="quiz__title">
+            <span class="line"><span><Rich text={c.titelZeile1} /></span></span>
+            <span class="line"><span><Rich text={c.titelZeile2} /></span></span>
+          </h1>
+          <p class="lead quiz__lead"><Rich text={c.einleitung} /></p>
+          <div class="quiz__start">
+            <button type="button" class="btn" data-next>{c.startButton} <Icon name="arrow-right" /></button>
+            <span class="quiz__hint">{c.startHinweis}</span>
+          </div>
+          <ul class="quiz__usp">
+            {c.vorteile.map((v) => <li><Icon name="check" />{v}</li>)}
+          </ul>
+        </div>
+
+        <!-- Fragen -->
+        {c.fragen.map((f, i) => (
+          <fieldset class="step" data-panel data-multi={f.mehrfach ? '' : undefined} data-if-field={f.nurWennFeld || undefined} data-if-value={f.nurWennAntwort || undefined}>
+            <legend class="step__q" tabindex="-1"><span class="step__no" data-no>0{i + 1}</span>{f.frage}</legend>
+            {f.hinweis && <p class="step__hint">{f.hinweis}</p>}
+            <div class="opts">
+              {f.antworten.map((a) => (
+                <label class="opt">
+                  <input type={f.mehrfach ? 'checkbox' : 'radio'} name={f.feld} value={a} required={!f.mehrfach} />
+                  <span class="opt__box"><span>{a}</span><i aria-hidden="true"><Icon name="check" /></i></span>
+                </label>
+              ))}
+            </div>
+            <p class="step__error" data-error hidden>Bitte wählen Sie eine Antwort.</p>
+            {f.mehrfach && <button type="button" class="btn step__next" data-next>Weiter <Icon name="arrow-right" /></button>}
+          </fieldset>
+        ))}
+
+        <!-- Kontaktdaten -->
+        <div class="step step--contact" data-panel>
+          <h2 class="step__q step__q--big" tabindex="-1"><Rich text={c.kontaktTitel} /></h2>
+          <p class="muted step__text"><Rich text={c.kontaktText} /></p>
+          <div class="card">
+            <div class="field">
+              <label for="e-name">Name</label>
+              <input id="e-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="e-email">E-Mail</label>
+              <input id="e-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="e-phone">Telefon <span class="optional" data-phone-hint>(optional)</span></label>
+              <input id="e-phone" name="telefon" type="tel" autocomplete="tel" />
+            </div>
+            <div class="field">
+              <label for="e-time">Wann passt es Ihnen? <span class="optional">(optional)</span></label>
+              <input id="e-time" name="wunschzeit" type="text" placeholder="z. B. mittwochs ab 18 Uhr" />
+            </div>
+            <div class="check">
+              <input id="e-privacy" name="datenschutz" type="checkbox" value="akzeptiert" required />
+              <label for="e-privacy">
+                Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen und bin einverstanden, dass meine
+                Angaben zur Vereinbarung des Erstgesprächs verarbeitet werden.
+              </label>
+            </div>
+            <p class="step__error" data-error hidden>Bitte füllen Sie die markierten Felder aus.</p>
+            <button class="btn card__submit" type="submit">{c.formButton} <Icon name="arrow-right" /></button>
+            <p class="card__note">{c.formHinweis}</p>
+          </div>
+        </div>
+      </form>
+
+      <!-- Vertrauen: wer sich meldet -->
+      <p class="quiz__who" data-who>
+        <span class="quiz__avatar">
+          <Picture src={images.avatar} formats={['avif', 'webp']} widths={[96, 192]} sizes="3rem" alt="" />
+        </span>
+        <span><strong>Zamin Köhler</strong> · Finanzberatung nur für Ärzte</span>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const root = document.querySelector('[data-quiz]');
+  const form = root?.querySelector('[data-funnel-form]');
+  if (root && form) {
+    root.classList.add('quiz--js');
+    const panels = [...form.querySelectorAll('[data-panel]')];
+    const progress = root.querySelector('[data-progress]');
+    const count = root.querySelector('[data-count]');
+    let current = 0;
+
+    // Anzeigen-Herkunft (utm_…) übernehmen, für die Sitzung merken
+    const params = new URLSearchParams(location.search);
+    form.querySelectorAll('input[type="hidden"][name^="utm_"]').forEach((el) => {
+      let v = params.get(el.name) ?? '';
+      try { if (v) sessionStorage.setItem(el.name, v); else v = sessionStorage.getItem(el.name) ?? ''; } catch {}
+      el.value = v.slice(0, 200);
+    });
+
+    // Fragen mit Bedingung (z. B. nur bei „Niederlassung geplant“)
+    function active(p) {
+      const f = p.dataset.ifField;
+      if (!f) return true;
+      return [...form.querySelectorAll(`input[name="${f}"]`)].some((x) => x.checked && x.value === p.dataset.ifValue);
+    }
+    function next() {
+      let i = current + 1;
+      while (i < panels.length - 1 && !active(panels[i])) i++;
+      show(i);
+    }
+
+    function show(i, push = true) {
+      current = Math.max(0, Math.min(i, panels.length - 1));
+      panels.forEach((p, n) => { p.hidden = n !== current; });
+      root.dataset.step = String(current);
+      if (current > 0) {
+        // Nummerierung nach den Fragen, die für diese Person gelten
+        const qs = panels.slice(1, -1).filter(active);
+        qs.forEach((p, n) => { const no = p.querySelector('[data-no]'); if (no) no.textContent = String(n + 1).padStart(2, '0'); });
+        const pos = qs.indexOf(panels[current]);
+        progress.style.transform = `scaleX(${pos < 0 ? 1 : (pos + 1) / (qs.length + 1)})`;
+        count.textContent = pos < 0 ? 'Letzter Schritt' : `Frage ${pos + 1} von ${qs.length}`;
+      }
+      if (push) history.pushState({ quiz: current }, '');
+      const q = panels[current].querySelector('.step__q');
+      if (current > 0) { q?.focus({ preventScroll: true }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    }
+
+    function valid(panel) {
+      const inputs = [...panel.querySelectorAll('input')];
+      const err = panel.querySelector('[data-error]');
+      let ok;
+      if (panel.classList.contains('step--contact')) {
+        ok = inputs.every((x) => x.checkValidity());
+        inputs.forEach((x) => x.closest('.field, .check')?.classList.toggle('is-invalid', !x.checkValidity()));
+      } else ok = inputs.some((x) => x.checked);
+      if (err) err.hidden = ok;
+      return ok;
+    }
+
+    form.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-next]');
+      if (!btn) return;
+      const panel = btn.closest('[data-panel]');
+      if (panel && !panel.classList.contains('step--start') && !valid(panel)) return;
+      next();
+    });
+    root.querySelector('[data-back]')?.addEventListener('click', () => history.back());
+    window.addEventListener('popstate', (e) => show(e.state?.quiz ?? 0, false));
+    history.replaceState({ quiz: 0 }, '');
+
+    // Einzelauswahl: nach dem Klick automatisch weiter
+    form.addEventListener('change', (e) => {
+      const t = e.target;
+      if (t.type === 'radio') {
+        t.closest('[data-panel]').querySelector('[data-error]').hidden = true;
+        // Telefon wird Pflicht, wenn jemand lieber telefonieren möchte
+        if (t.name === 'gespraech') {
+          const phone = t.value.includes('Telefon');
+          form.querySelector('#e-phone').required = phone;
+          form.querySelector('[data-phone-hint]').textContent = phone ? '' : '(optional)';
+        }
+        setTimeout(next, 280);
+      }
+      if (t.type === 'checkbox' && t.closest('[data-multi]')) t.closest('[data-panel]').querySelector('[data-error]').hidden = true;
+    });
+
+    // Markierung verschwindet, sobald das Feld ausgefüllt ist
+    form.addEventListener('input', (e) => {
+      const f = e.target.closest('.field, .check');
+      if (f && e.target.checkValidity()) f.classList.remove('is-invalid');
+    });
+
+    form.addEventListener('submit', (e) => {
+      if (!valid(panels[panels.length - 1])) { e.preventDefault(); return; }
+      // Antworten aus übersprungenen Fragen nicht mitsenden
+      panels.filter((p) => !active(p)).forEach((p) => p.querySelectorAll('input').forEach((x) => { x.disabled = true; }));
+      // Mehrfachauswahl als eine Zeile senden
+      const boxes = [...form.querySelectorAll('[data-multi] input[type="checkbox"]')];
+      const name = boxes[0]?.name;
+      if (name) {
+        const h = document.createElement('input');
+        h.type = 'hidden'; h.name = name; h.value = boxes.filter((b) => b.checked).map((b) => b.value).join(', ');
+        boxes.forEach((b) => { b.disabled = true; });
+        form.appendChild(h);
+      }
+    });
+
+    show(0, false);
+  }
+</script>
+
+<style>
+  /* ---------- Rahmen ---------- */
+  .quiz { position: relative; overflow: hidden; isolation: isolate; min-height: 100svh; display: grid; }
+  .quiz__bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .quiz__photo {
+    position: absolute; top: 0; left: 22%; right: -12%; height: 17rem;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 35%); mask-image: linear-gradient(to right, transparent 0, #000 35%);
+    transition: opacity 600ms var(--ease);
+  }
+  .quiz__photo :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 58% 8%; }
+  .quiz__shade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgb(35 5 47 / 0.55) 0, rgb(35 5 47 / 0) 5rem, rgb(35 5 47 / 0) 11rem, var(--c-aubergine) 17rem); }
+  .quiz__grain {
+    position: absolute; inset: 0; opacity: 0.08; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .quiz__ekg {
+    position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 4.5rem; overflow: visible; opacity: 0.8;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 30%); mask-image: linear-gradient(to right, transparent 0, #000 30%);
+  }
+  .quiz__ekg path { stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .quiz__ekg-line { stroke: var(--c-gold); stroke-width: 1.5; opacity: 0.55; }
+
+  .quiz__inner { display: grid; align-content: start; gap: 2rem; padding-block: 15.5rem 6rem; }
+  /* Während der Fragen: Foto weg, Inhalt rückt nach oben */
+  .quiz--js:not([data-step="0"]) .quiz__photo { opacity: 0; }
+  .quiz--js:not([data-step="0"]) .quiz__inner { padding-top: 7rem; }
+
+  /* ---------- Fortschritt ---------- */
+  .quiz__bar { display: none; }
+  .quiz--js:not([data-step="0"]) .quiz__bar { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 0.75rem 1rem; }
+  .quiz__back {
+    display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0;
+    background: none; border: 0; color: var(--c-text-muted-dark); cursor: pointer; font-size: 0.9375rem;
+  }
+  .quiz__back:hover { color: var(--c-offwhite); }
+  .quiz__back :global(svg) { width: 1rem; height: 1rem; transform: rotate(180deg); color: var(--c-gold); }
+  .quiz__count { justify-self: end; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
+  .quiz__progress { grid-column: 1 / -1; height: 2px; background: var(--c-aubergine-line); overflow: hidden; }
+  .quiz__progress i { display: block; height: 100%; background: var(--c-gold); transform-origin: left; transform: scaleX(0); transition: transform 600ms var(--ease); }
+
+  /* ---------- Schritte ---------- */
+  .quiz__form { display: grid; gap: 4rem; }
+  .step { display: grid; gap: 1.25rem; min-width: 0; margin: 0; padding: 0; border: 0; }
+  .step[hidden] { display: none; }
+  .quiz--js .step { animation: step-in 500ms var(--ease) both; }
+
+  .quiz__title { font-family: var(--font-display); font-weight: 400; line-height: 1.04; letter-spacing: -0.015em; font-size: clamp(2.25rem, 1rem + 6vw, 5.25rem); }
+  .quiz__title .line { display: block; }
+  .quiz__title :global(em) { font-family: var(--font-serif); font-style: italic; color: var(--c-gold); font-size: 0.92em; }
+  .quiz__lead { color: var(--c-offwhite); max-width: 34rem; }
+  .quiz__start { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-top: 0.5rem; }
+  .quiz__start .btn { min-width: 14rem; }
+  .quiz__hint { font-size: 0.9375rem; color: var(--c-text-muted-dark); }
+  .quiz__usp { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.9375rem; color: var(--c-text-muted-dark); }
+  .quiz__usp li { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .quiz__usp :global(svg) { width: 1rem; height: 1rem; color: var(--c-gold); }
+
+  .step__q {
+    display: grid; gap: 0.75rem; padding: 0; margin-bottom: 0.5rem; outline: none;
+    font-family: var(--font-display); font-size: clamp(1.875rem, 1.3rem + 2.6vw, 3.25rem); line-height: 1.1; letter-spacing: -0.01em;
+  }
+  .step__q :global(em) { font-family: var(--font-serif); font-style: italic; color: var(--c-gold); }
+  .step__no { font-family: var(--font-serif); font-style: italic; font-size: 1.125rem; color: var(--c-gold); }
+  .step__hint { margin-top: -0.25rem; font-size: 0.9375rem; color: var(--c-text-muted-dark); }
+  .step__text { max-width: 34rem; }
+  .step__error { color: #f0c2a8; font-size: 0.9375rem; }
+  .step__next { justify-self: start; min-width: 12rem; }
+
+  /* Antworten als große Felder */
+  .opts { display: grid; gap: 0.75rem; max-width: 40rem; }
+  .opt { position: relative; display: block; cursor: pointer; }
+  .opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .opt__box {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    min-height: 3.75rem; padding: 0.875rem 1.25rem; font-size: 1.0625rem; height: 100%;
+    background: rgb(47 18 64 / 0.6); border: 1px solid var(--c-aubergine-line); border-radius: var(--radius);
+    transition: border-color 200ms var(--ease), background-color 200ms var(--ease);
+  }
+  .opt__box i { flex: none; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border: 1px solid var(--c-aubergine-line); border-radius: 50%; color: transparent; transition: all 200ms var(--ease); }
+  .opt input[type="checkbox"] + .opt__box i { border-radius: var(--radius); }
+  .opt__box :global(svg) { width: 0.875rem; height: 0.875rem; }
+  @media (hover: hover) { .opt:hover .opt__box { border-color: var(--c-gold); } }
+  .opt input:checked + .opt__box { border-color: var(--c-gold); background: var(--c-aubergine-soft); }
+  .opt input:checked + .opt__box i { background: var(--c-gold); border-color: var(--c-gold); color: var(--c-aubergine); }
+  .opt input:focus-visible + .opt__box { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+
+  /* Kontaktdaten */
+  .card { display: grid; gap: 1.125rem; max-width: 40rem; padding: clamp(1.25rem, 1rem + 1.5vw, 2rem); background: var(--c-offwhite); color: var(--c-aubergine); border-radius: var(--radius); }
+  .field { display: grid; gap: 0.5rem; }
+  .field label { font-weight: 600; font-size: var(--fs-small); }
+  .optional { font-weight: 400; color: var(--c-text-muted-light); }
+  .field input {
+    width: 100%; min-height: 3.25rem; padding: 0.75rem 1rem; font-size: 1rem;
+    background: #fff; border: 1px solid var(--c-line-light); border-radius: var(--radius);
+  }
+  .field input:focus { outline: none; border-color: var(--c-aubergine); }
+  .field:global(.is-invalid) input { border-color: #b4532a; }
+  .check { display: grid; grid-template-columns: auto 1fr; gap: 0.875rem; align-items: start; font-size: 0.9375rem; color: var(--c-text-muted-light); }
+  .check input { width: 1.375rem; height: 1.375rem; margin: 0.15rem 0 0; accent-color: var(--c-aubergine); }
+  .check:global(.is-invalid) label { color: #b4532a; }
+  .card .step__error { color: #b4532a; }
+  .card__submit { width: 100%; margin-top: 0.25rem; }
+  .card__note { font-size: 0.9375rem; color: var(--c-text-muted-light); text-align: center; }
+
+  /* Wer sich meldet */
+  .quiz__who { display: none; }
+  .quiz--js:not([data-step="0"]) .quiz__who { display: flex; align-items: center; gap: 0.875rem; font-size: 0.9375rem; color: var(--c-text-muted-dark); }
+  .quiz__who strong { color: var(--c-offwhite); font-weight: 600; }
+  .quiz__avatar { flex: none; width: 3rem; height: 3rem; border-radius: 50%; overflow: hidden; border: 1px solid var(--c-gold); }
+  .quiz__avatar :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+
+  @media (max-width: 47.99rem) {
+    .quiz__start .btn, .step__next { width: 100%; }
+  }
+  @media (min-width: 48rem) {
+    .opts { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 64rem) {
+    .quiz__photo { inset: 0 0 0 42%; height: auto; -webkit-mask-image: none; mask-image: none; }
+    .quiz__photo :global(img) { object-position: 50% 22%; }
+    .quiz__shade {
+      background:
+        linear-gradient(to top, var(--c-aubergine) 0%, rgb(35 5 47 / 0.3) 28%, transparent 50%),
+        linear-gradient(to right, var(--c-aubergine) 0%, var(--c-aubergine) 42%, rgb(35 5 47 / 0.75) 52%, rgb(35 5 47 / 0.15) 74%, rgb(35 5 47 / 0.35) 100%);
+    }
+    .quiz__inner { align-content: center; padding-block: 9rem 7rem; }
+    .quiz__inner > * { max-width: 44rem; }
+    .quiz--js:not([data-step="0"]) .quiz__photo { opacity: 0.25; }
+    .quiz--js:not([data-step="0"]) .quiz__inner { padding-top: 9rem; }
+    .quiz__ekg { height: 30%; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .quiz__ekg-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: q-draw 2.6s var(--ease) 0.6s forwards; }
+    .quiz__ekg-head { animation-duration: 0.4s; animation-delay: 3.1s; }
+  }
+  @media (prefers-reduced-motion: reduce) { .quiz--js .step { animation: none; } }
+  @keyframes step-in { from { opacity: 0; transform: translateY(16px); } }
+  @keyframes q-draw { to { stroke-dashoffset: 0; } }
+</style>

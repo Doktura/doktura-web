@@ -1,0 +1,89 @@
+{
+  "kicker": "Kostenloses Erstgespräch",
+  "titelZeile1": "Sie haben Medizin studiert,",
+  "titelZeile2": "nicht *Finanzen.*",
+  "einleitung": "Beantworten Sie ein paar kurze Fragen. Danach meldet sich Zamin Köhler persönlich für Ihr kostenloses Erstgespräch, per Video oder in Düsseldorf.",
+  "startButton": "Fragen starten",
+  "startHinweis": "Dauert etwa eine Minute",
+  "vorteile": [
+    "100 % kostenlos",
+    "Nur für Ärztinnen und Ärzte",
+    "Ohne Verpflichtung"
+  ],
+  "fragen": [
+    {
+      "feld": "situation",
+      "frage": "Wo stehen Sie gerade?",
+      "mehrfach": false,
+      "antworten": [
+        "In der Weiterbildung",
+        "Fachärztin / Facharzt, angestellt",
+        "Niederlassung geplant",
+        "Bereits niedergelassen"
+      ]
+    },
+    {
+      "feld": "niederlassung_zeitpunkt",
+      "frage": "Wann planen Sie die Niederlassung?",
+      "mehrfach": false,
+      "nurWennFeld": "situation",
+      "nurWennAntwort": "Niederlassung geplant",
+      "antworten": [
+        "In den nächsten 12 Monaten",
+        "In 1 bis 3 Jahren",
+        "Noch offen"
+      ]
+    },
+    {
+      "feld": "fachbereich",
+      "frage": "In welchem Bereich arbeiten Sie?",
+      "mehrfach": false,
+      "antworten": [
+        "Allgemeinmedizin",
+        "Fachärztlicher Bereich",
+        "Zahnmedizin",
+        "Anderer Bereich"
+      ]
+    },
+    {
+      "feld": "themen",
+      "frage": "Welche Themen sind Ihnen gerade wichtig?",
+      "hinweis": "Mehrere Antworten möglich",
+      "mehrfach": true,
+      "antworten": [
+        "Berufsunfähigkeit",
+        "Praxis absichern",
+        "Altersvorsorge und Versorgungswerk",
+        "Vermögensaufbau",
+        "Zweitmeinung zu meinen Verträgen",
+        "Weiß ich noch nicht"
+      ]
+    },
+    {
+      "feld": "berater",
+      "frage": "Haben Sie schon einen Finanz- oder Versicherungsberater?",
+      "mehrfach": false,
+      "antworten": [
+        "Nein",
+        "Ja",
+        "Ja, aber ich möchte eine zweite Meinung"
+      ]
+    },
+    {
+      "feld": "gespraech",
+      "frage": "Wie möchten Sie am liebsten sprechen?",
+      "mehrfach": false,
+      "antworten": [
+        "Per Video",
+        "Persönlich in Düsseldorf",
+        "Erst einmal am Telefon"
+      ]
+    }
+  ],
+  "kontaktTitel": "Fast geschafft. *Wie erreichen wir Sie?*",
+  "kontaktText": "Zamin Köhler meldet sich persönlich bei Ihnen und schlägt einen Termin vor, der in Ihre Woche passt.",
+  "formButton": "Erstgespräch anfragen",
+  "formHinweis": "Kostenlos und unverbindlich. Ihre Angaben behandeln wir vertraulich.",
+  "dankeTitel": "Vielen Dank. *Wir melden uns.*",
+  "dankeText": "Ihre Anfrage ist angekommen. Zamin Köhler meldet sich persönlich bei Ihnen, um einen Termin zu finden."
+}
