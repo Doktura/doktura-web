@@ -173,6 +173,50 @@ collections:
           - { name: dankeTitel, label: 'Danke-Seite: Überschrift', widget: string, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
           - { name: dankeText, label: 'Danke-Seite: Text', widget: text, hint: '*Wort* = kursiv (Gold) · [Linktext](/seite) = Link' }
 
+  - name: dashboard
+    label: Team-Dashboard (intern)
+    description: 'Stand des Projekts und Aufgaben für doktura.de/team (mit Passwort geschützt). Nach dem Speichern ist die Seite in 1–2 Minuten aktuell. Achtung: Das Repo auf GitHub ist öffentlich, also keine Kundendaten, Zahlen oder Passwörter eintragen.'
+    format: json
+    files:
+      - name: dashboard
+        label: 'Aufgaben, Stand & Zeitplan'
+        file: src/content/dashboard.json
+        fields:
+          - { name: fokus, label: 'Im Fokus (ein, zwei Sätze, was gerade am wichtigsten ist)', widget: text, required: false }
+          - { name: countdownTitel, label: 'Countdown: wofür? (z. B. Instagram-Launch)', widget: string }
+          - { name: countdownDatum, label: 'Countdown: Datum', widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false }
+          - name: todos
+            label: Aufgaben
+            label_singular: Aufgabe
+            widget: list
+            summary: '{{fields.wer}} · {{fields.status}} · {{fields.aufgabe}}'
+            fields:
+              - { name: aufgabe, label: Aufgabe, widget: string }
+              - { name: wer, label: 'Wer?', widget: select, options: [Leon, Zamin, Beide, Claude], default: Leon }
+              - { name: status, label: Status, widget: select, default: offen, options: [{ label: 'Offen', value: offen }, { label: 'In Arbeit', value: arbeit }, { label: 'Wartet (auf jemand anderen)', value: wartet }, { label: 'Erledigt', value: erledigt }] }
+              - { name: prio, label: Priorität, widget: select, default: normal, options: [{ label: 'Hoch', value: hoch }, { label: 'Normal', value: normal }, { label: 'Niedrig', value: niedrig }] }
+              - { name: bereich, label: Bereich, widget: select, default: Website, options: [Website, Instagram, Video, Meta Ads, Rechtliches, Organisation] }
+              - { name: faellig, label: 'Fällig bis', widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, required: false }
+              - { name: notiz, label: 'Notiz (optional)', widget: text, required: false }
+          - name: bereiche
+            label: Stand je Bereich
+            label_singular: Bereich
+            widget: list
+            summary: '{{fields.name}} · {{fields.fortschritt}} %'
+            fields:
+              - { name: name, label: Bereich, widget: string }
+              - { name: status, label: Status, widget: select, default: arbeit, options: [{ label: 'Läuft gut', value: gut }, { label: 'In Arbeit', value: arbeit }, { label: 'Wartet', value: wartet }, { label: 'Blockiert', value: blockiert }, { label: 'Fertig', value: fertig }] }
+              - { name: fortschritt, label: 'Fortschritt in %', widget: number, value_type: int, min: 0, max: 100, step: 5, default: 0 }
+              - { name: stand, label: 'Stand in 1–2 Sätzen', widget: text }
+          - name: meilensteine
+            label: Zeitplan
+            label_singular: Termin
+            widget: list
+            summary: '{{fields.datum}} · {{fields.titel}}'
+            fields:
+              - { name: datum, label: Datum, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false }
+              - { name: titel, label: 'Was passiert?', widget: string }
+
   - name: bilder
     label: Bilder
     description: Fotos und Vorschaubild austauschen. Einfach ein neues Bild hochladen, die Seite verkleinert und optimiert es beim Bauen automatisch.

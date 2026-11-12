@@ -1,0 +1,290 @@
+---
+// Internes Team-Dashboard: Stand des Projekts und wer welche Aufgaben hat.
+// Geschützt per Passwort (netlify/edge-functions/team-schutz.ts), nicht in der Sitemap, nicht verlinkt, noindex.
+// Inhalte bearbeiten: doktura.de/admin → „Team-Dashboard (intern)“. Nach dem Speichern ist die Seite in 1–2 Minuten aktuell.
+// Achtung: Das GitHub-Repo ist öffentlich, die Inhalte (src/content/dashboard.json) sind dort lesbar.
+import Base from '../layouts/Base.astro';
+import d from '../content/dashboard.json';
+
+type Todo = (typeof d.todos)[number];
+
+const personen = [
+  { name: 'Leon', rolle: 'Marketing, Website, Anzeigen' },
+  { name: 'Zamin', rolle: 'Beratung, Inhalte, Rechtliches' },
+  { name: 'Claude', rolle: 'Assistent: Umsetzung' },
+];
+
+const statusText: Record<string, string> = { offen: 'Offen', arbeit: 'In Arbeit', wartet: 'Wartet', erledigt: 'Erledigt' };
+const bereichStatus: Record<string, string> = { gut: 'Läuft', arbeit: 'In Arbeit', wartet: 'Wartet', blockiert: 'Blockiert', fertig: 'Fertig' };
+const prioRang: Record<string, number> = { hoch: 0, normal: 1, niedrig: 2 };
+const statusRang: Record<string, number> = { arbeit: 0, offen: 1, wartet: 2, erledigt: 3 };
+
+const sortiert = (a: Todo, b: Todo) =>
+  (statusRang[a.status] ?? 9) - (statusRang[b.status] ?? 9) ||
+  (prioRang[a.prio] ?? 9) - (prioRang[b.prio] ?? 9) ||
+  (a.faellig || '9999').localeCompare(b.faellig || '9999');
+
+const offen = d.todos.filter((t) => t.status !== 'erledigt');
+const erledigt = d.todos.filter((t) => t.status === 'erledigt');
+const fuer = (name: string) =>
+  offen.filter((t) => t.wer === name || (t.wer === 'Beide' && (name === 'Leon' || name === 'Zamin'))).sort(sortiert);
+
+const datum = (iso: string, opts: Intl.DateTimeFormatOptions = { weekday: 'short', day: '2-digit', month: '2-digit' }) =>
+  iso ? new Date(`${iso.slice(0, 10)}T12:00:00`).toLocaleDateString('de-DE', opts) : '';
+
+const gebaut = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin', weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const meilensteine = [...d.meilensteine].sort((a, b) => a.datum.localeCompare(b.datum));
+const editUrl = '/admin/#/collections/dashboard/entries/dashboard';
+---
+<Base funnel noindex title="Team-Dashboard" description="Interner Bereich.">
+  <section class="dash-top section--dark">
+    <div class="container">
+      <div class="dash-top__row">
+        <div>
+          <p class="label">Intern · Team-Dashboard</p>
+          <h1 class="h2 dash-top__title">Stand der <em>Dinge</em></h1>
+          <p class="muted dash-top__meta">Zuletzt aktualisiert: {gebaut} Uhr</p>
+        </div>
+        <div class="dash-count" data-countdown={d.countdownDatum}>
+          <span class="dash-count__zahl" data-countdown-zahl>–</span>
+          <span class="dash-count__text"><span data-countdown-einheit>Tage</span> bis {d.countdownTitel}<br /><span class="muted">{datum(d.countdownDatum, { weekday: 'long', day: '2-digit', month: 'long' })}</span></span>
+        </div>
+      </div>
+
+      {d.fokus && (
+        <div class="dash-fokus">
+          <p class="dash-fokus__label">Im Fokus</p>
+          <p class="dash-fokus__text">{d.fokus}</p>
+        </div>
+      )}
+
+      <dl class="dash-kpis">
+        <div><dt>Offene Aufgaben</dt><dd>{offen.length}</dd></div>
+        <div><dt>Hohe Priorität</dt><dd>{offen.filter((t) => t.prio === 'hoch').length}</dd></div>
+        <div class="dash-kpis__warn"><dt>Überfällig</dt><dd data-ueberfaellig-zahl>0</dd></div>
+        <div><dt>Erledigt</dt><dd>{erledigt.length}</dd></div>
+      </dl>
+
+      <div class="dash-actions">
+        <a class="btn" href={editUrl}>Aufgaben bearbeiten</a>
+        <a class="dash-link" href="/team?abmelden">Abmelden</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="dash section--light">
+    <div class="container">
+      <h2 class="h3 dash-h">Wer macht was</h2>
+      <div class="dash-people">
+        {personen.map((p) => {
+          const liste = fuer(p.name);
+          return (
+            <article class="dash-person">
+              <header class="dash-person__head">
+                <span class="dash-avatar" aria-hidden="true">{p.name[0]}</span>
+                <div>
+                  <h3 class="dash-person__name">{p.name}</h3>
+                  <p class="dash-person__rolle">{p.rolle}</p>
+                </div>
+                <span class="dash-person__zahl" title="offene Aufgaben">{liste.length}</span>
+              </header>
+              {liste.length === 0 ? (
+                <p class="dash-leer">Nichts offen.</p>
+              ) : (
+                <ul class="dash-todos">
+                  {liste.map((t) => (
+                    <li class={`dash-todo dash-todo--${t.status} dash-todo--${t.prio}`} data-faellig={t.faellig || undefined}>
+                      <div class="dash-todo__top">
+                        <span class={`dash-pill dash-pill--${t.status}`}>{statusText[t.status] ?? t.status}</span>
+                        {t.prio === 'hoch' && <span class="dash-pill dash-pill--hoch">Wichtig</span>}
+                        {t.wer === 'Beide' && <span class="dash-pill">Gemeinsam</span>}
+                        <span class="dash-pill dash-pill--late" hidden>Überfällig</span>
+                      </div>
+                      <p class="dash-todo__text">{t.aufgabe}</p>
+                      <p class="dash-todo__meta">
+                        <span>{t.bereich}</span>
+                        {t.faellig && <span>bis {datum(t.faellig)}</span>}
+                      </p>
+                      {t.notiz && <p class="dash-todo__notiz">{t.notiz}</p>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          );
+        })}
+      </div>
+
+      <h2 class="h3 dash-h">Stand je Bereich</h2>
+      <div class="dash-areas">
+        {d.bereiche.map((b) => (
+          <article class="dash-area">
+            <div class="dash-area__head">
+              <h3 class="dash-area__name">{b.name}</h3>
+              <span class={`dash-pill dash-pill--b-${b.status}`}>{bereichStatus[b.status] ?? b.status}</span>
+            </div>
+            <div class="dash-bar" role="img" aria-label={`${b.fortschritt} Prozent`}><i style={`width:${Math.max(0, Math.min(100, Number(b.fortschritt) || 0))}%`}></i></div>
+            <p class="dash-area__pct">{b.fortschritt} %</p>
+            <p class="dash-area__stand">{b.stand}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="dash-split">
+        <div>
+          <h2 class="h3 dash-h">Zeitplan</h2>
+          <ol class="dash-time">
+            {meilensteine.map((m) => (
+              <li data-datum={m.datum}>
+                <span class="dash-time__date">{datum(m.datum, { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+                <span class="dash-time__title">{m.titel}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h2 class="h3 dash-h">Erledigt</h2>
+          {erledigt.length === 0 ? <p class="dash-leer">Noch nichts abgehakt.</p> : (
+            <ul class="dash-done">
+              {erledigt.map((t) => (
+                <li><span class="dash-done__who">{t.wer}</span> {t.aufgabe}</li>
+              ))}
+            </ul>
+          )}
+          <p class="dash-hinweis">Interne Seite. Bitte keine Kundendaten, Zahlen oder Passwörter eintragen: Die Inhalte liegen im öffentlichen GitHub-Repo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Tagesaktuell im Browser: Countdown, überfällige Aufgaben, vergangene Meilensteine
+  const heute = new Date();
+  heute.setHours(0, 0, 0, 0);
+  const tag = (iso: string) => new Date(`${iso.slice(0, 10)}T00:00:00`);
+
+  const cd = document.querySelector<HTMLElement>('[data-countdown]');
+  if (cd?.dataset.countdown) {
+    const tage = Math.round((tag(cd.dataset.countdown).getTime() - heute.getTime()) / 86400000);
+    const zahl = cd.querySelector('[data-countdown-zahl]')!;
+    const einheit = cd.querySelector('[data-countdown-einheit]')!;
+    if (tage > 0) { zahl.textContent = String(tage); einheit.textContent = tage === 1 ? 'Tag' : 'Tage'; }
+    else if (tage === 0) { zahl.textContent = 'Heute'; einheit.textContent = ''; cd.classList.add('is-heute'); }
+    else { cd.hidden = true; }
+  }
+
+  let ueberfaellig = 0;
+  document.querySelectorAll<HTMLElement>('[data-faellig]').forEach((el) => {
+    if (tag(el.dataset.faellig!) < heute) {
+      el.classList.add('is-late');
+      el.querySelector<HTMLElement>('.dash-pill--late')!.hidden = false;
+      ueberfaellig++;
+    }
+  });
+  const uz = document.querySelector('[data-ueberfaellig-zahl]');
+  if (uz) uz.textContent = String(ueberfaellig);
+  if (ueberfaellig > 0) uz?.parentElement?.classList.add('is-on');
+
+  let naechster = false;
+  document.querySelectorAll<HTMLElement>('[data-datum]').forEach((el) => {
+    if (tag(el.dataset.datum!) < heute) el.classList.add('is-past');
+    else if (!naechster) { el.classList.add('is-next'); naechster = true; }
+  });
+</script>
+
+<style>
+  .dash-top { padding-block: 8.5rem 3.5rem; background-image: radial-gradient(60rem 36rem at 85% -10%, rgb(191 158 93 / 0.16), transparent 60%); }
+  .dash-top__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 2rem; }
+  .dash-top__title { margin-top: 1rem; }
+  .dash-top__title em { color: var(--c-gold); }
+  .dash-top__meta { margin-top: 0.75rem; font-size: var(--fs-small); }
+
+  .dash-count { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid var(--c-aubergine-line); background: var(--c-aubergine-soft); border-radius: var(--radius); }
+  .dash-count__zahl { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; color: var(--c-gold); }
+  .dash-count__text { font-size: var(--fs-small); line-height: 1.4; }
+  .dash-count.is-heute .dash-count__zahl { font-size: 2.5rem; }
+
+  .dash-fokus { margin-top: 2.5rem; padding: 1.25rem 1.5rem; border-left: 2px solid var(--c-gold); background: rgb(240 237 246 / 0.04); }
+  .dash-fokus__label { font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
+  .dash-fokus__text { margin-top: 0.5rem; font-size: var(--fs-lead); line-height: 1.5; max-width: 70ch; }
+
+  .dash-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 2.5rem; background: var(--c-aubergine-line); border: 1px solid var(--c-aubergine-line); }
+  .dash-kpis div { padding: 1.25rem 1.5rem; background: var(--c-aubergine); }
+  .dash-kpis dt { font-size: 0.9375rem; color: var(--c-text-muted-dark); }
+  .dash-kpis dd { margin-top: 0.25rem; font-family: var(--font-display); font-size: 2.5rem; line-height: 1.1; }
+  .dash-kpis__warn.is-on dd { color: #f2b8b5; }
+
+  .dash-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2rem; }
+  .dash-link { color: var(--c-text-muted-dark); text-decoration: underline; text-underline-offset: 3px; }
+  .dash-link:hover { color: var(--c-offwhite); }
+
+  .dash { padding-block: 3.5rem 5rem; }
+  .dash-h { margin: 3rem 0 1.25rem; }
+  .dash-h:first-child { margin-top: 0; }
+
+  .dash-people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }
+  .dash-person { background: #fff; border: 1px solid var(--c-line-light); border-radius: var(--radius); padding: 1.25rem; }
+  .dash-person__head { display: flex; align-items: center; gap: 0.875rem; padding-bottom: 1rem; border-bottom: 1px solid var(--c-line-light); }
+  .dash-avatar { flex: none; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--c-aubergine); color: var(--c-gold); font-family: var(--font-display); font-size: 1.375rem; }
+  .dash-person__name { font-family: var(--font-serif); font-size: 1.375rem; line-height: 1.2; }
+  .dash-person__rolle { font-size: 0.875rem; color: var(--c-text-muted-light); }
+  .dash-person__zahl { margin-left: auto; min-width: 2rem; padding: 0.125rem 0.625rem; text-align: center; border-radius: 1rem; background: var(--c-offwhite-deep); font-weight: 600; }
+
+  .dash-todos { list-style: none; padding: 0; display: grid; gap: 0.75rem; margin-top: 1rem; }
+  .dash-todo { padding: 0.875rem 1rem; border: 1px solid var(--c-line-light); border-left: 3px solid var(--c-lavender); border-radius: var(--radius); background: var(--c-offwhite); }
+  .dash-todo--hoch { border-left-color: var(--c-gold); }
+  .dash-todo--wartet { opacity: 0.8; border-left-style: dashed; }
+  .dash-todo.is-late { border-left-color: #b3261e; }
+  .dash-todo__top { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .dash-todo__text { margin-top: 0.5rem; font-weight: 600; line-height: 1.4; }
+  .dash-todo__meta { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: 0.375rem; font-size: 0.875rem; color: var(--c-text-muted-light); }
+  .dash-todo__notiz { margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.5; color: var(--c-text-muted-light); }
+
+  .dash-pill { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; background: var(--c-offwhite-deep); color: var(--c-aubergine); }
+  .dash-pill--arbeit, .dash-pill--b-arbeit { background: var(--c-lavender); }
+  .dash-pill--wartet, .dash-pill--b-wartet { background: #ece3cf; color: var(--c-gold-text); }
+  .dash-pill--hoch { background: var(--c-gold); }
+  .dash-pill--late, .dash-pill--b-blockiert { background: #b3261e; color: #fff; }
+  .dash-pill--b-gut, .dash-pill--b-fertig { background: #dcebdc; color: #24572b; }
+
+  .dash-pill[hidden] { display: none; }
+
+  .dash-leer { margin-top: 1rem; color: var(--c-text-muted-light); }
+
+  .dash-areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .dash-area { background: #fff; border: 1px solid var(--c-line-light); border-radius: var(--radius); padding: 1.25rem; }
+  .dash-area__head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .dash-area__name { font-family: var(--font-serif); font-size: 1.25rem; }
+  .dash-bar { margin-top: 1rem; height: 6px; border-radius: 3px; background: var(--c-offwhite-deep); overflow: hidden; }
+  .dash-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--c-lavender), var(--c-gold)); }
+  .dash-area__pct { margin-top: 0.375rem; font-size: 0.875rem; font-weight: 600; color: var(--c-gold-text); }
+  .dash-area__stand { margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.55; color: var(--c-text-muted-light); }
+
+  .dash-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0 3rem; margin-top: 1rem; }
+  .dash-time { list-style: none; padding: 0; border-left: 1px solid var(--c-line-light); margin-left: 0.375rem; }
+  .dash-time li { position: relative; display: grid; gap: 0.125rem; padding: 0 0 1.25rem 1.5rem; }
+  .dash-time li::before { content: ''; position: absolute; left: -0.375rem; top: 0.375rem; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: var(--c-offwhite); border: 2px solid var(--c-lavender); }
+  .dash-time li.is-past::before { background: var(--c-lavender); }
+  .dash-time li.is-past .dash-time__title { color: var(--c-text-muted-light); text-decoration: line-through; text-decoration-color: var(--c-line-light); }
+  .dash-time li.is-next::before { background: var(--c-gold); border-color: var(--c-gold); box-shadow: 0 0 0 4px rgb(191 158 93 / 0.25); }
+  .dash-time li.is-next .dash-time__title { font-weight: 700; }
+  .dash-time__date { font-size: 0.875rem; color: var(--c-gold-text); font-weight: 600; }
+
+  .dash-done { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
+  .dash-done li { padding-left: 1.5rem; position: relative; color: var(--c-text-muted-light); }
+  .dash-done li::before { content: '✓'; position: absolute; left: 0; color: var(--c-gold-text); font-weight: 700; }
+  .dash-done__who { font-weight: 600; color: var(--c-aubergine); }
+  .dash-hinweis { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--c-line-light); font-size: 0.875rem; color: var(--c-text-muted-light); }
+
+  @media (max-width: 64rem) {
+    .dash-people, .dash-areas { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 44rem) {
+    .dash-top { padding-top: 7rem; }
+    .dash-people, .dash-areas, .dash-split { grid-template-columns: 1fr; }
+    .dash-kpis { grid-template-columns: 1fr 1fr; }
+    .dash-kpis div { padding: 1rem; }
+    .dash-kpis dd { font-size: 2rem; }
+  }
+</style>

@@ -1,0 +1,227 @@
+{
+  "fokus": "Bis zum Instagram-Launch am 16.11.: Instagram-Konto, Calendly-Termin und Werbekonto fertig machen. Feedback zu Reel v2 und den Bild-Ads geben, damit die finalen Fassungen rechtzeitig stehen.",
+  "countdownTitel": "Instagram-Launch",
+  "countdownDatum": "2026-11-16",
+  "bereiche": [
+    {
+      "name": "Website",
+      "status": "gut",
+      "fortschritt": 85,
+      "stand": "doktura.de ist live, Korrekturrunden 1–3 sind online. Offen: Calendly-Link und Meta-Pixel-ID im CMS eintragen, Adresse auf Düsseldorf umstellen."
+    },
+    {
+      "name": "Anzeigen-Funnel",
+      "status": "gut",
+      "fortschritt": 90,
+      "stand": "doktura.de/erstgespraech ist live (Fragen Schritt für Schritt, danach Kontakt). Leitet automatisch zum Kalender weiter, sobald der Calendly-Link eingetragen ist."
+    },
+    {
+      "name": "Instagram",
+      "status": "wartet",
+      "fortschritt": 60,
+      "stand": "Launch-Grafiken, Profilbild, Bio und Captions für P9 (16.11.) und P3 (18.11.) sind fertig. Es fehlt das Instagram-Konto selbst."
+    },
+    {
+      "name": "Video & Reels",
+      "status": "arbeit",
+      "fortschritt": 70,
+      "stand": "Anzeige A1 „Ich berate nur Ärzte“ ist final. Reel v2 „Medizin, nicht Finanzen“ wartet auf Feedback."
+    },
+    {
+      "name": "Meta Ads",
+      "status": "wartet",
+      "fortschritt": 40,
+      "stand": "Bild-Ads Runde 3 („Plakat“) wartet auf Feedback. Es fehlen Werbekonto und Pixel. Plan: kleine Tests bis Black Friday, Pause in der Black-Friday-Woche, ab 2.12. hochfahren."
+    },
+    {
+      "name": "Rechtliches",
+      "status": "arbeit",
+      "fortschritt": 90,
+      "stand": "Impressum, Datenschutz und Erstinformation sind vollständig. Offizieller Sitz ist jetzt Düsseldorf, die Seiten nennen noch Neuss."
+    }
+  ],
+  "meilensteine": [
+    { "datum": "2026-10-22", "titel": "Website doktura.de live" },
+    { "datum": "2026-11-04", "titel": "Drehtag mit Zamin" },
+    { "datum": "2026-11-11", "titel": "Anzeigen-Funnel /erstgespraech live" },
+    { "datum": "2026-11-16", "titel": "Instagram-Launch mit Post P9 (Erstgespräch)" },
+    { "datum": "2026-11-17", "titel": "Erste Test-Anzeigen mit kleinem Budget" },
+    { "datum": "2026-11-18", "titel": "Post P3 „Was ist Doktura?“" },
+    { "datum": "2026-11-23", "titel": "Black-Friday-Woche: Anzeigen pausieren" },
+    { "datum": "2026-12-02", "titel": "Anzeigen hochfahren (Thema Jahresende)" },
+    { "datum": "2026-12-23", "titel": "Weihnachtspause bis Januar" }
+  ],
+  "todos": [
+    {
+      "aufgabe": "Calendly-Termin „Kostenloses Erstgespräch für Ärzte“ anlegen und den Link im CMS unter Einstellungen → Terminbuchung eintragen",
+      "wer": "Leon",
+      "bereich": "Website",
+      "faellig": "2026-11-14",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": "Nicht den Link „strom-und-gasberatung“ nehmen. Sobald der Link drin ist, führen alle Termin-Buttons und der Funnel zum Kalender."
+    },
+    {
+      "aufgabe": "Instagram-Business-Konto anlegen, mit Facebook-Seite verknüpfen, Profilbild und Bio setzen",
+      "wer": "Leon",
+      "bereich": "Instagram",
+      "faellig": "2026-11-14",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": "Profilbild und Bio liegen fertig in den Projektdateien (instagram/launch-grafiken). Danach den Instagram-Link im CMS eintragen."
+    },
+    {
+      "aufgabe": "Feedback zu Reel v2 „Medizin, nicht Finanzen“ geben",
+      "wer": "Leon",
+      "bereich": "Video",
+      "faellig": "2026-11-13",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": ""
+    },
+    {
+      "aufgabe": "Feedback zu den Bild-Ads Runde 3 („Plakat“) geben",
+      "wer": "Leon",
+      "bereich": "Meta Ads",
+      "faellig": "2026-11-13",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": ""
+    },
+    {
+      "aufgabe": "Launch-Posts P9 (16.11.) und P3 (18.11.) in der Meta Business Suite einplanen",
+      "wer": "Leon",
+      "bereich": "Instagram",
+      "faellig": "2026-11-15",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": "Captions stehen in instagram/launch-captions.md. Posten jeweils 19–20 Uhr."
+    },
+    {
+      "aufgabe": "Meta-Werbekonto und Pixel anlegen, Pixel-ID im CMS unter Einstellungen eintragen",
+      "wer": "Leon",
+      "bereich": "Meta Ads",
+      "faellig": "2026-11-17",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": "Mit Pixel-ID schaltet sich das Cookie-Banner auf der Website automatisch ein."
+    },
+    {
+      "aufgabe": "Zamin auf GitHub als Mitarbeiter (Write) zum Repo einladen",
+      "wer": "Leon",
+      "bereich": "Organisation",
+      "faellig": "",
+      "status": "wartet",
+      "prio": "normal",
+      "notiz": "Geht, sobald Zamin ein GitHub-Konto hat. Dann kann Zamin Texte und dieses Dashboard selbst unter doktura.de/admin ändern."
+    },
+    {
+      "aufgabe": "Das früher im Chat gepostete Secret löschen bzw. neu erzeugen",
+      "wer": "Leon",
+      "bereich": "Organisation",
+      "faellig": "",
+      "status": "offen",
+      "prio": "normal",
+      "notiz": ""
+    },
+    {
+      "aufgabe": "Netlify-Badge ausschalten (überdeckt auf dem Handy Text)",
+      "wer": "Leon",
+      "bereich": "Website",
+      "faellig": "",
+      "status": "offen",
+      "prio": "niedrig",
+      "notiz": "Falls schon erledigt: hier auf „erledigt“ setzen."
+    },
+    {
+      "aufgabe": "Antwort an Fired Up Space zum „Founder Gift Guide“",
+      "wer": "Leon",
+      "bereich": "Organisation",
+      "faellig": "2026-11-20",
+      "status": "offen",
+      "prio": "niedrig",
+      "notiz": "Empfehlung: absagen oder niedrig priorisieren, das Publikum sind Gründer, keine Ärzte."
+    },
+    {
+      "aufgabe": "Neue Geschäftsadresse in Düsseldorf durchgeben (für Impressum, Erstinformation, Footer)",
+      "wer": "Zamin",
+      "bereich": "Rechtliches",
+      "faellig": "2026-11-15",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": "Vor den ersten Anzeigen sollte das Impressum stimmen."
+    },
+    {
+      "aufgabe": "Begriffe „Vermögensaufbau“ und „Kapitalanlagen“ mit dem Investment-Partner abstimmen",
+      "wer": "Zamin",
+      "bereich": "Rechtliches",
+      "faellig": "2026-11-17",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": "Vor dem Start der Anzeigen klären (§ 34d)."
+    },
+    {
+      "aufgabe": "GitHub-Konto anlegen und die Einladung zum Repo annehmen",
+      "wer": "Zamin",
+      "bereich": "Organisation",
+      "faellig": "",
+      "status": "offen",
+      "prio": "normal",
+      "notiz": "Kostenlos auf github.com. Danach Leon den Benutzernamen schicken."
+    },
+    {
+      "aufgabe": "Texte auf der Startseite gegenlesen und freigeben (Zitat, Vorstellung, FAQ)",
+      "wer": "Zamin",
+      "bereich": "Website",
+      "faellig": "2026-11-15",
+      "status": "offen",
+      "prio": "normal",
+      "notiz": "Änderungen direkt unter doktura.de/admin oder an Leon schicken."
+    },
+    {
+      "aufgabe": "Team-Dashboard bauen",
+      "wer": "Claude",
+      "bereich": "Website",
+      "faellig": "2026-11-12",
+      "status": "erledigt",
+      "prio": "normal",
+      "notiz": ""
+    },
+    {
+      "aufgabe": "Feedback zu Reel v2 und Bild-Ads Runde 3 einarbeiten",
+      "wer": "Claude",
+      "bereich": "Video",
+      "faellig": "2026-11-14",
+      "status": "wartet",
+      "prio": "hoch",
+      "notiz": "Wartet auf Leons Feedback."
+    },
+    {
+      "aufgabe": "Adresse Düsseldorf auf der Website umstellen",
+      "wer": "Claude",
+      "bereich": "Rechtliches",
+      "faellig": "2026-11-16",
+      "status": "wartet",
+      "prio": "hoch",
+      "notiz": "Wartet auf die neue Adresse von Zamin."
+    },
+    {
+      "aufgabe": "Meta-Testkampagne aufsetzen (A1 + beste Bild-Ad, Link auf /erstgespraech)",
+      "wer": "Claude",
+      "bereich": "Meta Ads",
+      "faellig": "2026-11-17",
+      "status": "offen",
+      "prio": "normal",
+      "notiz": "Einstellungen und Texte vorbereiten, Leon schaltet."
+    },
+    {
+      "aufgabe": "Posts für die Wochen nach dem Launch vorbereiten (Mo Reel, Mi Karussell, Fr Reel oder Foto)",
+      "wer": "Claude",
+      "bereich": "Instagram",
+      "faellig": "2026-11-20",
+      "status": "offen",
+      "prio": "normal",
+      "notiz": ""
+    }
+  ]
+}

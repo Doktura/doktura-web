@@ -11,3 +11,9 @@
   for = "/admin/*"
   [headers.values]
     X-Robots-Tag = "noindex"
+
+# Internes Team-Dashboard: nie in Suchmaschinen (zusätzlich zum Passwortschutz)
+[[headers]]
+  for = "/team*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
