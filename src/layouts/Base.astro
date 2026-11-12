@@ -71,6 +71,7 @@ const ogUrl = new URL(og, Astro.site);
       founder: { '@type': 'Person', name: site.contact.person },
       address: { '@type': 'PostalAddress', streetAddress: site.contact.address.split(',')[0], postalCode: site.contact.address.match(/\d{5}/)?.[0], addressLocality: site.contact.address.split(/\d{5}\s*/)[1], addressCountry: 'DE' },
       areaServed: 'DE',
+      ...(site.instagram ? { sameAs: [site.instagram] } : {}),
     })} />
     <slot name="head" />
   </head>

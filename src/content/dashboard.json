@@ -1,5 +1,5 @@
 {
-  "fokus": "Bis zum Instagram-Launch am 16.11.: Instagram-Konto, Calendly-Termin und Werbekonto fertig machen. Feedback zu Reel v2 und den Bild-Ads geben.",
+  "fokus": "Bis zum Instagram-Launch am 16.11.: Calendly-Termin und Werbekonto fertig machen, Instagram mit Facebook verknüpfen. Feedback zu Reel v2 und den Bild-Ads geben.",
   "countdownTitel": "Instagram-Launch",
   "countdownDatum": "2026-11-16",
   "checkliste": [
@@ -33,6 +33,11 @@
         },
         {
           "punkt": "Redaktionssystem doktura.de/admin",
+          "erledigt": true,
+          "wer": ""
+        },
+        {
+          "punkt": "Instagram-Link im Footer",
           "erledigt": true,
           "wer": ""
         },
@@ -112,12 +117,17 @@
           "wer": ""
         },
         {
+          "punkt": "Instagram-Konto @doktura.de angelegt",
+          "erledigt": true,
+          "wer": "Leon"
+        },
+        {
           "punkt": "Reel v2 freigegeben",
           "erledigt": false,
           "wer": "Leon"
         },
         {
-          "punkt": "Instagram-Konto angelegt und mit Facebook verknüpft",
+          "punkt": "Mit Facebook-Seite verknüpft, Profilbild und Bio gesetzt",
           "erledigt": false,
           "wer": "Leon"
         },
@@ -180,13 +190,13 @@
       "notiz": "Nicht den Link „strom-und-gasberatung“ nehmen. Sobald der Link drin ist, führen alle Termin-Buttons und der Funnel zum Kalender."
     },
     {
-      "aufgabe": "Instagram-Business-Konto anlegen, mit Facebook-Seite verknüpfen, Profilbild und Bio setzen",
+      "aufgabe": "Instagram @doktura.de mit Facebook-Seite verknüpfen, Profilbild und Bio setzen",
       "wer": "Leon",
       "bereich": "Instagram",
       "faellig": "2026-11-14",
       "status": "offen",
       "prio": "hoch",
-      "notiz": "Profilbild und Bio liegen fertig in den Projektdateien (instagram/launch-grafiken). Danach den Instagram-Link im CMS eintragen."
+      "notiz": "Profilbild und Bio liegen fertig in den Projektdateien (instagram/launch-grafiken). Wenn schon erledigt: hier abhaken."
     },
     {
       "aufgabe": "Feedback zu Reel v2 „Medizin, nicht Finanzen“ geben",
@@ -346,6 +356,15 @@
       "wer": "Leon",
       "bereich": "Meta Ads",
       "faellig": "2026-11-11",
+      "status": "erledigt",
+      "prio": "normal",
+      "notiz": ""
+    },
+    {
+      "aufgabe": "Instagram-Konto @doktura.de angelegt",
+      "wer": "Leon",
+      "bereich": "Instagram",
+      "faellig": "2026-11-12",
       "status": "erledigt",
       "prio": "normal",
       "notiz": ""
