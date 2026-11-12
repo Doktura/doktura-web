@@ -192,22 +192,28 @@ collections:
             summary: '{{fields.wer}} · {{fields.status}} · {{fields.aufgabe}}'
             fields:
               - { name: aufgabe, label: Aufgabe, widget: string }
-              - { name: wer, label: 'Wer?', widget: select, options: [Leon, Zamin, Beide, Claude], default: Leon }
+              - { name: wer, label: 'Wer?', widget: select, options: [Leon, Zamin, Beide], default: Leon }
               - { name: status, label: Status, widget: select, default: offen, options: [{ label: 'Offen', value: offen }, { label: 'In Arbeit', value: arbeit }, { label: 'Wartet (auf jemand anderen)', value: wartet }, { label: 'Erledigt', value: erledigt }] }
               - { name: prio, label: Priorität, widget: select, default: normal, options: [{ label: 'Hoch', value: hoch }, { label: 'Normal', value: normal }, { label: 'Niedrig', value: niedrig }] }
               - { name: bereich, label: Bereich, widget: select, default: Website, options: [Website, Instagram, Video, Meta Ads, Rechtliches, Organisation] }
               - { name: faellig, label: 'Fällig bis', widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, required: false }
               - { name: notiz, label: 'Notiz (optional)', widget: text, required: false }
-          - name: bereiche
-            label: Stand je Bereich
+          - name: checkliste
+            label: 'Launch-Checkliste (was wir zum Online-Gehen brauchen)'
             label_singular: Bereich
             widget: list
-            summary: '{{fields.name}} · {{fields.fortschritt}} %'
+            summary: '{{fields.bereich}}'
             fields:
-              - { name: name, label: Bereich, widget: string }
-              - { name: status, label: Status, widget: select, default: arbeit, options: [{ label: 'Läuft gut', value: gut }, { label: 'In Arbeit', value: arbeit }, { label: 'Wartet', value: wartet }, { label: 'Blockiert', value: blockiert }, { label: 'Fertig', value: fertig }] }
-              - { name: fortschritt, label: 'Fortschritt in %', widget: number, value_type: int, min: 0, max: 100, step: 5, default: 0 }
-              - { name: stand, label: 'Stand in 1–2 Sätzen', widget: text }
+              - { name: bereich, label: Bereich, widget: string }
+              - name: punkte
+                label: Punkte
+                label_singular: Punkt
+                widget: list
+                summary: '{{fields.punkt}}'
+                fields:
+                  - { name: punkt, label: Punkt, widget: string }
+                  - { name: erledigt, label: Erledigt, widget: boolean, default: false }
+                  - { name: wer, label: 'Wer ist zuständig?', widget: select, required: false, options: [Leon, Zamin, Beide] }
           - name: meilensteine
             label: Zeitplan
             label_singular: Termin
