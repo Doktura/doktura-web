@@ -16,7 +16,7 @@ const head = 'M1572 218L1600 216L1598 244';
   <div class="hero__bg" aria-hidden="true">
     <LoopVideo name="hero" mobile="hero-mobil" eager class="hero__video" />
     <div class="hero__shade"></div>
-    <svg class="hero__ekg" viewBox="0 0 1600 480" preserveAspectRatio="xMidYMid slice" fill="none">
+    <svg class="hero__ekg" viewBox="0 0 1600 480" preserveAspectRatio="none" fill="none">
       <path class="hero__ekg-line" pathLength="1" d={line} />
       <path class="hero__ekg-line hero__ekg-head" pathLength="1" d={head} />
       <path class="hero__ekg-pulse" pathLength="1" d={line} />
@@ -58,9 +58,6 @@ const head = 'M1572 218L1600 216L1598 244';
     </a>
   </div>
 
-  <a class="hero__scroll" href="#ueber-uns" aria-label="Weiter nach unten">
-    <span>Scrollen</span><i aria-hidden="true"></i>
-  </a>
 </section>
 
 <style>
@@ -133,7 +130,7 @@ const head = 'M1572 218L1600 216L1598 244';
      damit kein Ausschlag hinter der Karte oder den Buttons liegt */
   @media (max-width: 63.99rem) {
     .hero__inner { padding-bottom: 7.5rem; }
-    .hero__ekg { height: 6.5rem; bottom: 0.5rem; }
+    .hero__ekg { height: 6rem; bottom: 1.25rem; }
   }
 
   @media (min-width: 64rem) {
@@ -145,7 +142,7 @@ const head = 'M1572 218L1600 216L1598 244';
     }
     .hero__inner { grid-template-columns: 1fr auto; align-items: end; padding-bottom: 7rem; }
     .hero__card { justify-self: end; margin-bottom: 0.5rem; }
-    .hero__ekg { height: 40%; }
+    .hero__ekg { height: 32%; bottom: 2.5rem; }
 
     .hero__scroll {
       position: absolute; left: var(--gutter); bottom: 2.25rem; display: flex; align-items: center; gap: 0.875rem;

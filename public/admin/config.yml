@@ -156,6 +156,17 @@ collections:
               - { name: frage, label: 'Frage', widget: string }
               - { name: antwort, label: 'Antwort', widget: text, hint: 'Leerzeile = neuer Absatz · *Wort* = kursiv · [Linktext](/seite) = Link' }
 
+      - name: partner
+        label: '11 · Partner-Laufband (Versicherer & Banken)'
+        file: src/content/startseite/11-partner.json
+        fields:
+          - { name: label, label: 'Kleine Zeile über der Überschrift', widget: string }
+          - { name: titel, label: 'Überschrift (*Wort* = gold und kursiv)', widget: string }
+          - { name: text, label: 'Text', widget: text }
+          - { name: reihe1, label: 'Reihe 1 (läuft nach links)', widget: list, field: { name: name, label: Name, widget: string } }
+          - { name: reihe2, label: 'Reihe 2 (läuft nach rechts)', widget: list, field: { name: name, label: Name, widget: string } }
+          - { name: hinweis, label: 'Kleiner Hinweis darunter', widget: string, required: false }
+
       - name: kontakt
         label: '10 · Kontakt'
         file: src/content/startseite/10-kontakt.json

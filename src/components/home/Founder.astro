@@ -55,7 +55,7 @@ const zitat = ready(c.zitat);
 
         <div class="actions">
           <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
-          {site.instagram && <a class="link-arrow" href={site.instagram} target="_blank" rel="noopener"><span>Mir auf Instagram folgen</span><Icon name="arrow-up-right" /></a>}
+          {site.instagram && <a class="link-arrow" href={site.instagram} target="_blank" rel="noopener"><span>Weitere nützliche Infos auf Instagram</span><Icon name="arrow-up-right" /></a>}
         </div>
       </div>
     </div>
@@ -74,8 +74,12 @@ const zitat = ready(c.zitat);
     <!-- Persönliche Antwort auf „Warum nur Ärzte?“ -->
     {zitat && (
       <figure class="founder__quote reveal">
+        <span class="founder__quote-mark" aria-hidden="true">&ldquo;</span>
         <blockquote><p><Rich text={zitat} /></p></blockquote>
-        <figcaption>{c.zitatUnterschrift}</figcaption>
+        <figcaption>
+          <span class="founder__quote-avatar"><Picture src={images.avatar} formats={['avif', 'webp']} widths={[96, 192]} sizes="3.5rem" alt="" /></span>
+          <span class="founder__quote-who"><strong>Zamin Köhler</strong><span>Gründer von Doktura</span></span>
+        </figcaption>
       </figure>
     )}
 
@@ -129,10 +133,30 @@ const zitat = ready(c.zitat);
     .proof__list { grid-template-columns: repeat(4, auto); justify-content: space-between; align-items: end; }
   }
 
-  .founder__quote { margin: clamp(4rem, 3rem + 4vw, 7rem) auto 0; max-width: 54rem; text-align: center; }
-  .founder__quote blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem); line-height: 1.25; }
-  .founder__quote blockquote::before { content: '\201C'; display: block; height: 0.55em; margin-bottom: 0.25em; font-size: 3em; line-height: 1; color: var(--c-gold); }
-  .founder__quote figcaption { margin-top: 1.5rem; font-size: var(--fs-small); color: var(--c-text-muted-dark); }
+  .founder__quote {
+    position: relative; margin: clamp(5rem, 3.5rem + 5vw, 8rem) auto 0; max-width: 60rem; text-align: center;
+    padding: clamp(3.5rem, 2.5rem + 4vw, 5.5rem) clamp(1.25rem, 1rem + 3vw, 4rem) clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    border-top: 1px solid rgb(191 158 93 / 0.45); border-bottom: 1px solid rgb(191 158 93 / 0.45);
+    background: radial-gradient(60% 80% at 50% 0%, rgb(191 158 93 / 0.10), transparent 70%);
+  }
+  .founder__quote-mark {
+    position: absolute; top: 0; left: 50%; transform: translate(-50%, -52%);
+    display: grid; place-items: center; width: 5rem; height: 5rem; border-radius: 50%;
+    background: var(--c-aubergine); border: 1px solid rgb(191 158 93 / 0.45);
+    font-family: var(--font-display); font-size: 4.5rem; line-height: 1; padding-top: 1.6rem; color: var(--c-gold);
+  }
+  .founder__quote blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(2rem, 1.3rem + 3vw, 3.75rem); line-height: 1.12; letter-spacing: -0.01em; }
+  .founder__quote blockquote :global(em) { display: inline-block; font-family: var(--font-serif); font-style: italic; color: var(--c-gold); }
+  .founder__quote figcaption { display: inline-flex; align-items: center; gap: 1rem; margin-top: clamp(2rem, 1.5rem + 2vw, 3rem); text-align: left; }
+  .founder__quote-avatar { flex: none; width: 3.5rem; height: 3.5rem; border-radius: 50%; overflow: hidden; border: 1px solid var(--c-gold); }
+  .founder__quote-avatar :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+  .founder__quote-who { display: grid; line-height: 1.3; }
+  .founder__quote-who strong { font-family: var(--font-serif); font-weight: 400; font-size: 1.125rem; color: var(--c-offwhite); }
+  .founder__quote-who span { font-size: var(--fs-small); color: var(--c-text-muted-dark); }
+  @media (prefers-reduced-motion: no-preference) {
+    .founder__quote.is-visible blockquote :global(em) { animation: quote-glow 1.6s var(--ease) 0.4s both; }
+  }
+  @keyframes quote-glow { from { opacity: 0; transform: translateY(0.3em); filter: blur(6px); } }
 
   .founder__video { margin-top: clamp(3rem, 2rem + 4vw, 5rem); }
   .founder__video video, .video-ph { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--c-aubergine-soft); }

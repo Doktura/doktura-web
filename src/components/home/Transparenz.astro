@@ -1,0 +1,39 @@
+---
+// Transparenz: was man vor einer Zusammenarbeit wissen sollte (Texte aus „Warum Doktura & Transparenz“)
+import Rich from '../Rich.astro';
+import w from '../../content/startseite/06-warum.json';
+import { ready } from '../../placeholders';
+const transparenz = w.transparenz.map((t) => ({ ...t, text: ready(t.text) })).filter((t) => t.text);
+---
+<section id="transparenz" class="section section--light" aria-labelledby="transparency-title">
+  <div class="container">
+    <header class="tp__head reveal">
+      <p class="label">{w.transparenzLabel}</p>
+      <h2 id="transparency-title" class="h2"><Rich text={w.transparenzTitel} /></h2>
+      <p class="lead muted"><Rich text={w.transparenzText} /></p>
+    </header>
+    <dl class="tp__list">
+      {transparenz.map((t, i) => (
+        <div class="reveal" style={`--d: ${i}`}>
+          <dt>{t.titel}</dt>
+          <dd><Rich text={t.text!} /></dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+
+</section>
+
+<style>
+  .tp__head { display: grid; gap: 1.5rem; max-width: 52rem; margin-bottom: clamp(2.5rem, 2rem + 3vw, 4rem); }
+  .tp__list { display: grid; gap: 1px; margin: 0; background: var(--c-line-light); border: 1px solid var(--c-line-light); }
+  .tp__list > div { display: grid; gap: 0.5rem; align-content: start; padding: 1.5rem; background: #fff; }
+  .tp__list dt { font-family: var(--font-serif); font-size: 1.25rem; }
+  .tp__list dd { margin: 0; color: var(--c-text-muted-light); }
+  @media (min-width: 40rem) { .tp__list { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 72rem) { .tp__list { grid-template-columns: repeat(4, 1fr); } .tp__list > div { padding: 2rem 1.75rem; } }
+  .tp__list > div { transition: transform 500ms var(--ease), box-shadow 500ms var(--ease); }
+  .tp__list > div:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgb(35 5 47 / 0.35); position: relative; z-index: 1; }
+  .tp__list dt::before { content: counter(tp, decimal-leading-zero); counter-increment: tp; display: block; margin-bottom: 0.75rem; font-family: var(--font-display); font-size: 0.95rem; color: var(--c-gold-text); }
+  .tp__list { counter-reset: tp; }
+</style>

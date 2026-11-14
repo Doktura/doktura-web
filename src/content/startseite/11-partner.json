@@ -1,0 +1,34 @@
+{
+  "label": "Unsere Partner",
+  "titel": "Unabhängig. Mit Zugang zu den *Großen.*",
+  "text": "Wir vergleichen für Sie die Angebote führender Versicherer und Banken und wählen aus, was zu Ihnen passt.",
+  "reihe1": [
+    "Allianz",
+    "AXA",
+    "Swiss Life",
+    "Alte Leipziger",
+    "HDI",
+    "Generali",
+    "Zurich",
+    "Gothaer",
+    "Signal Iduna",
+    "R+V",
+    "Barmenia",
+    "Nürnberger"
+  ],
+  "reihe2": [
+    "apoBank",
+    "Deutsche Bank",
+    "Commerzbank",
+    "Sparkasse",
+    "Volksbank",
+    "ING",
+    "Hannoversche",
+    "Canada Life",
+    "Volkswohl Bund",
+    "Continentale",
+    "Stuttgarter",
+    "LV 1871"
+  ],
+  "hinweis": "Genannte Marken gehören den jeweiligen Unternehmen."
+}
