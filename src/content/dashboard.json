@@ -1,5 +1,5 @@
 {
-  "fokus": "Bis zum Instagram-Launch am 16.11.: Calendly-Termin und Werbekonto fertig machen, Instagram mit Facebook verknüpfen. Feedback zu Reel v2 und den Bild-Ads geben.",
+  "fokus": "Instagram aufbauen: Launch am 16.11., danach regelmäßig posten. Die Meta-Anzeigen starten zum 1.1.2027, bis dahin Werbekonto, Pixel und Anzeigen fertig machen.",
   "countdownTitel": "Instagram-Launch",
   "countdownDatum": "2026-11-16",
   "checkliste": [
@@ -45,11 +45,6 @@
           "punkt": "Calendly-Link im CMS eingetragen",
           "erledigt": true,
           "wer": "Leon"
-        },
-        {
-          "punkt": "Sitz Düsseldorf in Impressum und Footer",
-          "erledigt": false,
-          "wer": "Zamin"
         },
         {
           "punkt": "Texte von Zamin freigegeben",
@@ -147,7 +142,7 @@
           "wer": ""
         },
         {
-          "punkt": "Anzeigen-Plan bis Januar",
+          "punkt": "Anzeigen-Plan (Start 1.1.2027)",
           "erledigt": true,
           "wer": ""
         },
@@ -167,12 +162,7 @@
           "wer": "Leon"
         },
         {
-          "punkt": "Begriffe mit Investment-Partner geklärt",
-          "erledigt": false,
-          "wer": "Zamin"
-        },
-        {
-          "punkt": "Testkampagne gestartet",
+          "punkt": "Anzeigen gestartet (1.1.2027)",
           "erledigt": false,
           "wer": "Leon"
         }
@@ -229,19 +219,19 @@
       "aufgabe": "Meta-Werbekonto und Pixel anlegen, Pixel-ID im CMS unter Einstellungen eintragen",
       "wer": "Leon",
       "bereich": "Meta Ads",
-      "faellig": "2026-11-17",
+      "faellig": "2026-12-15",
       "status": "offen",
       "prio": "hoch",
-      "notiz": "Mit Pixel-ID schaltet sich das Cookie-Banner auf der Website automatisch ein."
+      "notiz": "Anzeigen starten zum 1.1.2027. Mit Pixel-ID schaltet sich das Cookie-Banner auf der Website automatisch ein."
     },
     {
       "aufgabe": "Zamin auf GitHub als Mitarbeiter (Write) zum Repo einladen",
       "wer": "Leon",
       "bereich": "Organisation",
       "faellig": "",
-      "status": "wartet",
+      "status": "offen",
       "prio": "normal",
-      "notiz": "Geht, sobald Zamin ein GitHub-Konto hat. Dann kann Zamin Texte und dieses Dashboard selbst unter doktura.de/admin ändern."
+      "notiz": "Zamins GitHub-Konto ist da. Danach kann Zamin Texte und dieses Dashboard selbst unter doktura.de/admin ändern."
     },
     {
       "aufgabe": "Das früher im Chat gepostete Secret löschen bzw. neu erzeugen",
@@ -271,31 +261,13 @@
       "notiz": "Empfehlung: absagen oder niedrig priorisieren, das Publikum sind Gründer, keine Ärzte."
     },
     {
-      "aufgabe": "Neue Geschäftsadresse in Düsseldorf durchgeben (für Impressum, Erstinformation, Footer)",
-      "wer": "Zamin",
-      "bereich": "Rechtliches",
-      "faellig": "2026-11-15",
-      "status": "offen",
-      "prio": "hoch",
-      "notiz": "Vor den ersten Anzeigen sollte das Impressum stimmen."
-    },
-    {
-      "aufgabe": "Begriffe „Vermögensaufbau“ und „Kapitalanlagen“ mit dem Investment-Partner abstimmen",
-      "wer": "Zamin",
-      "bereich": "Rechtliches",
-      "faellig": "2026-11-17",
-      "status": "offen",
-      "prio": "hoch",
-      "notiz": "Vor dem Start der Anzeigen klären (§ 34d)."
-    },
-    {
-      "aufgabe": "GitHub-Konto anlegen und die Einladung zum Repo annehmen",
+      "aufgabe": "GitHub-Konto angelegt",
       "wer": "Zamin",
       "bereich": "Organisation",
-      "faellig": "",
-      "status": "offen",
+      "faellig": "2026-11-14",
+      "status": "erledigt",
       "prio": "normal",
-      "notiz": "Kostenlos auf github.com. Danach Leon den Benutzernamen schicken."
+      "notiz": ""
     },
     {
       "aufgabe": "Texte auf der Startseite gegenlesen und freigeben (Zitat, Vorstellung, FAQ)",
@@ -370,7 +342,7 @@
       "notiz": ""
     },
     {
-      "aufgabe": "Calendly: eigenes Doktura-Event fertig einrichten (Beschreibung nur für Ärzte, ohne ETFs/Gold/Immobilien)",
+      "aufgabe": "Calendly: eigenen Doktura-Bereich erstellen (nur für Ärzte, ohne ETFs/Gold/Immobilien) und den Link an Leon schicken",
       "wer": "Zamin",
       "bereich": "Website",
       "faellig": "2026-11-16",
@@ -393,12 +365,12 @@
       "titel": "Anzeigen-Funnel /erstgespraech live"
     },
     {
-      "datum": "2026-11-16",
-      "titel": "Instagram-Launch mit Post P9 (Erstgespräch)"
+      "datum": "2026-11-14",
+      "titel": "Team-Dashboard live"
     },
     {
-      "datum": "2026-11-17",
-      "titel": "Erste Test-Anzeigen mit kleinem Budget"
+      "datum": "2026-11-16",
+      "titel": "Instagram-Launch mit Post P9 (Erstgespräch)"
     },
     {
       "datum": "2026-11-18",
@@ -406,15 +378,19 @@
     },
     {
       "datum": "2026-11-23",
-      "titel": "Black-Friday-Woche: Anzeigen pausieren"
+      "titel": "Instagram aufbauen: Mo Reel, Mi Karussell, Fr Reel oder Foto"
     },
     {
-      "datum": "2026-12-02",
-      "titel": "Anzeigen hochfahren (Thema Jahresende)"
+      "datum": "2026-12-15",
+      "titel": "Werbekonto, Pixel und Anzeigen fertig"
     },
     {
       "datum": "2026-12-23",
-      "titel": "Weihnachtspause bis Januar"
+      "titel": "Instagram: Weihnachtspause"
+    },
+    {
+      "datum": "2027-01-01",
+      "titel": "Start der Meta-Anzeigen"
     }
   ]
 }
