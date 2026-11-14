@@ -2,9 +2,9 @@
   "kicker": "Kostenloses Erstgespräch",
   "titelZeile1": "Sie haben Medizin studiert,",
   "titelZeile2": "nicht *Finanzen.*",
-  "einleitung": "Beantworten Sie ein paar kurze Fragen. Danach meldet sich Zamin Köhler persönlich für Ihr kostenloses Erstgespräch, per Video oder in Düsseldorf.",
+  "einleitung": "Beantworten Sie ein paar kurze Fragen. Danach meldet sich Zamin Köhler persönlich für Ihr kostenloses Erstgespräch, per Video oder bei Ihnen vor Ort.",
   "startButton": "Fragen starten",
-  "startHinweis": "Dauert etwa eine Minute",
+  "startHinweis": "Dauert weniger als eine Minute",
   "vorteile": [
     "100 % kostenlos",
     "Nur für Ärztinnen und Ärzte",
@@ -75,7 +75,7 @@
       "mehrfach": false,
       "antworten": [
         "Per Video",
-        "Persönlich in Düsseldorf",
+        "Persönlich bei Ihnen (Düsseldorf und Umgebung)",
         "Erst einmal am Telefon"
       ]
     }
