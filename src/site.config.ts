@@ -54,8 +54,8 @@ export const legal = {
 };
 
 export const nav = [
-  { label: 'Check', href: '/#check' },
   { label: 'Leistungen', href: '/#leistungen' },
-  { label: 'Über mich', href: '/#zamin' },
-  { label: 'Fragen', href: '/#fragen' },
+  { label: 'Über uns', href: '/#ueber-uns' },
+  { label: 'Ablauf', href: '/#ablauf' },
+  { label: 'Kontakt', href: '/#kontakt' },
 ];

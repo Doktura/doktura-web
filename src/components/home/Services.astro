@@ -11,55 +11,75 @@ import c from '../../content/startseite/03-leistungen.json';
       <p class="lead muted"><Rich text={c.einleitung} /></p>
     </header>
 
-    <ul class="services__grid">
+    <ul class="services__grid" data-carousel>
       {c.leistungen.map((s, i) => (
-        <li class="service reveal" style={`--d: ${i}`} data-spotlight>
+        <li class="service reveal" style={`--d: ${i % 4}`} data-spotlight>
           <ServiceIcon name={s.icon} />
-          <div>
-            <h3 class="service__title">{s.titel}</h3>
-            <p class="service__text"><Rich text={s.text} /></p>
-          </div>
+          <h3 class="service__title">{s.titel}</h3>
+          <p class="service__text"><Rich text={s.text} /></p>
         </li>
       ))}
     </ul>
-
-    <!-- Phasen als ruhige Zeitleiste statt eigener Abschnitt -->
-    <div class="phases reveal">
-      <p class="phases__title">{c.phasenTitel}</p>
-      <ol class="phases__line">
-        {c.phasen.map((p, i) => <li><span>0{i + 1}</span>{p}</li>)}
-      </ol>
+    <!-- Nur auf dem Handy: Hinweis zum Wischen + Fortschritt -->
+    <div class="services__swipe" aria-hidden="true">
+      <span>Wischen für alle {c.leistungen.length} Leistungen</span>
+      <i><b data-carousel-bar></b></i>
     </div>
   </div>
 </section>
 
 <style>
-  .services__head { display: grid; gap: 1.5rem; max-width: 50rem; margin-bottom: clamp(2.5rem, 2rem + 3vw, 4rem); }
-  .services__grid { list-style: none; display: grid; gap: 1px; background: var(--c-aubergine-line); border: 1px solid var(--c-aubergine-line); }
+  .services__head { display: grid; gap: 1.5rem; max-width: 52rem; margin-bottom: clamp(3rem, 2rem + 4vw, 5rem); }
+  .services__grid { list-style: none; display: grid; padding: 1px 0 0 1px; }
   .service {
-    position: relative; display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start;
-    padding: 1.75rem 1.5rem; background: var(--c-aubergine);
-    background-image: radial-gradient(28rem circle at var(--x, -100%) var(--y, -100%), rgb(191 158 93 / 0.09), transparent 60%);
+    position: relative; display: grid; gap: 1rem; align-content: start; overflow: hidden;
+    padding: 2rem 1.5rem 2.25rem; margin: -1px 0 0 -1px;
+    border: 1px solid var(--c-aubergine-line);
+    transition: background-color 500ms var(--ease), border-color 500ms var(--ease);
   }
-  .service :global(svg) { width: 2.25rem; height: 2.25rem; color: var(--c-gold); }
-  .service__title { font-family: var(--font-serif); font-size: 1.375rem; line-height: 1.25; margin-bottom: 0.5rem; }
-  .service__text { color: var(--c-text-muted-dark); }
-
-  .phases { margin-top: clamp(3rem, 2rem + 3vw, 4.5rem); }
-  .phases__title { margin-bottom: 1.25rem; font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--c-gold); }
-  .phases__line { list-style: none; display: grid; gap: 0; counter-reset: p; }
-  .phases__line li {
-    position: relative; display: flex; align-items: baseline; gap: 0.875rem;
-    padding: 0.75rem 0 0.75rem 1.5rem; border-left: 1px solid var(--c-aubergine-line); font-family: var(--font-serif); font-size: 1.125rem;
+  /* Lichtkegel, der der Maus folgt */
+  .service::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0;
+    background: radial-gradient(22rem circle at var(--x, 50%) var(--y, 50%), rgb(191 158 93 / 0.14), transparent 60%);
+    transition: opacity 500ms var(--ease);
   }
-  .phases__line li::before { content: ''; position: absolute; left: -4px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: var(--c-gold); }
-  .phases__line span { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--c-gold); }
+  /* Goldlinie oben, die beim Überfahren hereinläuft */
+  .service::after {
+    content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--c-gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 700ms var(--ease);
+  }
+  .service > * { position: relative; z-index: 1; }
+  .service :global(.service-icon) { transition: transform 600ms var(--ease); }
+  .service:hover { background: var(--c-aubergine-soft); }
+  .service:hover::before { opacity: 1; }
+  .service:hover::after { transform: scaleX(1); }
+  .service:hover :global(.service-icon) { transform: translateY(-4px); }
+  .service__title { font-family: var(--font-serif); font-size: 1.3125rem; line-height: 1.3; hyphens: auto; }
+  .service__text { color: var(--c-text-muted-dark); hyphens: auto; overflow-wrap: break-word; }
 
-  @media (min-width: 48rem) {
+  .services__swipe { display: none; }
+
+  /* Handy: Leistungen als Karten zum Wischen statt einer langen Liste */
+  @media (max-width: 39.99rem) {
+    .services__grid {
+      grid-auto-flow: column; grid-auto-columns: 82%; gap: 0.75rem; padding: 0;
+      overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+      margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+    }
+    .services__grid::-webkit-scrollbar { display: none; }
+    .service { margin: 0; scroll-snap-align: start; background: var(--c-aubergine-soft); min-height: 17rem; }
+    .services__swipe {
+      display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem;
+      font-size: 0.875rem; color: var(--c-text-muted-dark);
+    }
+    .services__swipe i { position: relative; flex: 1; height: 1px; background: var(--c-aubergine-line); overflow: hidden; }
+    .services__swipe b { position: absolute; inset: 0; background: var(--c-gold); transform-origin: left; transform: scaleX(var(--progress, 0.125)); transition: transform 150ms linear; }
+  }
+  @media (min-width: 40rem) {
     .services__grid { grid-template-columns: repeat(2, 1fr); }
-    .service { padding: 2.5rem 2.25rem; }
-    .phases__line { grid-template-columns: repeat(4, 1fr); }
-    .phases__line li { flex-direction: column; gap: 0.25rem; padding: 1.5rem 1rem 0 0; border-left: 0; border-top: 1px solid var(--c-aubergine-line); }
-    .phases__line li::before { left: 0; top: -4px; margin-top: 0; }
+  }
+  @media (min-width: 72rem) {
+    .services__grid { grid-template-columns: repeat(4, 1fr); }
+    .service { padding: 2.5rem 2rem 3rem; min-height: 22rem; }
   }
 </style>

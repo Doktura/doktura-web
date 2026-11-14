@@ -1,19 +1,36 @@
 ---
-import Icon from '../Icon.astro';
 import Rich from '../Rich.astro';
-import { site } from '../../site.config';
+import c from '../../content/startseite/09-faq.json';
+import w from '../../content/startseite/06-warum.json';
 import { ready } from '../../placeholders';
-import c from '../../content/startseite/06-faq.json';
+// Transparenz-Punkte (aus „Warum Doktura & Transparenz“) stehen als kurze Übersicht über den Fragen
+const transparenz = w.transparenz.map((t) => ({ ...t, text: ready(t.text) })).filter((t) => t.text);
 // Fragen ohne fertige Antwort erscheinen auf der Live-Seite (noch) nicht
 const fragen = c.fragen.map((f) => ({ ...f, antwort: ready(f.antwort) })).filter((f) => f.antwort);
 ---
 <section id="fragen" class="section section--light" aria-labelledby="faq-title">
+  <!-- Transparenz: was man vor einer Zusammenarbeit wissen sollte -->
+  <div class="container">
+    <header class="tp__head reveal">
+      <p class="label">{w.transparenzLabel}</p>
+      <h2 id="transparency-title" class="h2"><Rich text={w.transparenzTitel} /></h2>
+      <p class="lead muted"><Rich text={w.transparenzText} /></p>
+    </header>
+    <dl class="tp__list">
+      {transparenz.map((t, i) => (
+        <div class="reveal" style={`--d: ${i}`}>
+          <dt>{t.titel}</dt>
+          <dd><Rich text={t.text!} /></dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+
   <div class="container faq">
     <header class="faq__head reveal">
       <p class="label">{c.label}</p>
       <h2 id="faq-title" class="h2 faq__title"><Rich text={c.titel} /></h2>
-      <p class="muted">Ihre Frage ist nicht dabei? Rufen Sie an: <a href={`tel:${site.contact.phone.replace(/[^+\d]/g, '')}`}>{site.contact.phone}</a></p>
-      <a class="link-arrow" href={site.calUrl} {...site.calAttrs}><span>Kostenloses Erstgespräch</span><Icon name="arrow-right" /></a>
+      <p class="muted"><Rich text={c.einleitung} /></p>
     </header>
 
     <div class="faq__list reveal">
@@ -28,27 +45,37 @@ const fragen = c.fragen.map((f) => ({ ...f, antwort: ready(f.antwort) })).filter
 </section>
 
 <style>
-  .faq { display: grid; gap: 2.5rem; }
-  .faq__head { display: grid; gap: 1.25rem; align-content: start; justify-items: start; }
-  .faq__head a[href^='tel'] { color: var(--c-aubergine); font-weight: 600; white-space: nowrap; }
+  .tp__head { display: grid; gap: 1.5rem; max-width: 52rem; margin-bottom: clamp(2.5rem, 2rem + 3vw, 4rem); }
+  .tp__list { display: grid; gap: 1px; margin: 0; background: var(--c-line-light); border: 1px solid var(--c-line-light); }
+  .tp__list > div { display: grid; gap: 0.5rem; align-content: start; padding: 1.5rem; background: #fff; }
+  .tp__list dt { font-family: var(--font-serif); font-size: 1.25rem; }
+  .tp__list dd { margin: 0; color: var(--c-text-muted-light); }
+  @media (min-width: 40rem) { .tp__list { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 72rem) { .tp__list { grid-template-columns: repeat(4, 1fr); } .tp__list > div { padding: 2rem 1.75rem; } }
+
+  .faq { display: grid; gap: 2.5rem; margin-top: clamp(4.5rem, 3rem + 5vw, 8rem); }
+  .faq__title { font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem); }
+  .faq__head { display: grid; gap: 1.25rem; align-content: start; }
   .faq__list { border-top: 1px solid var(--c-line-light); }
   details { border-bottom: 1px solid var(--c-line-light); }
   summary {
     position: relative; display: block; cursor: pointer; list-style: none;
-    padding: 1.375rem 3rem 1.375rem 0; font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.35;
+    padding: 1.5rem 3rem 1.5rem 0; font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.35;
     transition: color 300ms var(--ease);
   }
   summary::-webkit-details-marker { display: none; }
   summary:hover { color: var(--c-gold-text); }
+  /* Plus, das zum Minus wird */
   summary::before, summary::after {
-    content: ''; position: absolute; right: 0.25rem; top: 50%; width: 1rem; height: 1px; background: var(--c-gold-text);
+    content: ''; position: absolute; right: 0.25rem; top: 50%; width: 1rem; height: 1px; background: var(--c-gold);
     transition: transform 400ms var(--ease);
   }
   summary::after { transform: rotate(90deg); }
   details[open] summary::after { transform: rotate(0deg); }
-  .faq__answer { padding: 0 3rem 1.5rem 0; color: var(--c-text-muted-light); max-width: var(--measure); }
-  .faq__answer :global(a) { color: var(--c-aubergine); }
+  .faq__answer { padding: 0 3rem 1.75rem 0; color: var(--c-text-muted-light); max-width: var(--measure); }
+  .faq__answer a { color: var(--c-aubergine); }
 
+  /* Weiches Auf- und Zuklappen (in Browsern, die das können) */
   @media (prefers-reduced-motion: no-preference) {
     @supports (interpolate-size: allow-keywords) {
       .faq__list { interpolate-size: allow-keywords; }
@@ -56,6 +83,7 @@ const fragen = c.fragen.map((f) => ({ ...f, antwort: ready(f.antwort) })).filter
       details[open]::details-content { block-size: auto; }
     }
   }
+
   @media (min-width: 64rem) {
     .faq { grid-template-columns: 0.8fr 1.2fr; gap: 6rem; }
     .faq__head { position: sticky; top: 7rem; align-self: start; }
