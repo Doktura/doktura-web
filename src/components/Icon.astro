@@ -1,6 +1,6 @@
 ---
 // Kleine Linien-Icons für Buttons und Links
-interface Props { name: 'arrow-right' | 'arrow-up-right' | 'menu' | 'close' | 'check'; class?: string }
+interface Props { name: 'arrow-right' | 'arrow-up-right' | 'menu' | 'close' | 'check' | 'instagram'; class?: string }
 const { name, class: cls = '' } = Astro.props;
 const paths: Record<string, string> = {
   'arrow-right': 'M4 12h15M13 6l6 6-6 6',
@@ -8,6 +8,7 @@ const paths: Record<string, string> = {
   menu: 'M3 7h18M3 17h18',
   close: 'M5 5l14 14M19 5L5 19',
   check: 'M4 12.5l5 5L20 6.5',
+  instagram: 'M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zM12 8.5a3.5 3.5 0 110 7 3.5 3.5 0 010-7zM17.25 6.75h.01',
 };
 ---
 <svg class={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">

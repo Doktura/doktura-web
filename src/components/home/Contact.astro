@@ -17,6 +17,7 @@ import c from '../../content/startseite/10-kontakt.json';
         <div><dt>Ansprechpartner</dt><dd>{site.contact.person}</dd></div>
         <div><dt>E-Mail</dt><dd><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></dd></div>
         {site.contact.phone && <div><dt>Telefon</dt><dd><a href={`tel:${site.contact.phone.replace(/[^+\d]/g, '')}`}>{site.contact.phone}</a></dd></div>}
+        {site.instagram && <div><dt>Instagram</dt><dd><a href={site.instagram} target="_blank" rel="noopener">@doktura.de</a></dd></div>}
       </dl>
     </div>
 

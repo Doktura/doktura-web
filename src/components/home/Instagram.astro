@@ -1,0 +1,73 @@
+---
+// Instagram-Teaser: drei echte Beiträge von @doktura.de, alle führen zum Profil.
+// Wird ausgeblendet, solange in „Einstellungen“ kein Instagram-Link steht.
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import { site } from '../../site.config';
+import pZamin from '../../assets/images/instagram/post-zamin.png';
+import pErst from '../../assets/images/instagram/post-erstgespraech.png';
+import pWas from '../../assets/images/instagram/post-was-ist-doktura.png';
+
+const posts = [
+  { src: pWas, alt: 'Beitrag: Was ist Doktura?' },
+  { src: pZamin, alt: 'Beitrag: Zamin Köhler – Neugierig geworden?' },
+  { src: pErst, alt: 'Beitrag: Ihr Erstgespräch in 3 Schritten' },
+];
+const handle = '@doktura.de';
+---
+{site.instagram && (
+<section id="instagram" class="section section--dark ig" aria-labelledby="ig-title">
+  <div class="container ig__grid">
+    <header class="ig__head reveal">
+      <p class="label">Instagram</p>
+      <h2 id="ig-title" class="h2">Wissen für Ärzte. <em>Kurz erklärt.</em></h2>
+      <p class="muted">Berufsunfähigkeit, Praxis, Versorgungswerk: Was Sie wissen sollten, in wenigen Sekunden. Dazu ein Blick hinter die Kulissen von Doktura.</p>
+      <a class="btn ig__btn" href={site.instagram} target="_blank" rel="noopener">
+        <Icon name="instagram" /> {handle} folgen
+      </a>
+    </header>
+
+    <ul class="ig__posts">
+      {posts.map((p, i) => (
+        <li class="reveal" style={`--d: ${i}`}>
+          <a href={site.instagram} target="_blank" rel="noopener" aria-label={`${p.alt} – auf Instagram ansehen`}>
+            <Picture src={p.src} formats={['avif', 'webp']} widths={[320, 540, 720]} sizes="(min-width: 64rem) 20vw, 70vw" alt={p.alt} loading="lazy" />
+            <span class="ig__hover" aria-hidden="true"><Icon name="instagram" /></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+)}
+
+<style>
+  .ig { overflow: hidden; }
+  .ig__grid { display: grid; gap: clamp(2.5rem, 2rem + 2vw, 4rem); align-items: center; }
+  .ig__head { display: grid; gap: 1.25rem; justify-items: start; max-width: 32rem; }
+  .ig__head :global(em) { font-family: var(--font-serif); font-style: italic; color: var(--c-gold); }
+  .ig__btn :global(svg) { width: 1.125rem; height: 1.125rem; }
+
+  .ig__posts {
+    list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: 68%; gap: 1rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+  }
+  .ig__posts::-webkit-scrollbar { display: none; }
+  .ig__posts li { scroll-snap-align: start; }
+  .ig__posts a { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; border: 1px solid var(--c-aubergine-line); }
+  .ig__posts :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1200ms var(--ease); }
+  .ig__hover {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    background: rgb(31 5 34 / 0.55); color: var(--c-gold); opacity: 0; transition: opacity 400ms var(--ease);
+  }
+  .ig__hover :global(svg) { width: 2.5rem; height: 2.5rem; }
+  .ig__posts a:hover :global(img), .ig__posts a:focus-visible :global(img) { transform: scale(1.05); }
+  .ig__posts a:hover .ig__hover, .ig__posts a:focus-visible .ig__hover { opacity: 1; }
+
+  @media (min-width: 64rem) {
+    .ig__grid { grid-template-columns: 0.8fr 1.2fr; column-gap: 5rem; }
+    .ig__posts { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; margin: 0; padding: 0; }
+    .ig__posts li:nth-child(2) { transform: translateY(2.5rem); }
+  }
+</style>

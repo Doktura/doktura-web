@@ -55,6 +55,7 @@ const zitat = ready(c.zitat);
 
         <div class="actions">
           <a class="btn" href={site.calUrl} {...site.calAttrs}>{c.button} <Icon name={site.calIcon} /></a>
+          {site.instagram && <a class="link-arrow" href={site.instagram} target="_blank" rel="noopener"><span>Mir auf Instagram folgen</span><Icon name="arrow-up-right" /></a>}
         </div>
       </div>
     </div>
