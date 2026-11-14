@@ -43,7 +43,7 @@
         },
         {
           "punkt": "Calendly-Link im CMS eingetragen",
-          "erledigt": false,
+          "erledigt": true,
           "wer": "Leon"
         },
         {
@@ -78,7 +78,7 @@
         },
         {
           "punkt": "Calendly-Termin „Kostenloses Erstgespräch für Ärzte“",
-          "erledigt": false,
+          "erledigt": true,
           "wer": "Leon"
         },
         {
@@ -185,7 +185,7 @@
       "wer": "Leon",
       "bereich": "Website",
       "faellig": "2026-11-14",
-      "status": "offen",
+      "status": "erledigt",
       "prio": "hoch",
       "notiz": "Nicht den Link „strom-und-gasberatung“ nehmen. Sobald der Link drin ist, führen alle Termin-Buttons und der Funnel zum Kalender."
     },
@@ -368,6 +368,15 @@
       "status": "erledigt",
       "prio": "normal",
       "notiz": ""
+    },
+    {
+      "aufgabe": "Calendly: eigenes Doktura-Event fertig einrichten (Beschreibung nur für Ärzte, ohne ETFs/Gold/Immobilien)",
+      "wer": "Zamin",
+      "bereich": "Website",
+      "faellig": "2026-11-16",
+      "status": "offen",
+      "prio": "hoch",
+      "notiz": "Event calendly.com/koeundko/erstgespraech ist auf der Website verlinkt. Titel z. B. „Kostenloses Erstgespräch für Ärzte“, Beschreibung: „Kostenloses Erstgespräch mit Zamin Köhler, Versicherungsmakler nur für Ärztinnen und Ärzte. Unverbindlich, per Video oder Telefon.“ Die aktuelle Profil-Beschreibung (ETFs, Gold, Immobilien) passt nicht zu § 34d und wird von Meta mitgeprüft."
     }
   ],
   "meilensteine": [
